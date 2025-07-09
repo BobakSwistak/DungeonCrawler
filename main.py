@@ -8,8 +8,10 @@ screen = pygame.display.set_mode((1000, 800))
 pygame.display.set_caption('DungeonCrawler')
 clock = pygame.time.Clock()
 font = pygame.font.SysFont('courier', 36)
-print(levelGenerator.generate_level())
+level_map = levelGenerator.generate_level()
 
+for row in level_map:
+    print("".join(row))
 # Show the menu first
 menu.main_menu(screen)
 text = font.render("12", 0, (0,0,0))  # fixed variable name
