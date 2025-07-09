@@ -14,7 +14,7 @@ for row in level_map:
     print("".join(row))
 # Show the menu first
 menu.main_menu(screen)
-text = font.render("12", 0, (0,0,0))  # fixed variable name
+text = font.render("12", 0, (0, 0, 0))  # fixed variable name
 
 # Game loop starts after the menu exits
 running = True
@@ -27,6 +27,5 @@ while running:
     screen.blit(text, (100, 100))  # draw the text at position (100, 100)
     pygame.display.flip()
     clock.tick(60)
-
 
 pygame.quit()
