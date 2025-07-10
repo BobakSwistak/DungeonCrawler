@@ -1,5 +1,5 @@
 import pygame
-import menu  # this is your menu.py file
+import menu
 import Dungeon.levelGenerator as levelGenerator
 import Dungeon.level as levelFile
 
@@ -10,21 +10,21 @@ clock = pygame.time.Clock()
 font = pygame.font.SysFont('courier', 36)
 level_map = levelGenerator.generate_level()
 
-for row in level_map:
-    print("".join(row))
-# Show the menu first
-menu.main_menu(screen)
-text = font.render("12", 0, (0, 0, 0))  # fixed variable name
+# x is row, y is column
+for x in range(len(level_map)):
+    print("".join(level_map[x]))
 
-# Game loop starts after the menu exits
+menu.main_menu(screen)
+text = font.render("12", 0, (0, 0, 0))
+
 running = True
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
 
-    screen.fill((0, 0, 0))  # clear screen with black
-    screen.blit(text, (100, 100))  # draw the text at position (100, 100)
+    screen.fill((0, 0, 0))
+    screen.blit(text, (100, 100))
     pygame.display.flip()
     clock.tick(60)
 

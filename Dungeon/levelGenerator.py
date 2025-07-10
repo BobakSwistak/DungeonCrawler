@@ -2,96 +2,61 @@ import random
 import Dungeon.level as level
 
 
-# błąd by bo kiedy on chce zrobić korytarz ma dwie przeszkody
-#
-# 1. próbóje znaleść ścianę ale klatka z której zaczyta to już ściana
-# 2. gdy tworzy pokój to jest próba czy te pola są już zajęte
-# pracuj pracuj
-
-
 def generate_level():
+    # Outer list is rows (x), inner is columns (y)
     level.level = [["." for _ in range(level.width)] for _ in range(level.height)]
-    # generate_room(10, 10, 1, 1)
-    # generate_room(10, 10, 20, 1)
-    # generate_corridor_horizontal(4, 10, right=True)
-    for i in range(random.randint(level.roomCount[0], level.roomCount[1])):
-        generate_room()
-    for i in range(1000):
-        generate_corridors()
+    generate_room(10, 10, 1, 1)
+    generate_room(10, 10, 1, 20)
+    connect_rooms()
+    # for _ in range(random.randint(level.roomCount[0], level.roomCount[1])):
+    #     generate_room()
+    # connect_rooms()
     return level.level
 
 
 def generate_room(roomW=None, roomH=None, x=None, y=None, force=False):
-    if roomW == None:
+    if roomW is None:
         roomW = random.randint(level.roomSize[0], level.roomSize[1])
         roomH = random.randint(level.roomSize[0], level.roomSize[1])
-        x = random.randint(1, level.width - roomW - 1)
-        y = random.randint(1, level.height - roomH - 1)
-
-    for i in range(roomH):
-        for j in range(roomW):
-            if level.level[y + i][x + j] != '.' and force == False:
-                print('room already exists')
-                return
-    level.rooms.append((x, y, x + roomW, y + roomH))
-    for i in range(roomH):
-        for j in range(roomW):
-            level.level[y + i][x + j] = '#'
-    print('generating...')
+        x = random.randint(1, level.height - roomH - 1)
+        y = random.randint(1, level.width - roomW - 1)
 
     for i in range(roomH - 2):
         for j in range(roomW - 2):
-            level.level[y + i + 1][x + j + 1] = '.'
-    print('room generated')
+            check_x = x + i + 1
+            check_y = y + j + 1
+            if check_x >= level.height or check_y >= level.width:
+                print('room check out of bounds')
+                return
+            if level.level[check_x][check_y] != '.' and not force:
+                print('room already exists')
+                return
+    number = len(level.rooms) + 1
+    if not force:
+        level.rooms.append((x, y, x + roomH, y + roomW, number))
+    for i in range(roomH):
+        for j in range(roomW):
+            level.level[x + i][y + j] = '#'
+
+    for i in range(roomH - 2):
+        for j in range(roomW - 2):
+            level.level[x + i + 1][y + j + 1] = '.'
 
 
-def generate_corridors():
-    for i in range(1, level.height - 1):
-        for j in range(1, level.width - 1):
-            if level.level[i][j] == '#':
-                for room in level.rooms:
-                    if room[1] <= i < room[3] and room[0] <= j < room[2] and random.random() < 0.5:
-                        # Check vertical corridor possibility
-                        if level.level[i + 1][j] == '#' and level.level[i - 1][j] == '#':
-                            center_x = (room[0] + room[2]) // 2
-                            generate_corridor_horizontal(i, j, right=(j > center_x))
-                        # Check horizontal corridor possibility
-                        if level.level[i][j + 1] != '.' and level.level[i][j - 1] != '.':
-                            center_y = (room[1] + room[3]) // 2
-                            generate_corridor_vertical(i, j, up=(i > center_y))
-                        break
-                break
 
 
-def generate_corridor_vertical(i, j, up=True, first=True):
-    print('coridor begin')
-    level.level[i][j] = '+'
-    for k in range(random.randint(level.corridorLength[0], level.corridorLength[1])):
-        if i + k >= level.height - 1 or i + k < 0:
-            print('coridor out of bounds')
-            return
-        if level.level[i + k][j] == '#':
-            print('coridor found')
-            print(k)
-            generate_room(roomW=3, roomH=k + 1 if up else -k - 1, x=j - 1, y=i, force=True)
-            level.level[i + k][j] = '+'
-            level.level[i][j] = '+'
-            return
-    print('coridor not found')
 
+def connect_rooms():
+    for room in range(level.rooms):
+        for i in range(3):
+            # finding nearest room
+            nearest_room = None
+            nearest_distance = 9999
+            for other_room in level.rooms:
+                if room == other_room:
+                    continue
+                distance = abs(room[0] - other_room[0]) + abs(room[1] - other_room[1])
+                if distance < nearest_distance:
+                    nearest_distance = distance
+                    nearest_room = other_room
 
-def generate_corridor_horizontal(i, j, right=True, first=True):
-    print('coridor begin')
-    # level.level[i][j] = '+'
-    for k in range(random.randint(level.corridorLength[0], level.corridorLength[1])):
-        if j + k >= level.width - 1 or j + k < 0:
-            print('coridor out of bounds')
-            return
-        if level.level[i][j + k] == '#' and k != 0:
-            print('coridor found')
-            print(k)
-            generate_room(roomW=k + 1 if right else -k - 1, roomH=3, x=j, y=i - 1, force=True)
-            level.level[i][j + k] = '+'
-            level.level[i][j] = '+'
-            return
-    print('coridor not found')
