@@ -4,7 +4,7 @@ import Dungeon.level as level
 
 def generate_level():
     # Outer list is rows (x), inner is columns (y)
-    level.level = [["." for _ in range(level.width)] for _ in range(level.height)]
+    level.level = [["#" for _ in range(level.width)] for _ in range(level.height)]
     # generate_room(10, 10, 1, 1)
     # generate_room(10, 10, 1, 20)
     # connect_rooms()
@@ -15,7 +15,7 @@ def generate_level():
     return level.level
 
 
-def generate_room(roomW=None, roomH=None, x=None, y=None, force=False):
+def generate_room(roomW=None, roomH=None, x=None, y=None, force=False, direction=None):
     if roomW is None:
         roomW = random.randint(level.roomSize[0], level.roomSize[1])
         roomH = random.randint(level.roomSize[0], level.roomSize[1])
@@ -29,13 +29,17 @@ def generate_room(roomW=None, roomH=None, x=None, y=None, force=False):
             if check_x >= level.height or check_y >= level.width:
                 print('room check out of bounds')
                 return
-            if level.level[check_x][check_y] != '.' and not force:
+            if level.level[check_x][check_y] != '#' and not force:
                 print('room already exists')
                 return
     number = len(level.rooms) + 1
     if not force:
         level.rooms.append((x, y, x + roomH, y + roomW, number))
-    level.rooms_tech.append((x, y, x + roomH, y + roomW, number))
+    if direction is not None:
+        if direction == 'horizontal':
+            level.rooms_hor.append((x, y, x + roomH, y + roomW, number))
+        if direction == 'vertical':
+            level.rooms_ver.append((x, y, x + roomH, y + roomW, number))
     for i in range(roomH):
         for j in range(roomW):
             level.level[x + i][y + j] = '#'
@@ -90,7 +94,7 @@ def generate_corridor(room, other_room):
     if room_cx != other_cx:
         x1 = min(room_cx, other_cx)
         length = abs(room_cx - other_cx) + 1
-        generate_room(roomW=3, roomH=length, x=x1, y=room_cy - 1, force=True)
+        generate_room(roomW=3, roomH=length, x=x1, y=room_cy - 1, force=True, direction='vertical')
         corridor_end_x = other_cx
         corridor_end_y = room_cy
     else:
@@ -103,17 +107,49 @@ def generate_corridor(room, other_room):
             # corridor goes left
             y1 = min(corridor_end_y, other_cy)
             length = abs(corridor_end_y - other_cy) + 1
-            generate_room(roomW=length, roomH=3, x=corridor_end_x, y=y1 - 1, force=True)
+            generate_room(roomW=length, roomH=3, x=corridor_end_x, y=y1 - 1, force=True, direction='horizontal')
         else:
             # corridor goes right
             y1 = min(corridor_end_y, other_cy)
             length = abs(corridor_end_y - other_cy) + 1
-            generate_room(roomW=length, roomH=3, x=corridor_end_x, y=y1 + 1, force=True)
+            generate_room(roomW=length, roomH=3, x=corridor_end_x, y=y1 + 1, force=True, direction='horizontal')
 
 
 def clean_Up():
-    for i in level.rooms_tech:
+    for i in level.rooms:
         # clean each room inside to .
         for x in range(i[0] + 1, i[2] - 1):
             for y in range(i[1] + 1, i[3] - 1):
                 level.level[x][y] = '.'
+    for i in level.rooms_hor:
+        # clean each horizontal room inside to .
+        for x in range(i[0] + 1, i[2] - 1):
+            for y in range(i[1], i[3]):
+                level.level[x][y] = '.'
+    for i in level.rooms_ver:
+        # clean each vertical room inside to .
+        for x in range(i[0], i[2]):
+            for y in range(i[1] + 1, i[3] - 1):
+                level.level[x][y] = '.'
+    # find holes in the walls and fill them with +
+    for i in level.rooms:
+        for x in range(i[0], i[2]):
+            for y in range(i[1], i[3]):
+                if level.level[x][y] == '.':
+                    if (x == i[0] or x == i[2] - 1) or (y == i[1] or y == i[3] - 1):
+                        level.level[x][y] = '+'
+
+    # for i in range(level.height):
+    #     for j in range(level.width):
+    #         if level.level[i][j] == '.' and level.level[i + 1][j] == '#' and level.level[i - 1][j] == '#' and \
+    #                 level.level[i][j + 1] == '#':
+    #             level.level[i][j] = '#'
+    #         elif level.level[i][j] == '.' and level.level[i + 1][j] == '#' and level.level[i - 1][j] == '#' and \
+    #                 level.level[i][j - 1] == '#':
+    #             level.level[i][j] = '#'
+    #         elif level.level[i][j] == '.' and level.level[i + 1][j] == '#' and level.level[i][j + 1] == '#' and \
+    #                 level.level[i][j - 1] == '#':
+    #             level.level[i][j] = '#'
+    #         elif level.level[i][j] == '.' and level.level[i - 1][j] == '#' and level.level[i][j + 1] == '#' and \
+    #                 level.level[i][j - 1] == '#':
+    #             level.level[i][j] = '#'

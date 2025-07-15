@@ -5,7 +5,8 @@ roomSize = (7, 17)
 roomCount = (25, 30)
 # roomCount = (3, 3)
 rooms = []
-rooms_tech = []
+rooms_ver = []
+rooms_hor = []
 roomsConnected = [[99, 99]]
 
 level = (
