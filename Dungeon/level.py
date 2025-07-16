@@ -3,13 +3,8 @@ height = 50  # number of rows (x)
 
 roomSize = (7, 17)
 roomCount = (25, 30)
-# roomCount = (3, 3)
-rooms = []
-rooms_ver = []
-rooms_hor = []
-roomsConnected = [[99, 99]]
 
-level = (
-    "",
-    "",
-)
+rooms = []
+roomsConnected = []
+
+level = ()
