@@ -5,6 +5,5 @@ roomSize = (7, 17)
 roomCount = (25, 30)
 
 rooms = []
-roomsConnected = []
 
 level = ()
