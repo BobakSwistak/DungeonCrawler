@@ -1,16 +1,17 @@
 import random
 import Dungeon.level as level
-from Dungeon.level import roomCount
 
 
 def generate_level():
     level.level = [["#" for _ in range(level.width)] for _ in range(level.height)]
     carve_room(10, 8, level.height // 2, level.width // 2)
     generate_rooms()
+    generating_doors()
+    clean_up()
 
 
 def generate_rooms():
-    for _ in range(random.randint(roomCount[0], roomCount[1])):
+    for _ in range(level.roomCount):
         minDistance = 9999
         nearestPlace = None
         room = carve_room()
@@ -25,12 +26,10 @@ def generate_rooms():
                     if distance < minDistance:
                         minDistance = distance
                         nearestPlace = (x, y)
-        print(nearestPlace, minDistance)
-        # we found nearest place join our new room to our room web.
-        # creating a tunnel to the nearest place
-        # first by the x-axis then by the y-axis
+        # print(nearestPlace, minDistance)
         startPos = (room[0] + room[2]) // 2, (room[1] + room[3]) // 2
         endPos = nearestPlace
+
         if startPos[0] < endPos[0]:
             for i in range(startPos[0], endPos[0] + 1):
                 level.level[i][startPos[1]] = '.'
@@ -49,18 +48,18 @@ def carve_room(roomW=None, roomH=None, x=None, y=None):
     if roomW is None:
         roomW = random.randint(level.roomSize[0], level.roomSize[1])
         roomH = random.randint(level.roomSize[0], level.roomSize[1])
-        x = random.randint(1, level.height - roomH - 1)
-        y = random.randint(1, level.width - roomW - 1)
+        x = random.randint(1, level.height - roomH - 2)
+        y = random.randint(1, level.width - roomW - 2)
 
     for i in range(roomH):
         for j in range(roomW):
             check_x = x + i
             check_y = y + j
             if check_x >= level.height or check_y >= level.width:
-                print('room check out of bounds')
+                # print('room check out of bounds')
                 return None
             if level.level[check_x][check_y] != '#':
-                print('room already exists')
+                # print('room already exists')
                 return None
     for i in range(roomH):
         for j in range(roomW):
@@ -71,4 +70,37 @@ def carve_room(roomW=None, roomH=None, x=None, y=None):
             level.level[x + i + 1][y + j + 1] = '.'
     return [x, y, roomH + x, roomW + y]
 
-# todo: add a function which cleans up the level and add toors
+
+def generating_doors():
+    for x in range(level.height):
+        for y in range(level.width):
+            if level.level[x][y] == '.':
+                if ((level.level[x - 1][y] == '#' and level.level[x + 1][y] == '#' and
+                     level.level[x][y - 1] == '.' and level.level[x][y + 1] == '.') or
+                        (level.level[x][y - 1] == '#' and level.level[x][y + 1] == '#' and
+                         level.level[x - 1][y] == '.' and level.level[x + 1][y] == '.')):
+                    if (level.level[x + 1][y + 1] == '.' or level.level[x + 1][y - 1] == '.' or
+                            level.level[x - 1][y + 1] == '.' or level.level[x - 1][y - 1] == '.'):
+                        level.level[x][y] = '+'
+
+
+def clean_up():
+    for x in range(0, level.height - 1):
+        for y in range(0, level.width - 1):
+            if level.level[x][y] == '#':
+                if ((level.level[x - 1][y] == '#' or level.level[x - 1][y] == ' ') and
+                        (level.level[x + 1][y] == '#' or level.level[x + 1][y] == ' ') and
+                        (level.level[x][y - 1] == '#' or level.level[x][y - 1] == ' ') and
+                        (level.level[x][y + 1] == '#' or level.level[x][y + 1] == ' ') and
+                        (level.level[x + 1][y + 1] == '#' or level.level[x + 1][y + 1] == ' ') and
+                        (level.level[x + 1][y - 1] == '#' or level.level[x + 1][y - 1] == ' ') and
+                        (level.level[x - 1][y + 1] == '#' or level.level[x - 1][y + 1] == ' ') and
+                        (level.level[x - 1][y - 1] == '#' or level.level[x - 1][y - 1] == ' ')):
+                    level.level[x][y] = ' '
+
+    for x in range(level.height):
+        level.level[x][0] = ' '
+        level.level[x][level.width - 1] = ' '
+    for y in range(level.width):
+        level.level[0][y] = ' '
+        level.level[level.height - 1][y] = ' '
