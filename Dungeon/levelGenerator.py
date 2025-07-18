@@ -1,5 +1,6 @@
 import random
 import Dungeon.level as level
+import curses
 
 
 def generate_level():
@@ -8,6 +9,14 @@ def generate_level():
     generate_rooms()
     generating_doors()
     clean_up()
+
+
+def reload_level(stdscr):
+    generate_level()
+    # Spawn player in the center room
+    center_x = level.width // 2 + 3
+    center_y = level.height // 2 + 3
+    return center_x, center_y
 
 
 def generate_rooms():
