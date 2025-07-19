@@ -2,8 +2,10 @@ import curses
 import Dungeon.level as level
 import Dungeon.levelGenerator as levelGenerator
 import renderer
+import menuRenderer
 import playerInputs
 import colors
+import logoRenderer
 
 
 def main(stdscr):
@@ -15,21 +17,31 @@ def main(stdscr):
     curses.noecho()  # Don't echo keypresses
     stdscr.timeout(1000)  # Input timeout (ms)
 
+    logoRenderer.draw_centered_logo(stdscr)
+    stdscr.refresh()
+    while True:
+        if stdscr.getch() != -1:  # Wait for any key press
+            if stdscr.getch() == ord('q'):
+                break
+            elif game_cycle(stdscr) == 0:
+                break
+
+
+def game_cycle(stdscr):
     player_x, player_y = levelGenerator.reload_level(stdscr)  # Initialize player position
 
     while True:
         if level.changes:
             level.changes = False
-            stdscr.clear()  # Clear the screen for fresh rendering
-            renderer.rendering_map(stdscr)  # Draw the dungeon map
-            stdscr.addstr(player_y, player_x, '@', curses.color_pair(4))  # Draw the player
-            stdscr.refresh()  # Update the display
+            stdscr.clear()
+            renderer.rendering_map(stdscr, player_x, player_y)  # Player is always centered
+            menuRenderer.left_menu(stdscr, player_x, player_y)  # Draw the left menu
+            stdscr.refresh()
 
-            # Handle player input and movement
             result = playerInputs.player_input(stdscr, player_x, player_y, level)
             if result is None:
-                break  # Exit loop if 'q' is pressed
-            player_x, player_y = result  # Update player position
+                return 0
+            player_x, player_y = result
 
 
 curses.wrapper(main)
