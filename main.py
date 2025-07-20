@@ -1,15 +1,12 @@
 import curses
-import Dungeon.level as level
-import Dungeon.levelGenerator as levelGenerator
-import renderer
-import menuRenderer
+from Dungeon import levelGenerator, level
+from Renderers import renderer, menuRenderer, logoRenderer
 import playerInputs
 import colors
-import logoRenderer
 
 
 def main(stdscr):
-    colors.Colors(stdscr)
+    colors.colors(stdscr) # Initialize colors
     stdscr.bkgd(' ', colors.curses.color_pair(1))  # Set default background
 
     curses.curs_set(0)  # Hide cursor

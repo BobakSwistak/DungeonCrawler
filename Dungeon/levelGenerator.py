@@ -5,6 +5,7 @@ import curses
 
 def generate_level():
     level.level = [["#" for _ in range(level.width)] for _ in range(level.height)]
+    level.visible = [[" " for _ in range(level.width)] for _ in range(level.height)]
     carve_room(10, 8, level.height // 2, level.width // 2)
     generate_rooms()
     generating_doors()

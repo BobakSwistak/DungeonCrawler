@@ -12,4 +12,5 @@ roomSize = (7, 17)
 roomCount = 300
 
 rooms = []
-level = ()
+level = [] # list of all tiles
+visible = []  # list of visible tiles

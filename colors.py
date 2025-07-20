@@ -1,7 +1,7 @@
 import curses
 
 
-def Colors(stdscr):
+def colors(stdscr):
     # Initialize curses color system and set up color pairs
     curses.start_color()
     # Colors are defined as RGB values (0-1000)

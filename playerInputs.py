@@ -14,24 +14,24 @@ def player_input(stdscr, player_x, player_y, level):
             return player_x, player_y
         dx, dy = 0, 0
         # Handle movement keys
-        if key == curses.KEY_UP:
+        if key == curses.KEY_UP or key == ord('8'):  # Up arrow or numpad 8
             dy = -1
-        elif key == curses.KEY_DOWN:
+        elif key == curses.KEY_DOWN or key == ord('2'):  # Down arrow or numpad 2
             dy = 1
-        elif key == curses.KEY_LEFT:
+        elif key == curses.KEY_LEFT or key == ord('4'):  # Left arrow or numpad 4
             dx = -1
-        elif key == curses.KEY_RIGHT:
+        elif key == curses.KEY_RIGHT or key == ord('6'):  # Right arrow or numpad 6
             dx = 1
-        elif key == curses.KEY_HOME:
+        elif key == curses.KEY_HOME or key == ord('7'):  # Home key or numpad 7
             dx = -1
             dy = -1
-        elif key == curses.KEY_END:
+        elif key == curses.KEY_END or key == ord('1'):  # End key or numpad 1
             dx = -1
             dy = 1
-        elif key == curses.KEY_PPAGE:
+        elif key == curses.KEY_PPAGE or key == ord('9'):  # Page Up or numpad 9
             dx = 1
             dy = -1
-        elif key == curses.KEY_NPAGE:
+        elif key == curses.KEY_NPAGE or key == ord('3'):  # Page Down or numpad 3
             dx = 1
             dy = 1
         new_x = player_x + dx
