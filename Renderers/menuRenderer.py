@@ -1,7 +1,11 @@
 import curses
+from pickle import GLOBAL
 
+import Dungeon.level as level
+import Renderers.renderer as renderer
 
-text = " by Bobak Świstak"
+text = "by Bobak Świstak"
+menu_offset = renderer.master_offset + level.view_width
 
 
 def left_menu(stdscr, player_x, player_y):

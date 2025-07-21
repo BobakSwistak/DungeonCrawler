@@ -1,7 +1,7 @@
 import Dungeon.level as level
 import curses
 
-master_offset = 30  # Reserve 20 columns on the left for a menu
+master_offset = 30  # Reserve 30 columns on the left for a menu
 
 
 def rendering_map(stdscr, player_x, player_y):
