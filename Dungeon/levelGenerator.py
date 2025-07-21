@@ -17,8 +17,8 @@ def generate_level():
 def reload_level(stdscr):
     generate_level()
     # Spawn player in the center room
-    center_x = level.width // 2 + 3
-    center_y = level.height // 2 + 3
+    center_x = level.height // 2 + 3
+    center_y = level.width // 2 + 3
     return center_x, center_y
 
 

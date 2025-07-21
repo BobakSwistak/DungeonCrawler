@@ -26,19 +26,16 @@ def bresenham_line(x0, y0, x1, y1):
 
 def calculate_field_of_view(player_x, player_y, radius):
     local_visible = [[False for _ in range(level.width)] for _ in range(level.height)]
-
-    for y in range(player_y - radius, player_y + radius + 1):
-        for x in range(player_x - radius, player_x + radius + 1):
-            if 0 <= x < level.width and 0 <= y < level.height:
+    for x in range(player_x - radius, player_x + radius + 1):
+        for y in range(player_y - radius, player_y + radius + 1):
+            if 0 <= x < level.height and 0 <= y < level.width:
                 line = bresenham_line(player_x, player_y, x, y)
                 for (lx, ly) in line:
-                    if 0 <= lx < level.width and 0 <= ly < level.height:
-                        local_visible[ly][lx] = True
-                        if level.level[ly][lx] in level.unwalkable:
-                            break  # stop ray on wall
-
-    # Update the global visible variable
-    for y in range(level.height):
-        for x in range(level.width):
-            if local_visible[y][x]:
-                level.visible[y][x] = ''
+                    if 0 <= lx < level.height and 0 <= ly < level.width:
+                        local_visible[lx][ly] = True
+                        if level.level[lx][ly] in level.unwalkable:
+                            break
+    for x in range(level.height):
+        for y in range(level.width):
+            if local_visible[x][y]:
+                level.visible[x][y] = ''

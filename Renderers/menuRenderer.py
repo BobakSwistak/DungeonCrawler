@@ -1,6 +1,4 @@
 import curses
-from pickle import GLOBAL
-
 import Dungeon.level as level
 import Renderers.renderer as renderer
 
