@@ -2,8 +2,8 @@ import Dungeon.level as level
 from Dungeon.level import visible
 
 
-def bresenham_line(x0, y0, x1, y1):
-    """Generate points on a line from (x0, y0) to (x1, y1)."""
+def bresenham_line(y0, x0, y1, x1):
+    """Generate points on a line from (y0, x0) to (y1, x1)."""
     points = []
     dx = abs(x1 - x0)
     dy = -abs(y1 - y0)
@@ -11,8 +11,8 @@ def bresenham_line(x0, y0, x1, y1):
     sy = 1 if y0 < y1 else -1
     err = dx + dy
     while True:
-        points.append((x0, y0))
-        if x0 == x1 and y0 == y1:
+        points.append((y0, x0))
+        if y0 == y1 and x0 == x1:
             break
         e2 = 2 * err
         if e2 >= dy:
@@ -24,18 +24,19 @@ def bresenham_line(x0, y0, x1, y1):
     return points
 
 
-def calculate_field_of_view(player_x, player_y, radius):
+def calculate_field_of_view(player_y, player_x, radius):
+    # local_visible[y][x]
     local_visible = [[False for _ in range(level.width)] for _ in range(level.height)]
-    for x in range(player_x - radius, player_x + radius + 1):
-        for y in range(player_y - radius, player_y + radius + 1):
-            if 0 <= x < level.height and 0 <= y < level.width:
-                line = bresenham_line(player_x, player_y, x, y)
-                for (lx, ly) in line:
-                    if 0 <= lx < level.height and 0 <= ly < level.width:
-                        local_visible[lx][ly] = True
-                        if level.level[lx][ly] in level.unwalkable:
+    for y in range(player_y - radius, player_y + radius + 1):
+        for x in range(player_x - radius, player_x + radius + 1):
+            if 0 <= y < level.height and 0 <= x < level.width:
+                line = bresenham_line(player_y, player_x, y, x)
+                for (ly, lx) in line:
+                    if 0 <= ly < level.height and 0 <= lx < level.width:
+                        local_visible[ly][lx] = True
+                        if level.level[ly][lx] in level.unwalkable:
                             break
-    for x in range(level.height):
-        for y in range(level.width):
-            if local_visible[x][y]:
-                level.visible[x][y] = ''
+    for y in range(level.height):
+        for x in range(level.width):
+            if local_visible[y][x]:
+                level.visible[y][x] = ''
