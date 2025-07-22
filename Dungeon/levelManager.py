@@ -1,5 +1,4 @@
-import Dungeon.level as level
-from Dungeon.level import visible
+from Dungeon import level
 
 
 def bresenham_line(y0, x0, y1, x1):
@@ -39,4 +38,10 @@ def calculate_field_of_view(player_y, player_x, radius):
     for y in range(level.height):
         for x in range(level.width):
             if local_visible[y][x]:
-                level.visible[y][x] = ''
+                level.memorized[y][x] = ''
+    for y in range(level.height):
+        for x in range(level.width):
+            if local_visible[y][x]:
+                level.visible[y][x] = True
+            else:
+                level.visible[y][x] = False

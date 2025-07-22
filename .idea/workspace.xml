@@ -4,14 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="23dfc354-9bb7-4c61-9667-04865449b8c6" name="Changes" comment="experimental | improved tunnel generation feature: more tunnels and wide tunnels(bug but now a feature).">
+    <list default="true" id="23dfc354-9bb7-4c61-9667-04865449b8c6" name="Changes" comment="fix | all scripts are in [y][x] array style">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dungeon/level.py" beforeDir="false" afterPath="$PROJECT_DIR$/Dungeon/level.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Dungeon/levelGenerator.py" beforeDir="false" afterPath="$PROJECT_DIR$/Dungeon/levelGenerator.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Dungeon/levelManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/Dungeon/levelManager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Renderers/logoRenderer.py" beforeDir="false" afterPath="$PROJECT_DIR$/Renderers/logoRenderer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Renderers/menuRenderer.py" beforeDir="false" afterPath="$PROJECT_DIR$/Renderers/menuRenderer.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Renderers/renderer.py" beforeDir="false" afterPath="$PROJECT_DIR$/Renderers/renderer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/playerInputs.py" beforeDir="false" afterPath="$PROJECT_DIR$/playerInputs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/colors.py" beforeDir="false" afterPath="$PROJECT_DIR$/colors.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -226,6 +225,7 @@
       <workItem from="1752922879018" duration="1916000" />
       <workItem from="1753036142805" duration="2442000" />
       <workItem from="1753079696791" duration="9743000" />
+      <workItem from="1753169175907" duration="1546000" />
     </task>
     <task id="LOCAL-00001" summary="experimental | corridor generation does not work.">
       <option name="closed" value="true" />
@@ -299,7 +299,15 @@
       <option name="project" value="LOCAL" />
       <updated>1753088850298</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="fix | all scripts are in [y][x] array style">
+      <option name="closed" value="true" />
+      <created>1753123149812</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1753123149812</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -341,7 +349,9 @@
     <MESSAGE value="experimental | fog of Waaagh added, numpad support added." />
     <MESSAGE value="experimental | improved tunnel generation feature: more tunnels and wide tunnels(bug but now a feature)." />
     <MESSAGE value="experimental | improved tunnel generation feature: more tunnels and wide tunnels(bug but now a feature)." />
-    <option name="LAST_COMMIT_MESSAGE" value="experimental | improved tunnel generation feature: more tunnels and wide tunnels(bug but now a feature)." />
+    <MESSAGE value="new | all scripts are in [x][y] array style" />
+    <MESSAGE value="fix | all scripts are in [y][x] array style" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix | all scripts are in [y][x] array style" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/DungeonCrawler$test.coverage" NAME="test Coverage Results" MODIFIED="1752657407509" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

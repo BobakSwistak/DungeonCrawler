@@ -6,6 +6,7 @@ def generate_level():
     # Initialize level and visible arrays as [y][x]
     level.level = [["#" for _ in range(level.width)] for _ in range(level.height)]
     level.visible = [[" " for _ in range(level.width)] for _ in range(level.height)]
+    level.memorized = [[" " for _ in range(level.width)] for _ in range(level.height)]
     carve_room(10, 8, level.height // 2, level.width // 2)
     generate_rooms()
     generate_tunnels()
