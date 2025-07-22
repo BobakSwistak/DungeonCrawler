@@ -4,6 +4,7 @@ height = 100
 changes = True  # flag to indicate if the level has changed
 can_move = True  # flag to indicate if the player can move
 action = False
+fog_of_war = True
 
 step_counter = 0  # counter for steps taken by the player
 

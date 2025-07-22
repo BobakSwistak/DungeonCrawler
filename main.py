@@ -35,9 +35,8 @@ def game_cycle(stdscr):
             level.changes = False
             stdscr.clear()
             renderer.rendering_map(stdscr, player_y, player_x)  # Player is always centered (y, x)
-            menuRenderer.left_menu(stdscr, player_y, player_x)  # Draw the left menu (y, x)
+            menuRenderer.menus(stdscr, player_y, player_x)  # Draw the left menu (y, x)
             stdscr.refresh()
-
             result = playerInputs.player_input(stdscr, player_y, player_x)
             player_y, player_x = result  # Update player position (y, x)
 

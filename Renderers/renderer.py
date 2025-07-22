@@ -5,7 +5,6 @@ master_offset = 30  # Reserve 30 columns on the left for a menu
 
 
 def rendering_map(stdscr, player_y, player_x):
-    fog_of_war = True
     # Calculate the top-left corner of the viewport so the player stays centered
     offset_y = max(0, min(player_y - level.view_height // 2, level.height - level.view_height))
     offset_x = max(0, min(player_x - level.view_width // 2, level.width - level.view_width))
@@ -31,7 +30,7 @@ def rendering_map(stdscr, player_y, player_x):
     screen_x = player_x - offset_x
     # Draw the player character '@' at their position in the viewport, shifted by master_offset
 
-    if fog_of_war:
+    if level.fog_of_war:
         # for y in range(3):
         #     for x in range(3):
         #         if 0 <= screen_y + y < level.view_height and 0 <= screen_x + x < level.view_width:

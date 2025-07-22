@@ -1,6 +1,6 @@
 import curses
 from Dungeon import levelGenerator, level
-import Renderers.renderer as renderer
+from Renderers import renderer, menuRenderer
 import sys
 
 
@@ -21,10 +21,6 @@ def player_input(stdscr, player_y, player_x):
             level.action = False
             level.can_move = True
             renderer.rendering_map(stdscr, player_y, player_x)
-
-        elif key == ord('r'):
-            player_y, player_x = levelGenerator.reload_level()
-            return player_y, player_x
 
         dy, dx = 0, 0
         # Handle movement keys
@@ -58,8 +54,10 @@ def player_input(stdscr, player_y, player_x):
 
                 if level.level[new_y][new_x] == "`":
                     level.level[new_y][new_x] = "+"  # Close the door
+                    menuRenderer.debug_log(stdscr, ("Door closed"))
                 elif level.level[new_y][new_x] == "+":
                     level.level[new_y][new_x] = "`"  # Open the door
+                    menuRenderer.debug_log(stdscr, ("Door opened"))
 
             elif level.level[new_y][new_x] in level.walkable and level.can_move:
                 player_y, player_x = new_y, new_x
@@ -68,5 +66,6 @@ def player_input(stdscr, player_y, player_x):
 
             elif level.level[new_y][new_x] == "+":
                 level.level[new_y][new_x] = "`"  # Open the door
+                menuRenderer.debug_log(stdscr, ("Door opened"))
 
         return player_y, player_x
