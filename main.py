@@ -3,6 +3,7 @@ from Dungeon import levelGenerator, level
 from Renderers import renderer, menuRenderer, logoRenderer
 import playerInputs
 from Resources import colors
+import sys
 
 
 def main(stdscr):
@@ -16,12 +17,14 @@ def main(stdscr):
 
     logoRenderer.draw_centered_logo(stdscr)
     stdscr.refresh()
+
     while True:
-        if stdscr.getch() != -1:  # Wait for any key press
-            if stdscr.getch() == ord('q'):
-                break
-            elif game_cycle(stdscr) == 'game_over':
-                break
+        key = stdscr.getch()
+        if key == ord('q'):
+            sys.exit()
+        elif key != -1:  # Wait for any key press
+            game_cycle(stdscr)
+            return
 
 
 def game_cycle(stdscr):
@@ -36,8 +39,6 @@ def game_cycle(stdscr):
             stdscr.refresh()
 
             result = playerInputs.player_input(stdscr, player_y, player_x)
-            if result == 'game_over':
-                return 'game_over'
             player_y, player_x = result  # Update player position (y, x)
 
 

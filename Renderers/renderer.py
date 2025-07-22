@@ -1,8 +1,6 @@
 from Dungeon import level, levelManager
 import curses
 
-# xy solved
-
 master_offset = 30  # Reserve 30 columns on the left for a menu
 
 

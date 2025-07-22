@@ -1,5 +1,7 @@
 import curses
 from Dungeon import levelGenerator, level
+import Renderers.renderer as renderer
+import sys
 
 
 def player_input(stdscr, player_y, player_x):
@@ -9,7 +11,7 @@ def player_input(stdscr, player_y, player_x):
 
         level.changes = True  # Mark level as changed
         if key == ord('q'):
-            return 'game_over'
+            sys.exit()
 
         elif key == ord('a'):
             level.action = True
@@ -18,6 +20,7 @@ def player_input(stdscr, player_y, player_x):
         elif key == 27:  # ESC key
             level.action = False
             level.can_move = True
+            renderer.rendering_map(stdscr, player_y, player_x)
 
         elif key == ord('r'):
             player_y, player_x = levelGenerator.reload_level()
