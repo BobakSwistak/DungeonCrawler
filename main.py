@@ -2,7 +2,7 @@ import curses
 from Dungeon import levelGenerator, level
 from Renderers import renderer, menuRenderer, logoRenderer
 import playerInputs
-import colors
+from Resources import colors
 
 
 def main(stdscr):
@@ -20,7 +20,7 @@ def main(stdscr):
         if stdscr.getch() != -1:  # Wait for any key press
             if stdscr.getch() == ord('q'):
                 break
-            elif game_cycle(stdscr) == 0:
+            elif game_cycle(stdscr) == 'game_over':
                 break
 
 
@@ -35,9 +35,9 @@ def game_cycle(stdscr):
             menuRenderer.left_menu(stdscr, player_y, player_x)  # Draw the left menu (y, x)
             stdscr.refresh()
 
-            result = playerInputs.player_input(stdscr, player_y, player_x, level)
-            if result is None:
-                return 0
+            result = playerInputs.player_input(stdscr, player_y, player_x)
+            if result == 'game_over':
+                return 'game_over'
             player_y, player_x = result  # Update player position (y, x)
 
 

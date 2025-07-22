@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="23dfc354-9bb7-4c61-9667-04865449b8c6" name="Changes" comment="fix | all scripts are in [y][x] array style">
+    <list default="true" id="23dfc354-9bb7-4c61-9667-04865449b8c6" name="Changes" comment="new | player can close/open doors, and added Step Counter">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dungeon/level.py" beforeDir="false" afterPath="$PROJECT_DIR$/Dungeon/level.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dungeon/levelGenerator.py" beforeDir="false" afterPath="$PROJECT_DIR$/Dungeon/levelGenerator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dungeon/levelManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/Dungeon/levelManager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Renderers/renderer.py" beforeDir="false" afterPath="$PROJECT_DIR$/Renderers/renderer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/colors.py" beforeDir="false" afterPath="$PROJECT_DIR$/colors.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,7 +23,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="dev" />
+        <entry key="$PROJECT_DIR$" value="e211b8b2a7ecb2bcaef13627d0b5523a74bd2b7e" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -76,6 +72,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Resources" />
       <recent name="$PROJECT_DIR$/Dungeon" />
       <recent name="$PROJECT_DIR$/Renderers" />
     </key>
@@ -182,10 +179,10 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.levelManager" />
         <item itemvalue="Python.main (1)" />
         <item itemvalue="Python.levelGenerator" />
-        <item itemvalue="Python.levelGenerator" />
+        <item itemvalue="Python.levelManager" />
+        <item itemvalue="Python.levelManager" />
         <item itemvalue="Python.main (1)" />
       </list>
     </recent_temporary>
@@ -225,7 +222,7 @@
       <workItem from="1752922879018" duration="1916000" />
       <workItem from="1753036142805" duration="2442000" />
       <workItem from="1753079696791" duration="9743000" />
-      <workItem from="1753169175907" duration="1546000" />
+      <workItem from="1753169175907" duration="8584000" />
     </task>
     <task id="LOCAL-00001" summary="experimental | corridor generation does not work.">
       <option name="closed" value="true" />
@@ -307,7 +304,39 @@
       <option name="project" value="LOCAL" />
       <updated>1753123149812</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="new | tiles which player sees are now Bright and the tiles that the player remembers are darker color.">
+      <option name="closed" value="true" />
+      <created>1753171050015</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1753171050015</updated>
+    </task>
+    <task id="LOCAL-00012" summary="new | player can interact(close/open) with doors.">
+      <option name="closed" value="true" />
+      <created>1753184950437</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1753184950437</updated>
+    </task>
+    <task id="LOCAL-00013" summary="new | player can close/open doors.">
+      <option name="closed" value="true" />
+      <created>1753185303324</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1753185303324</updated>
+    </task>
+    <task id="LOCAL-00014" summary="new | player can close/open doors, and added Step Counter">
+      <option name="closed" value="true" />
+      <created>1753185739100</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1753185739100</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -351,7 +380,11 @@
     <MESSAGE value="experimental | improved tunnel generation feature: more tunnels and wide tunnels(bug but now a feature)." />
     <MESSAGE value="new | all scripts are in [x][y] array style" />
     <MESSAGE value="fix | all scripts are in [y][x] array style" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix | all scripts are in [y][x] array style" />
+    <MESSAGE value="new | tiles which player sees are now Bright and the tiles that the player remembers are darker color." />
+    <MESSAGE value="new | player can close/open doors." />
+    <MESSAGE value="new | player can close/open doors, and added Step Counter" />
+    <MESSAGE value="new | player can close/open doors, and added Step Counter" />
+    <option name="LAST_COMMIT_MESSAGE" value="new | player can close/open doors, and added Step Counter" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/DungeonCrawler$test.coverage" NAME="test Coverage Results" MODIFIED="1752657407509" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

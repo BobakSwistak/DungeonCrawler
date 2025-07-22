@@ -41,6 +41,7 @@ def generate_rooms():
         endPos = nearestPlace
         carve_tunnel(startPos, endPos)
 
+
 def generate_tunnels():
     for room in level.rooms:
         minDistance = 9999
@@ -55,6 +56,7 @@ def generate_tunnels():
                     nearestRoom = otherCenter
         if nearestRoom:
             carve_tunnel(roomCenter, nearestRoom)
+
 
 def carve_room(roomH=None, roomW=None, y=None, x=None):
     if roomH is None:
@@ -84,6 +86,7 @@ def carve_room(roomH=None, roomW=None, y=None, x=None):
     level.rooms.append(room)
     return room
 
+
 def carve_tunnel(startPos, endPos):
     # startPos and endPos are (y, x)
     if startPos[0] < endPos[0]:
@@ -98,6 +101,7 @@ def carve_tunnel(startPos, endPos):
     else:
         for x in range(endPos[1], startPos[1] + 1):
             level.level[endPos[0]][x] = '.'
+
 
 def generating_doors():
     for y in range(1, level.height - 1):
@@ -123,6 +127,7 @@ def generating_doors():
                             level.level[y][x] = '`'
                         else:
                             level.level[y][x] = '+'
+
 
 def clean_up():
     for y in range(1, level.height - 1):
