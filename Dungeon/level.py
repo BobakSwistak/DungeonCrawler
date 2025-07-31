@@ -23,5 +23,5 @@ open_door_chance = 0.2
 rooms = []  # list of rooms
 level = []  # list of all tiles
 
-memorized = [] # list of memorized tiles
+memorized = []  # list of memorized tiles
 visible = []  # list of visible tiles

@@ -28,7 +28,7 @@ def left_menu(stdscr, player_y, player_x, height, width):
         stdscr.addstr(1, width // 2 - len(texts.interaction_text) // 2, texts.interaction_text, curses.color_pair(1))
 
 
-def debug_log(stdscr, text):
+def debug_log(text):
     log_array.append(text)
 
 

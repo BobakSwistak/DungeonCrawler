@@ -11,7 +11,7 @@ def player_input(stdscr, player_y, player_x):
 
         level.changes = True  # Mark level as changed
         if key == ord('q'):
-            sys.exit()
+            return False
 
         elif key == ord('a'):
             level.action = True
@@ -20,7 +20,7 @@ def player_input(stdscr, player_y, player_x):
         elif key == 27:  # ESC key
             level.action = False
             level.can_move = True
-            renderer.rendering_map(stdscr, player_y, player_x)
+            renderer.renderer(stdscr, player_y, player_x)
 
         dy, dx = 0, 0
         # Handle movement keys
@@ -54,10 +54,10 @@ def player_input(stdscr, player_y, player_x):
 
                 if level.level[new_y][new_x] == "`":
                     level.level[new_y][new_x] = "+"  # Close the door
-                    menuRenderer.debug_log(stdscr, ("Door closed"))
+                    menuRenderer.debug_log("Door closed")
                 elif level.level[new_y][new_x] == "+":
                     level.level[new_y][new_x] = "`"  # Open the door
-                    menuRenderer.debug_log(stdscr, ("Door opened"))
+                    menuRenderer.debug_log("Door opened")
 
             elif level.level[new_y][new_x] in level.walkable and level.can_move:
                 player_y, player_x = new_y, new_x
@@ -66,6 +66,6 @@ def player_input(stdscr, player_y, player_x):
 
             elif level.level[new_y][new_x] == "+":
                 level.level[new_y][new_x] = "`"  # Open the door
-                menuRenderer.debug_log(stdscr, ("Door opened"))
+                menuRenderer.debug_log("Door opened")
 
         return player_y, player_x

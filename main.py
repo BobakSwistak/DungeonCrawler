@@ -14,7 +14,11 @@ def main(stdscr):
     stdscr.nodelay(True)  # Non-blocking input
     curses.noecho()  # Don't echo keypresses
     stdscr.timeout(1000)  # Input timeout (ms)
+    main_menu(stdscr)
 
+
+def main_menu(stdscr):
+    stdscr.clear()
     logoRenderer.draw_centered_logo(stdscr)
     stdscr.refresh()
 
@@ -28,16 +32,18 @@ def main(stdscr):
 
 
 def game_cycle(stdscr):
-    player_y, player_x = levelGenerator.reload_level()  # Initialize player position (y, x)
+    player_y, player_x = levelGenerator.generate_dungeon()  # Initialize player position (y, x)
 
     while True:
         if level.changes:
             level.changes = False
             stdscr.clear()
-            renderer.rendering_map(stdscr, player_y, player_x)  # Player is always centered (y, x)
+            renderer.renderer(stdscr, player_y, player_x)  # Player is always centered (y, x)
             menuRenderer.menus(stdscr, player_y, player_x)  # Draw the left menu (y, x)
             stdscr.refresh()
             result = playerInputs.player_input(stdscr, player_y, player_x)
+            if result == False:
+                main_menu(stdscr)
             player_y, player_x = result  # Update player position (y, x)
 
 

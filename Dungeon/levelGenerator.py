@@ -2,7 +2,8 @@ import random
 import Dungeon.level as level
 import Renderers.menuRenderer as menuRenderer
 
-def generate_level():
+
+def generate_dungeon():
     # Initialize level and visible arrays as [y][x]
     level.level = [["#" for _ in range(level.width)] for _ in range(level.height)]
     level.visible = [[" " for _ in range(level.width)] for _ in range(level.height)]
@@ -12,13 +13,11 @@ def generate_level():
     generate_tunnels()
     generating_doors()
     clean_up()
-
-def reload_level():
-    generate_level()
     # Spawn player in the center room
     center_y = level.height // 2 + 3
     center_x = level.width // 2 + 3
     return center_y, center_x  # (y, x)
+
 
 def generate_rooms():
     for _ in range(level.roomCount):
