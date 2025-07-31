@@ -25,10 +25,12 @@ def render_map(stdscr, player_y, player_x):
                 # Draw each tile with its corresponding color, shifted by master_offset
                 if tile == '#' or tile == '.':
                     stdscr.addstr(y, x + master_offset, tile, curses.color_pair(2))  # Wall or Floor
+                elif tile == 'h+':
+                    stdscr.addstr(y, x + master_offset, '#', curses.color_pair(2))  # Hidden Door
                 elif tile in level.doors:
                     stdscr.addstr(y, x + master_offset, "+", curses.color_pair(4))  # Door
                 elif tile == '`':
-                    stdscr.addstr(y, x + master_offset, "`", curses.color_pair(4))  # open Door
+                    stdscr.addstr(y, x + master_offset, "`", curses.color_pair(4))  # Open Door
                 else:
                     stdscr.addstr(y, x + master_offset, tile, curses.color_pair(2))  # Default
 
@@ -46,6 +48,8 @@ def render_map(stdscr, player_y, player_x):
                     tile = level.level[map_y][map_x]
                     if tile == '#' or tile == '.':
                         stdscr.addstr(y, x + master_offset, tile, curses.color_pair(1))  # Wall or Floor
+                    if tile == 'h+':
+                        stdscr.addstr(y, x + master_offset, '#', curses.color_pair(1))
                     elif tile in level.doors:
                         stdscr.addstr(y, x + master_offset, "+", curses.color_pair(3))  # Door
                     elif tile == '`':

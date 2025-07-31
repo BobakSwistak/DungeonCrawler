@@ -117,6 +117,8 @@ def generating_doors():
                         else:
                             if random.random() < level.trapped_door_chance:
                                 level.level[y][x] = 't+'
+                            elif random.random() < level.hidden_door_chance:
+                                level.level[y][x] = 'h+'
                             else:
                                 level.level[y][x] = '+'
             if level.level[y][x] == '#':

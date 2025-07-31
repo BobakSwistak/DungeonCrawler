@@ -1,7 +1,7 @@
 import curses
 import Renderers.renderer as renderer
 from Dungeon import level
-from Player import player_hp
+from Player import player_hp, player
 from Resources import texts
 
 menu_offset = renderer.master_offset + level.view_width + 20
@@ -29,9 +29,11 @@ def left_menu(stdscr, player_y, player_x, height, width):
 
 
 def text_help(stdscr):
-    if level.action:
+    if player.action:
         stdscr.addstr(1, width // 2 - len(texts.interaction_text) // 2, texts.interaction_text, curses.color_pair(1))
-    elif level.rest:
+    if player.inspect:
+        stdscr.addstr(1, width // 2 - len(texts.inspection_text) // 2, texts.inspection_text, curses.color_pair(1))
+    elif player.rest:
         stdscr.addstr(1, width // 2 - len(texts.rest_text) // 2, texts.rest_text, curses.color_pair(1))
         stdscr.refresh()  # Refresh the screen to display the prompt
 
@@ -77,38 +79,49 @@ def hp_menu(stdscr):
     stdscr.addstr(0, offset + 4, f"/{player_hp.max_hp}", curses.color_pair(1))  # Display max HP
 
 
+# Python
 def right_menu(stdscr):
-    global log_array
-    """aka debug log"""
-    global menu_offset
+    global log_array  # Global variable to store log entries
+    global menu_offset  # Offset for the menu position
 
-    if len(log_array) >= height - 2:  # Check if log exceeds height
-        log_array.pop(0)
-        right_menu(stdscr)
-    lines = 0
-    # Create a new list to store the processed log entries
-    new_log_array = []
+    # Ensure the log does not exceed the height of the screen
+    if len(log_array) >= height - 2:
+        log_array.pop(0)  # Remove the oldest log entry to make space
+
+    lines = 0  # Counter for lines in the menu
+    new_log_array = []  # Temporary list to store processed log entries
+
+    # Validate and format each log entry
     for i in range(len(log_array)):
+        # Ensure each log entry is a list or tuple with at least two elements
         if not isinstance(log_array[i], (list, tuple)) or len(log_array[i]) < 2:
-            log_array[i] = [log_array[i], 1]  # Ensure log entries are lists with a color pair
+            log_array[i] = [log_array[i], 1]  # Default to color pair 1 if invalid
 
-    for i in range(len(log_array)):  # Loop through log entries
-        if len(log_array[i][0]) > width - menu_offset:  # Check if entry exceeds width
-            parts = log_array[i][0].split(" ")  # Split entry into words
-            text = ''  # Current line text
-            for part in parts:  # Loop through words
-                if len(text + part + " ") > width - menu_offset:  # Check line length
-                    new_log_array.append(text.strip())  # Add the current line to the new list
+        # Ensure the second element (color pair) is an integer
+        if not isinstance(log_array[i][1], int):
+            log_array[i][1] = 1  # Default to color pair 1
+
+    # Process log entries to fit within the screen width
+    for i in range(len(log_array)):
+        if len(log_array[i][0]) > width - menu_offset:  # Check if the log entry exceeds the width
+            parts = log_array[i][0].split(" ")  # Split the log entry into words
+            text = ''  # Temporary variable to build lines
+            for part in parts:
+                # Check if adding the next word exceeds the width
+                if len(text + part + " ") > width - menu_offset:
+                    new_log_array.append([text.strip(), log_array[i][1]])  # Add the current line to the new list
                     text = part + " "  # Start a new line
                 else:
-                    text += part + " "  # Add word to the current line
-            new_log_array.append(text.strip())
+                    text += part + " "  # Add the word to the current line
+            new_log_array.append([text.strip(), log_array[i][1]])  # Add the last line
         else:
             new_log_array.append(log_array[i])  # Add short entries as-is
 
-    # Update log_array with the processed lines
+    # Update the global log array with the processed entries
     log_array = new_log_array
 
-    # Display the log entries
+    # Display the log entries on the screen
     for i in range(len(log_array)):
         stdscr.addstr(i + height_offset, menu_offset, log_array[i][0], curses.color_pair(log_array[i][1]))
+    # Update log_array with the processed lines
+    log_array = new_log_array

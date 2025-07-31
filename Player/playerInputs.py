@@ -1,7 +1,7 @@
 import curses
 from Dungeon import levelGenerator, level
 from Renderers import renderer, menuRenderer
-from Player import player_hp
+from Player import player_hp, player
 from Resources import texts
 import sys
 
@@ -9,20 +9,24 @@ import sys
 def player_input(stdscr, player_y, player_x):
     key = stdscr.getch()
 
-    if key is not None:
+    if key != None:
 
         level.changes = True  # Mark level as changed
         if key == ord('q'):
             sys.exit(0)
             # return False # Exit to the main menu, for the future.
 
-        elif key == ord('a'):
-            level.action = True
-            level.can_move = False
+        elif key == ord('a') and player.can_move:
+            player.action = True
+            player.can_move = False
+
+        elif key == ord('i'):
+            player.inspect = True
+            player.can_move = False
 
         elif key == 27:  # ESC key
-            level.action = False
-            level.can_move = True
+            player.action = False
+            player.can_move = True
             renderer.renderer(stdscr, player_y, player_x)
 
         dy, dx = 0, 0
@@ -51,9 +55,9 @@ def player_input(stdscr, player_y, player_x):
         new_y = player_y + dy
         new_x = player_x + dx
         if 0 <= new_y < level.height and 0 <= new_x < level.width:
-            if level.action and (dx != 0 or dy != 0):
-                level.action = False
-                level.can_move = True
+            if player.action and (dx != 0 or dy != 0):
+                player.action = False
+                player.can_move = True
 
                 if level.level[new_y][new_x] == "`":
                     level.level[new_y][new_x] = "+"  # Close the door
@@ -67,13 +71,20 @@ def player_input(stdscr, player_y, player_x):
                         player_hp.damage_player(2, 5)
                         level.level[new_y][new_x] = "`"  # Open the door
                         menuRenderer.debug_log("Door was trapped")
-
-            elif level.level[new_y][new_x] in level.walkable and level.can_move:
+            elif player.inspect and (dx != 0 or dy != 0):
+                player.inspect = False
+                player.can_move = True
+                if level.level[new_y][new_x] == "h+":
+                    level.level[new_y][new_x] = "+"
+                    menuRenderer.debug_log("you found something")
+                else:
+                    menuRenderer.debug_log("there is nothing unusual to see here")
+            elif level.level[new_y][new_x] in level.walkable and player.can_move:
                 player_y, player_x = new_y, new_x
                 if dx != 0 or dy != 0:
                     level.step_counter += 1
 
-            elif level.level[new_y][new_x] in level.doors and level.can_move:
+            elif level.level[new_y][new_x] in level.doors and player.can_move:
                 if level.level[new_y][new_x] == "+":
                     level.level[new_y][new_x] = "`"  # Open the door
                     menuRenderer.debug_log("Door opened")
