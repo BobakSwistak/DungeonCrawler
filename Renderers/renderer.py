@@ -9,8 +9,8 @@ def renderer(stdscr, player_y, player_x):
     offset_y = max(0, min(player_y - level.view_height // 2, level.height - level.view_height))
     offset_x = max(0, min(player_x - level.view_width // 2, level.width - level.view_width))
     render_map(stdscr, player_y, player_x)
-    if level.fog_of_war:
-        render_fog_of_war(stdscr, player_y, player_x)
+    # if level.fog_of_war:
+    render_fog_of_war(stdscr, player_y, player_x)
 
 
 def render_map(stdscr, player_y, player_x):
@@ -24,11 +24,13 @@ def render_map(stdscr, player_y, player_x):
                 tile = level.level[map_y][map_x]
                 # Draw each tile with its corresponding color, shifted by master_offset
                 if tile == '#' or tile == '.':
-                    stdscr.addstr(y, x + master_offset, tile, curses.color_pair(5))  # Wall or Floor
-                elif tile == '+' or tile == '`':
-                    stdscr.addstr(y, x + master_offset, tile, curses.color_pair(7))  # Door
+                    stdscr.addstr(y, x + master_offset, tile, curses.color_pair(2))  # Wall or Floor
+                elif tile in level.doors:
+                    stdscr.addstr(y, x + master_offset, "+", curses.color_pair(4))  # Door
+                elif tile == '`':
+                    stdscr.addstr(y, x + master_offset, "`", curses.color_pair(4))  # open Door
                 else:
-                    stdscr.addstr(y, x + master_offset, tile, curses.color_pair(5))  # Default
+                    stdscr.addstr(y, x + master_offset, tile, curses.color_pair(2))  # Default
 
     # Calculate player's position in the viewport
     screen_y = player_y - offset_y
@@ -44,13 +46,15 @@ def render_map(stdscr, player_y, player_x):
                     tile = level.level[map_y][map_x]
                     if tile == '#' or tile == '.':
                         stdscr.addstr(y, x + master_offset, tile, curses.color_pair(1))  # Wall or Floor
-                    elif tile == '+' or tile == '`':
-                        stdscr.addstr(y, x + master_offset, tile, curses.color_pair(2))  # Door
+                    elif tile in level.doors:
+                        stdscr.addstr(y, x + master_offset, "+", curses.color_pair(3))  # Door
+                    elif tile == '`':
+                        stdscr.addstr(y, x + master_offset, "`", curses.color_pair(3))  # open Door
                     else:
                         stdscr.addstr(y, x + master_offset, tile, curses.color_pair(1))  # Default
 
     if 0 <= screen_y < level.view_height and 0 <= screen_x < level.view_width:
-        stdscr.addstr(screen_y, screen_x + master_offset, '@', curses.color_pair(3))
+        stdscr.addstr(screen_y, screen_x + master_offset, '@', curses.color_pair(5))
 
 
 def render_fog_of_war(stdscr, player_y, player_x):

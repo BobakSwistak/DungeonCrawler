@@ -1,7 +1,7 @@
 import curses
-import Dungeon.level as level
 import Renderers.renderer as renderer
-from Dungeon.level import height
+from Dungeon import level
+from Player import player_hp
 from Resources import texts
 
 menu_offset = renderer.master_offset + level.view_width + 20
@@ -15,21 +15,66 @@ def menus(stdscr, player_y, player_x):
     height, width = stdscr.getmaxyx()  # Get the current terminal size
     left_menu(stdscr, player_y, player_x, height, width)
     right_menu(stdscr)
+    hp_menu(stdscr)
+    text_help(stdscr)
 
 
 def left_menu(stdscr, player_y, player_x, height, width):
     # Display player position (y, x)
-    stdscr.addstr(0, 0, f"Player Position: ({player_y}, {player_x})")
-    stdscr.addstr(1, 0, f"Steps Taken: {level.step_counter}")
+    # stdscr.addstr(0, 0, f"Player Position: ({player_y}, {player_x})")
+    # stdscr.addstr(1, 0, f"Steps Taken: {level.step_counter}")
 
     # Draw author text at the bottom right
     stdscr.addstr(height - 1, width - 2 - len(texts.autor_text), texts.autor_text, curses.color_pair(1))
+
+
+def text_help(stdscr):
     if level.action:
         stdscr.addstr(1, width // 2 - len(texts.interaction_text) // 2, texts.interaction_text, curses.color_pair(1))
+    elif level.rest:
+        stdscr.addstr(1, width // 2 - len(texts.rest_text) // 2, texts.rest_text, curses.color_pair(1))
+        stdscr.refresh()  # Refresh the screen to display the prompt
+
+        curses.echo()  # Enable echo to show user input on the screen
+        input_x = width // 2 - len(texts.rest_text) // 2 + len(texts.rest_text)  # Position input after the prompt
+        stdscr.refresh()  # Ensure the input prompt is visible
+
+        user_input = ""
+        while True:
+            key = stdscr.getch()
+            if key == ord('\n'):  # Enter key
+                break
+            elif key != -1:  # Valid key press
+                user_input += chr(key)
+                stdscr.refresh()
+
+        curses.noecho()  # Disable echo after capturing input
+        level.rest = False
+        level.can_move = True
+        return user_input
 
 
 def debug_log(text):
     log_array.append(text)
+
+
+def hp_menu(stdscr):
+    stdscr.addstr(0, 0, f"Hp: ")
+    hp_percentage = player_hp.hp / player_hp.max_hp  # Calculate the health percentage
+    hp_color = 0  # Default color pair for health
+    if hp_percentage == 1:
+        hp_color = 1
+    elif hp_percentage > 0.75:
+        hp_color = 103  # Green
+    elif hp_percentage > 0.5:
+        hp_color = 102  # Yellow
+    elif hp_percentage > 0.25:
+        hp_color = 101  # orange
+    else:
+        hp_color = 100  # Red
+    stdscr.addstr(0, 4, str(player_hp.hp), curses.color_pair(hp_color))
+    offset = len(str(player_hp.hp))
+    stdscr.addstr(0, offset + 4, f"/{player_hp.max_hp}", curses.color_pair(1))  # Display max HP
 
 
 def right_menu(stdscr):

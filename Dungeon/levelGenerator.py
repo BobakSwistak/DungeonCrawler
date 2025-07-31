@@ -115,7 +115,10 @@ def generating_doors():
                         if random.random() < level.open_door_chance:
                             level.level[y][x] = '`'
                         else:
-                            level.level[y][x] = '+'
+                            if random.random() < level.trapped_door_chance:
+                                level.level[y][x] = 't+'
+                            else:
+                                level.level[y][x] = '+'
             if level.level[y][x] == '#':
                 if ((level.level[y - 1][x] == '.' and level.level[y + 1][x] == '.' and
                      level.level[y][x - 1] == '#' and level.level[y][x + 1] == '#') or

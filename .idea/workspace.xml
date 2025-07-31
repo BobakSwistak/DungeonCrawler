@@ -4,14 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="23dfc354-9bb7-4c61-9667-04865449b8c6" name="Changes" comment="new | added debug_log">
+    <list default="true" id="23dfc354-9bb7-4c61-9667-04865449b8c6" name="Changes" comment="fix | improved style of code.">
+      <change afterPath="$PROJECT_DIR$/Player/player_hp.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Dungeon/level.py" beforeDir="false" afterPath="$PROJECT_DIR$/Dungeon/level.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Dungeon/levelGenerator.py" beforeDir="false" afterPath="$PROJECT_DIR$/Dungeon/levelGenerator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dungeon/levelManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/Dungeon/levelManager.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Renderers/menuRenderer.py" beforeDir="false" afterPath="$PROJECT_DIR$/Renderers/menuRenderer.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Renderers/renderer.py" beforeDir="false" afterPath="$PROJECT_DIR$/Renderers/renderer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/colors.py" beforeDir="false" afterPath="$PROJECT_DIR$/Resources/colors.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/texts.py" beforeDir="false" afterPath="$PROJECT_DIR$/Resources/texts.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/playerInputs.py" beforeDir="false" afterPath="$PROJECT_DIR$/playerInputs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/playerInputs.py" beforeDir="false" afterPath="$PROJECT_DIR$/Player/playerInputs.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,6 +81,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Player" />
       <recent name="$PROJECT_DIR$/Resources" />
       <recent name="$PROJECT_DIR$/Dungeon" />
       <recent name="$PROJECT_DIR$/Renderers" />
@@ -178,8 +183,8 @@
     </configuration>
     <list>
       <item itemvalue="Python.main" />
-      <item itemvalue="Python.levelManager" />
       <item itemvalue="Python.levelGenerator" />
+      <item itemvalue="Python.levelManager" />
       <item itemvalue="Python.main (1)" />
     </list>
     <recent_temporary>
@@ -228,7 +233,9 @@
       <workItem from="1753036142805" duration="2442000" />
       <workItem from="1753079696791" duration="9743000" />
       <workItem from="1753169175907" duration="19773000" />
-      <workItem from="1753946901826" duration="1051000" />
+      <workItem from="1753946901826" duration="3305000" />
+      <workItem from="1753958081000" duration="244000" />
+      <workItem from="1753958334813" duration="5422000" />
     </task>
     <task id="LOCAL-00001" summary="experimental | corridor generation does not work.">
       <option name="closed" value="true" />
@@ -374,7 +381,15 @@
       <option name="project" value="LOCAL" />
       <updated>1753205672750</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="fix | improved style of code.">
+      <option name="closed" value="true" />
+      <created>1753948027519</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1753948027519</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -424,7 +439,8 @@
     <MESSAGE value="new | player can close/open doors, and added Step Counter" />
     <MESSAGE value="fix | improved performance." />
     <MESSAGE value="new | added debug_log" />
-    <option name="LAST_COMMIT_MESSAGE" value="new | added debug_log" />
+    <MESSAGE value="fix | improved style of code." />
+    <option name="LAST_COMMIT_MESSAGE" value="fix | improved style of code." />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/DungeonCrawler$test.coverage" NAME="test Coverage Results" MODIFIED="1752657407509" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

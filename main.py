@@ -1,12 +1,13 @@
 import curses
 from Dungeon import levelGenerator, level
 from Renderers import renderer, menuRenderer, logoRenderer
-import playerInputs
+from Player import playerInputs, player_hp
 from Resources import colors
 import sys
 
 
 def main(stdscr):
+    player_hp.hp_init()
     colors.colors(stdscr)  # Initialize colors
     stdscr.bkgd(' ', colors.curses.color_pair(1))  # Set default background
 
@@ -14,10 +15,10 @@ def main(stdscr):
     stdscr.nodelay(True)  # Non-blocking input
     curses.noecho()  # Don't echo keypresses
     stdscr.timeout(1000)  # Input timeout (ms)
-    main_menu(stdscr)
+    main_screen(stdscr)
 
 
-def main_menu(stdscr):
+def main_screen(stdscr):
     stdscr.clear()
     logoRenderer.draw_centered_logo(stdscr)
     stdscr.refresh()
@@ -35,16 +36,38 @@ def game_cycle(stdscr):
     player_y, player_x = levelGenerator.generate_dungeon()  # Initialize player position (y, x)
 
     while True:
+        stdscr.clear()
+        renderer.renderer(stdscr, player_y, player_x)
+        menuRenderer.menus(stdscr, player_y, player_x)
+        stdscr.refresh()
         if level.changes:
             level.changes = False
-            stdscr.clear()
-            renderer.renderer(stdscr, player_y, player_x)  # Player is always centered (y, x)
-            menuRenderer.menus(stdscr, player_y, player_x)  # Draw the left menu (y, x)
-            stdscr.refresh()
             result = playerInputs.player_input(stdscr, player_y, player_x)
-            if result == False:
-                main_menu(stdscr)
+            if result is False:
+                main_screen(stdscr)
+                return
+
             player_y, player_x = result  # Update player position (y, x)
+            player_hp.hp_update()
+
+            # Only clear and refresh the screen when necessary
+            stdscr.clear()
+            renderer.renderer(stdscr, player_y, player_x)
+            menuRenderer.menus(stdscr, player_y, player_x)
+            stdscr.refresh()
+
+        if player_hp.hp <= 0:  # Handle player death
+            death_screen(stdscr)
+            return
+
+
+def death_screen(stdscr):
+    stdscr.clear()
+    stdscr.addstr(10, 10, "game over")
+    while True:
+        key = stdscr.getch()
+        if key == ord('q'):
+            sys.exit()
 
 
 curses.wrapper(main)
