@@ -1,7 +1,7 @@
 import curses
 from Dungeon import levelGenerator, level
 from Renderers import renderer, menuRenderer
-from Player import player_hp, player
+from Player import playerHp, player, playerActions
 from Resources import texts
 import sys
 
@@ -10,7 +10,6 @@ def player_input(stdscr, player_y, player_x):
     key = stdscr.getch()
 
     if key != None:
-
         level.changes = True  # Mark level as changed
         if key == ord('q'):
             sys.exit(0)
@@ -58,19 +57,11 @@ def player_input(stdscr, player_y, player_x):
             if player.action and (dx != 0 or dy != 0):
                 player.action = False
                 player.can_move = True
-
                 if level.level[new_y][new_x] == "`":
-                    level.level[new_y][new_x] = "+"  # Close the door
-                    menuRenderer.debug_log("Door closed")
+                    playerActions.close_door(new_y, new_x)
                 elif level.level[new_y][new_x] in level.doors:
-                    if level.level[new_y][new_x] == "+":
-                        level.level[new_y][new_x] = "`"  # Open the door
-                        menuRenderer.debug_log("Door opened")
+                    playerActions.open_door(new_y, new_x)
 
-                    if level.level[new_y][new_x] == "t+":
-                        player_hp.damage_player(2, 5)
-                        level.level[new_y][new_x] = "`"  # Open the door
-                        menuRenderer.debug_log("Door was trapped")
             elif player.inspect and (dx != 0 or dy != 0):
                 player.inspect = False
                 player.can_move = True
@@ -79,18 +70,13 @@ def player_input(stdscr, player_y, player_x):
                     menuRenderer.debug_log("you found something")
                 else:
                     menuRenderer.debug_log("there is nothing unusual to see here")
+
             elif level.level[new_y][new_x] in level.walkable and player.can_move:
                 player_y, player_x = new_y, new_x
                 if dx != 0 or dy != 0:
                     level.step_counter += 1
 
             elif level.level[new_y][new_x] in level.doors and player.can_move:
-                if level.level[new_y][new_x] == "+":
-                    level.level[new_y][new_x] = "`"  # Open the door
-                    menuRenderer.debug_log("Door opened")
-                elif level.level[new_y][new_x] == "t+":
-                    player_hp.damage_player(2, 5)
-                    level.level[new_y][new_x] = "`"  # Open the door
-                    menuRenderer.debug_log("Door was trapped")
+                playerActions.open_door(new_y, new_x)
 
-        return player_y, player_x
+    return player_y, player_x

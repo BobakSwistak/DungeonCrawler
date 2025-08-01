@@ -10,17 +10,17 @@ view_width = 80
 view_height = 40
 
 walkable = ['.', '`']  # walkable tiles
-unwalkable = ['#', ' ', '+', 'h+']  # unwalkable tiles
+unwalkable = ['#', ' ']  # unwalkable tiles
 
-doors = ['+', 't+']
+doors = ['+', 't+', 'h+']
 
 roomSize = (7, 17)
 roomCount = 300
 
-random_door_chance = 0.1
+random_door_chance = 0.3
 open_door_chance = 0.2
-trapped_door_chance = 0.1
-hidden_door_chance = 0.2
+trapped_door_chance = 0.2
+hidden_door_chance = 0.1
 
 rooms = []  # list of rooms
 level = []  # list of all tiles

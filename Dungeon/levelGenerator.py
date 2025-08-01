@@ -4,6 +4,7 @@ import Renderers.menuRenderer as menuRenderer
 
 
 def generate_dungeon():
+    level.unwalkable.append(level.doors)
     # Initialize level and visible arrays as [y][x]
     level.level = [["#" for _ in range(level.width)] for _ in range(level.height)]
     level.visible = [[" " for _ in range(level.width)] for _ in range(level.height)]

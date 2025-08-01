@@ -1,13 +1,13 @@
 import curses
 from Dungeon import levelGenerator, level
 from Renderers import renderer, menuRenderer, logoRenderer
-from Player import playerInputs, player_hp
+from Player import playerInputs, playerHp
 from Resources import colors
 import sys
 
 
 def main(stdscr):
-    player_hp.hp_init()
+    playerHp.hp_init()
     colors.colors(stdscr)  # Initialize colors
     stdscr.bkgd(' ', colors.curses.color_pair(1))  # Set default background
 
@@ -48,7 +48,7 @@ def game_cycle(stdscr):
                 return
 
             player_y, player_x = result  # Update player position (y, x)
-            player_hp.hp_update()
+            playerHp.hp_update()
 
             # Only clear and refresh the screen when necessary
             stdscr.clear()
@@ -56,7 +56,7 @@ def game_cycle(stdscr):
             menuRenderer.menus(stdscr, player_y, player_x)
             stdscr.refresh()
 
-        if player_hp.hp <= 0:  # Handle player death
+        if playerHp.hp <= 0:  # Handle player death
             death_screen(stdscr)
             return
 

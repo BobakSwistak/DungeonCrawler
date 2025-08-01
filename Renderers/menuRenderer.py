@@ -1,7 +1,7 @@
 import curses
 import Renderers.renderer as renderer
 from Dungeon import level
-from Player import player_hp, player
+from Player import playerHp, player
 from Resources import texts
 
 menu_offset = renderer.master_offset + level.view_width + 20
@@ -62,7 +62,7 @@ def debug_log(text):
 
 def hp_menu(stdscr):
     stdscr.addstr(0, 0, f"Hp: ")
-    hp_percentage = player_hp.hp / player_hp.max_hp  # Calculate the health percentage
+    hp_percentage = playerHp.hp / playerHp.max_hp  # Calculate the health percentage
     hp_color = 0  # Default color pair for health
     if hp_percentage == 1:
         hp_color = 1
@@ -74,9 +74,9 @@ def hp_menu(stdscr):
         hp_color = 101  # orange
     else:
         hp_color = 100  # Red
-    stdscr.addstr(0, 4, str(player_hp.hp), curses.color_pair(hp_color))
-    offset = len(str(player_hp.hp))
-    stdscr.addstr(0, offset + 4, f"/{player_hp.max_hp}", curses.color_pair(1))  # Display max HP
+    stdscr.addstr(0, 4, str(playerHp.hp), curses.color_pair(hp_color))
+    offset = len(str(playerHp.hp))
+    stdscr.addstr(0, offset + 4, f"/{playerHp.max_hp}", curses.color_pair(1))  # Display max HP
 
 
 # Python
