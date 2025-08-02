@@ -103,6 +103,17 @@ def carve_tunnel(startPos, endPos):
             level.level[endPos[0]][x] = '.'
 
 
+def carve_door(y, x):
+    if random.random() < level.open_door_chance:
+        level.level[y][x] = '`'
+    elif random.random() < level.trapped_door_chance:
+        level.level[y][x] = 't+'
+    elif random.random() < level.hidden_door_chance:
+        level.level[y][x] = 'h+'
+    else:
+        level.level[y][x] = '+'
+
+
 def generating_doors():
     for y in range(1, level.height - 1):
         for x in range(1, level.width - 1):
@@ -113,25 +124,14 @@ def generating_doors():
                          level.level[y - 1][x] == '.' and level.level[y + 1][x] == '.')):
                     if (level.level[y + 1][x + 1] == '.' or level.level[y + 1][x - 1] == '.' or
                             level.level[y - 1][x + 1] == '.' or level.level[y - 1][x - 1] == '.'):
-                        if random.random() < level.open_door_chance:
-                            level.level[y][x] = '`'
-                        else:
-                            if random.random() < level.trapped_door_chance:
-                                level.level[y][x] = 't+'
-                            elif random.random() < level.hidden_door_chance:
-                                level.level[y][x] = 'h+'
-                            else:
-                                level.level[y][x] = '+'
+                        carve_door(y, x)
             if level.level[y][x] == '#':
                 if ((level.level[y - 1][x] == '.' and level.level[y + 1][x] == '.' and
                      level.level[y][x - 1] == '#' and level.level[y][x + 1] == '#') or
                         (level.level[y][x - 1] == '.' and level.level[y][x + 1] == '.' and
                          level.level[y - 1][x] == '#' and level.level[y + 1][x] == '#')):
                     if random.random() < level.random_door_chance:
-                        if random.random() < level.open_door_chance:
-                            level.level[y][x] = '`'
-                        else:
-                            level.level[y][x] = '+'
+                        carve_door(y, x)
 
 
 def clean_up():

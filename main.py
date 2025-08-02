@@ -57,17 +57,25 @@ def game_cycle(stdscr):
             stdscr.refresh()
 
         if playerHp.hp <= 0:  # Handle player death
-            death_screen(stdscr)
+            death(stdscr)
             return
 
 
-def death_screen(stdscr):
+def death(stdscr):
     stdscr.clear()
-    stdscr.addstr(10, 10, "game over")
+    logoRenderer.death_screen(stdscr)
     while True:
         key = stdscr.getch()
         if key == ord('q'):
             sys.exit()
+        elif key != -1:  # Wait for any key press
+            playerHp.hp_init()
+            menuRenderer.clear_log()
+
+            game_cycle(stdscr)
+            return
+
+
 
 
 curses.wrapper(main)

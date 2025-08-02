@@ -60,6 +60,11 @@ def debug_log(text):
     log_array.append(text)
 
 
+def clear_log():
+    global log_array
+    log_array = []  # Clear the log array
+
+
 def hp_menu(stdscr):
     stdscr.addstr(0, 0, f"Hp: ")
     hp_percentage = playerHp.hp / playerHp.max_hp  # Calculate the health percentage
