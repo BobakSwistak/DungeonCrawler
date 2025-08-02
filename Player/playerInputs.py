@@ -14,14 +14,17 @@ def player_input(stdscr, player_y, player_x):
             sys.exit(0)
             # return False # Exit to the main menu, for the future.
 
-        elif key == ord('a') and player.can_move:
+        elif key == ord('a') and player.can_move and not player.menu_opened:
             player.action = True
             player.can_move = False
 
-        elif key == ord('i'):
+        elif key == ord('i') and not player.menu_opened:
             player.inspect = True
             player.can_move = False
 
+        elif key == ord('e'):
+            player.can_move = not player.can_move
+            player.menu_opened = not player.menu_opened
         elif key == 27:  # ESC key
             player.action = False  # Disable action mode
             player.inspect = False  # Disable inspect mode

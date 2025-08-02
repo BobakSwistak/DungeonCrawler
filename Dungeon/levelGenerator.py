@@ -1,7 +1,5 @@
 import random
 import Dungeon.level as level
-import Renderers.menuRenderer as menuRenderer
-
 
 def generate_dungeon():
     level.unwalkable.append(level.doors)

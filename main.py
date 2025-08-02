@@ -1,7 +1,7 @@
 import curses
 from Dungeon import levelGenerator, level
 from Renderers import renderer, menuRenderer, logoRenderer
-from Player import playerInputs, playerHp
+from Player import playerInputs, playerHp, player
 from Resources import colors
 import sys
 
@@ -37,7 +37,8 @@ def game_cycle(stdscr):
 
     while True:
         stdscr.clear()
-        renderer.renderer(stdscr, player_y, player_x)
+        if player.menu_opened is False:
+            renderer.renderer(stdscr, player_y, player_x)
         menuRenderer.menus(stdscr, player_y, player_x)
         stdscr.refresh()
         if level.changes:
@@ -74,8 +75,6 @@ def death(stdscr):
 
             game_cycle(stdscr)
             return
-
-
 
 
 curses.wrapper(main)
