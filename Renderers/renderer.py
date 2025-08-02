@@ -9,8 +9,8 @@ def renderer(stdscr, player_y, player_x):
     offset_y = max(0, min(player_y - level.view_height // 2, level.height - level.view_height))
     offset_x = max(0, min(player_x - level.view_width // 2, level.width - level.view_width))
     render_map(stdscr, player_y, player_x)
-    # if level.fog_of_war:
-    render_fog_of_war(stdscr, player_y, player_x)
+    if level.fog_of_war:
+        render_fog_of_war(stdscr, player_y, player_x)
 
 
 def render_map(stdscr, player_y, player_x):

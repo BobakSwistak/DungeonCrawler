@@ -33,6 +33,7 @@ def player_input(stdscr, player_y, player_x):
         new_x = player_x + dx
 
         if 0 <= new_y < level.height and 0 <= new_x < level.width and player.can_move:
+            playerActions.passive_inspect(new_y, new_x)
             if level.level[new_y][new_x] in level.walkable:  # Check if the tile is walkable
                 player_y, player_x = new_y, new_x  # Update player position
                 if dx != 0 or dy != 0:
@@ -60,11 +61,7 @@ def player_action(stdscr, player_y, player_x, dy, dx):
             player.can_move = True
     elif player.inspect:
         if dx != 0 or dy != 0:
-            if level.level[new_y][new_x] == "h+":
-                level.level[new_y][new_x] = "+"
-                menuRenderer.debug_log("you found something")
-            else:
-                menuRenderer.debug_log("there is nothing unusual to see here")
+            playerActions.inspect_tile(new_y, new_x)
             player.inspect = False
             player.can_move = True
 

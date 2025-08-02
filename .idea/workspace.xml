@@ -4,15 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="23dfc354-9bb7-4c61-9667-04865449b8c6" name="Changes" comment="fix | improved door mechanics.">
+    <list default="true" id="23dfc354-9bb7-4c61-9667-04865449b8c6" name="Changes" comment="new | added passive inspect chance.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dungeon/level.py" beforeDir="false" afterPath="$PROJECT_DIR$/Dungeon/level.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dungeon/levelGenerator.py" beforeDir="false" afterPath="$PROJECT_DIR$/Dungeon/levelGenerator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Player/playerInputs.py" beforeDir="false" afterPath="$PROJECT_DIR$/Player/playerInputs.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Renderers/logoRenderer.py" beforeDir="false" afterPath="$PROJECT_DIR$/Renderers/logoRenderer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Renderers/menuRenderer.py" beforeDir="false" afterPath="$PROJECT_DIR$/Renderers/menuRenderer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resources/texts.py" beforeDir="false" afterPath="$PROJECT_DIR$/Resources/texts.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Renderers/renderer.py" beforeDir="false" afterPath="$PROJECT_DIR$/Renderers/renderer.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -234,7 +228,7 @@
       <workItem from="1753958081000" duration="244000" />
       <workItem from="1753958334813" duration="8603000" />
       <workItem from="1754034843859" duration="82000" />
-      <workItem from="1754037363405" duration="6371000" />
+      <workItem from="1754037363405" duration="8184000" />
     </task>
     <task id="LOCAL-00001" summary="experimental | corridor generation does not work.">
       <option name="closed" value="true" />
@@ -420,7 +414,23 @@
       <option name="project" value="LOCAL" />
       <updated>1754038763191</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="fix | improved playerInputs and added death screen.">
+      <option name="closed" value="true" />
+      <created>1754123883006</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1754123883006</updated>
+    </task>
+    <task id="LOCAL-00025" summary="new | added passive inspect chance.">
+      <option name="closed" value="true" />
+      <created>1754124632543</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1754124632543</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -446,7 +456,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="text">
+                    <value>
+                      <list>
+                        <option value="." />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -475,7 +497,10 @@
     <MESSAGE value="new | added hidden doors and inspect button." />
     <MESSAGE value="new | added hidden doors and inspect button." />
     <MESSAGE value="fix | improved door mechanics." />
-    <option name="LAST_COMMIT_MESSAGE" value="fix | improved door mechanics." />
+    <MESSAGE value="new | added death screen and improved playerInputs." />
+    <MESSAGE value="new | added passive inspect chance." />
+    <MESSAGE value="new | added death screen and improved playerInputs." />
+    <option name="LAST_COMMIT_MESSAGE" value="new | added death screen and improved playerInputs." />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/DungeonCrawler$test.coverage" NAME="test Coverage Results" MODIFIED="1752657407509" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
