@@ -2,7 +2,7 @@ import curses
 import Renderers.renderer as renderer
 from Dungeon import level
 from Player import playerHp, player
-from Resources import texts
+from Resources.texts import Texts
 
 menu_offset = renderer.master_offset + level.view_width + 20
 height_offset = 1
@@ -25,20 +25,20 @@ def left_menu(stdscr, player_y, player_x, height, width):
     # stdscr.addstr(1, 0, f"Steps Taken: {level.step_counter}")
 
     # Draw author text at the bottom right
-    stdscr.addstr(height - 1, width - 2 - len(texts.autor_text), texts.autor_text, curses.color_pair(1))
+    stdscr.addstr(height - 1, width - 2 - len(Texts.autor_text), Texts.autor_text, curses.color_pair(1))
 
 
 def text_help(stdscr):
     if player.action:
-        stdscr.addstr(1, width // 2 - len(texts.interaction_text) // 2, texts.interaction_text, curses.color_pair(1))
+        stdscr.addstr(1, width // 2 - len(Texts.interaction_text) // 2, Texts.interaction_text, curses.color_pair(1))
     if player.inspect:
-        stdscr.addstr(1, width // 2 - len(texts.inspection_text) // 2, texts.inspection_text, curses.color_pair(1))
+        stdscr.addstr(1, width // 2 - len(Texts.inspection_text) // 2, Texts.inspection_text, curses.color_pair(1))
     elif player.rest:
-        stdscr.addstr(1, width // 2 - len(texts.rest_text) // 2, texts.rest_text, curses.color_pair(1))
+        stdscr.addstr(1, width // 2 - len(Texts.rest_text) // 2, Texts.rest_text, curses.color_pair(1))
         stdscr.refresh()  # Refresh the screen to display the prompt
 
         curses.echo()  # Enable echo to show user input on the screen
-        input_x = width // 2 - len(texts.rest_text) // 2 + len(texts.rest_text)  # Position input after the prompt
+        input_x = width // 2 - len(Texts.rest_text) // 2 + len(Texts.rest_text)  # Position input after the prompt
         stdscr.refresh()  # Ensure the input prompt is visible
 
         user_input = ""

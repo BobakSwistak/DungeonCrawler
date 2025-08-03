@@ -1,5 +1,5 @@
 import curses
-from Resources import texts
+from Resources.texts import Texts
 
 logo = [
     "    ___                                        ___                   _",
@@ -31,7 +31,7 @@ def draw_centered_logo(stdscr):
         # Draw each line of the logo at the correct (y, x) position
         stdscr.addstr(start_y + i, start_x, line, curses.color_pair(1))
     height, width = stdscr.getmaxyx()
-    stdscr.addstr(height - 3, width // 2 - len(texts.intro_text) // 2, texts.intro_text, curses.color_pair(1))
+    stdscr.addstr(height - 3, width // 2 - len(Texts.intro_text) // 2, Texts.intro_text, curses.color_pair(1))
 
 
 def death_screen(stdscr):
@@ -46,4 +46,4 @@ def death_screen(stdscr):
         # Draw each line of the logo at the correct (y, x) position
         stdscr.addstr(start_y + i, start_x, line, curses.color_pair(1))
     height, width = stdscr.getmaxyx()
-    stdscr.addstr(height - 3, width // 2 - len(texts.death_text) // 2, texts.death_text, curses.color_pair(1))
+    stdscr.addstr(height - 3, width // 2 - len(Texts.death_text) // 2, Texts.death_text, curses.color_pair(1))

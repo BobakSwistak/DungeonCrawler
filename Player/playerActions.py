@@ -1,5 +1,4 @@
 import random
-
 from Dungeon import level, levelManager
 from Player import player, playerHp
 from Renderers import menuRenderer
