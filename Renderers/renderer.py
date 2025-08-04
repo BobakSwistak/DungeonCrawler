@@ -1,4 +1,6 @@
 from Dungeon import level, levelManager
+from Enemies import enemies, enemyController, enemyManager
+from Player import player
 import curses
 
 master_offset = 30  # Reserve 30 columns on the left for a menu
@@ -11,6 +13,19 @@ def renderer(stdscr, player_y, player_x):
     render_map(stdscr, player_y, player_x)
     if level.fog_of_war:
         render_fog_of_war(stdscr, player_y, player_x)
+
+    # Render enemies
+    for enemy in enemies.enemies_list:
+        if level.visible[enemy.enemy_pos[0]][enemy.enemy_pos[1]]:
+            enemy_y, enemy_x = enemy.enemy_pos
+            if offset_y <= enemy_y < offset_y + level.view_height and offset_x <= enemy_x < offset_x + level.view_width:
+                screen_y = enemy_y - offset_y
+                screen_x = enemy_x - offset_x
+                stdscr.addstr(screen_y, screen_x + master_offset, enemy.enemy_symbol,
+                              curses.color_pair(enemy.color))
+
+
+#     todo enemies are not moving
 
 
 def render_map(stdscr, player_y, player_x):
@@ -66,7 +81,8 @@ def render_fog_of_war(stdscr, player_y, player_x):
     #     for x in range(3):
     #         if 0 <= screen_y + y < level.view_height and 0 <= screen_x + x < level.view_width:
     #             level.visible[player_y + y - 1][player_x + x - 1] = ''
-    levelManager.calculate_field_of_view(player_y, player_x, 20)
+    fov = levelManager.calculate_field_of_view(player_y, player_x, 20)
+    levelManager.player_fov(player_y, player_x, fov)
     for y in range(level.view_height):
         for x in range(level.view_width):
             map_y = offset_y + y  # Map coordinate for current row (y)

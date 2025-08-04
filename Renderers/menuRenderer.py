@@ -21,8 +21,8 @@ def menus(stdscr, player_y, player_x):
 
 def left_menu(stdscr, player_y, player_x, height, width):
     # Display player position (y, x)
-    # stdscr.addstr(0, 0, f"Player Position: ({player_y}, {player_x})")
-    # stdscr.addstr(1, 0, f"Steps Taken: {level.step_counter}")
+    stdscr.addstr(0, 0, f"Player Position: ({player_y}, {player_x})")
+    stdscr.addstr(1, 0, f"Steps Taken: {level.step_counter}")
 
     # Draw author text at the bottom right
     stdscr.addstr(height - 1, width - 2 - len(Texts.autor_text), Texts.autor_text, curses.color_pair(1))

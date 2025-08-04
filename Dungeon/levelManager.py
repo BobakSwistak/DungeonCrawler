@@ -35,6 +35,10 @@ def calculate_field_of_view(player_y, player_x, radius):
                         local_visible[ly][lx] = True
                         if level.level[ly][lx] in level.unwalkable or level.level[ly][lx] in level.doors:
                             break
+    return local_visible
+
+
+def player_fov(player_y, player_x, local_visible):
     for y in range(level.height):
         for x in range(level.width):
             if local_visible[y][x]:

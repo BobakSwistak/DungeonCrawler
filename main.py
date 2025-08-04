@@ -33,28 +33,28 @@ def main_screen(stdscr):
 
 
 def game_cycle(stdscr):
-    player_y, player_x = levelGenerator.generate_dungeon()  # Initialize player position (y, x)
+    player.player_y, player.player_x = levelGenerator.generate_dungeon()  # Initialize player position (y, x)
 
     while True:
         stdscr.clear()
         if player.menu_opened is False:
-            renderer.renderer(stdscr, player_y, player_x)
-        menuRenderer.menus(stdscr, player_y, player_x)
+            renderer.renderer(stdscr, player.player_y, player.player_x)
+        menuRenderer.menus(stdscr, player.player_y, player.player_x)
         stdscr.refresh()
         if level.changes:
             level.changes = False
-            result = playerInputs.player_input(stdscr, player_y, player_x)
+            result = playerInputs.player_input(stdscr, player.player_y, player.player_x)
             if result is False:
                 main_screen(stdscr)
                 return
 
-            player_y, player_x = result  # Update player position (y, x)
+            player.player_y, player.player_x = result  # Update player position (y, x)
             playerHp.hp_update()
 
             # Only clear and refresh the screen when necessary
             stdscr.clear()
-            renderer.renderer(stdscr, player_y, player_x)
-            menuRenderer.menus(stdscr, player_y, player_x)
+            renderer.renderer(stdscr, player.player_y, player.player_x)
+            menuRenderer.menus(stdscr, player.player_y, player.player_x)
             stdscr.refresh()
 
         if playerHp.hp <= 0:  # Handle player death
