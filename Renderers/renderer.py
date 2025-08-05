@@ -1,18 +1,18 @@
 from Dungeon import level, levelManager
 from Enemies import enemies, enemyController, enemyManager
 from Player import player
-import curses
+from Resources import colors
 
 master_offset = 30  # Reserve 30 columns on the left for a menu
 
 
-def renderer(stdscr, player_y, player_x):
+def renderer(terminal, player_y, player_x):
     global offset_y, offset_x
     offset_y = max(0, min(player_y - level.view_height // 2, level.height - level.view_height))
     offset_x = max(0, min(player_x - level.view_width // 2, level.width - level.view_width))
-    render_map(stdscr, player_y, player_x)
+    render_map(terminal, player_y, player_x)
     if level.fog_of_war:
-        render_fog_of_war(stdscr, player_y, player_x)
+        render_fog_of_war(terminal, player_y, player_x)
 
     # Render enemies
     for enemy in enemies.enemies_list:
@@ -21,14 +21,13 @@ def renderer(stdscr, player_y, player_x):
             if offset_y <= enemy_y < offset_y + level.view_height and offset_x <= enemy_x < offset_x + level.view_width:
                 screen_y = enemy_y - offset_y
                 screen_x = enemy_x - offset_x
-                stdscr.addstr(screen_y, screen_x + master_offset, enemy.enemy_symbol,
-                              curses.color_pair(enemy.color))
+                terminal.printf(screen_x + master_offset, screen_y, enemy.enemy_symbol, enemy.color)
 
 
 #     todo enemies are not moving
 
 
-def render_map(stdscr, player_y, player_x):
+def render_map(terminal, player_y, player_x):
     # Loop through each cell in the viewport
     for y in range(level.view_height):
         for x in range(level.view_width):
@@ -39,15 +38,20 @@ def render_map(stdscr, player_y, player_x):
                 tile = level.level[map_y][map_x]
                 # Draw each tile with its corresponding color, shifted by master_offset
                 if tile == '#' or tile == '.':
-                    stdscr.addstr(y, x + master_offset, tile, curses.color_pair(2))  # Wall or Floor
+                    terminal.color(colors.GREY)
+                    terminal.printf(x + master_offset, y, tile)  # Wall or Floor
                 elif tile == 'h+':
-                    stdscr.addstr(y, x + master_offset, '#', curses.color_pair(2))  # Hidden Door
+                    terminal.color(colors.GREY)
+                    terminal.printf(x + master_offset, y, '#')  # Hidden Door
                 elif tile in level.doors:
-                    stdscr.addstr(y, x + master_offset, "+", curses.color_pair(4))  # Door
+                    terminal.color(colors.DARK_BROWN)
+                    terminal.printf(x + master_offset, y, "+")  # Door
                 elif tile == '`':
-                    stdscr.addstr(y, x + master_offset, "`", curses.color_pair(4))  # Open Door
+                    terminal.color(colors.DARK_BROWN)
+                    terminal.printf(x + master_offset, y, "`")  # Open Door
                 else:
-                    stdscr.addstr(y, x + master_offset, tile, curses.color_pair(2))  # Default
+                    terminal.color(colors.GREY)
+                    terminal.printf(x + master_offset, y, tile)  # Default
 
     # Calculate player's position in the viewport
     screen_y = player_y - offset_y
@@ -62,21 +66,27 @@ def render_map(stdscr, player_y, player_x):
                 if level.visible[map_y][map_x]:
                     tile = level.level[map_y][map_x]
                     if tile == '#' or tile == '.':
-                        stdscr.addstr(y, x + master_offset, tile, curses.color_pair(1))  # Wall or Floor
+                        terminal.color(colors.WHITE)
+                        terminal.printf(x + master_offset, y, tile)  # Wall or Floor
                     if tile == 'h+':
-                        stdscr.addstr(y, x + master_offset, '#', curses.color_pair(1))
+                        terminal.color(colors.WHITE)
+                        terminal.printf(x + master_offset, y, '#')
                     elif tile in level.doors:
-                        stdscr.addstr(y, x + master_offset, "+", curses.color_pair(3))  # Door
+                        terminal.color(colors.BROWN)
+                        terminal.printf(x + master_offset, y, "+")  # Door
                     elif tile == '`':
-                        stdscr.addstr(y, x + master_offset, "`", curses.color_pair(3))  # open Door
+                        terminal.color(colors.BROWN)
+                        terminal.printf(x + master_offset, y, "`")  # open Door
                     else:
-                        stdscr.addstr(y, x + master_offset, tile, curses.color_pair(1))  # Default
+                        terminal.color(colors.WHITE)
+                        terminal.printf(x + master_offset, y, tile)  # Default
 
     if 0 <= screen_y < level.view_height and 0 <= screen_x < level.view_width:
-        stdscr.addstr(screen_y, screen_x + master_offset, '@', curses.color_pair(5))
+        terminal.color(colors.CYAN)
+        terminal.printf(screen_x + master_offset, screen_y, '@')
 
 
-def render_fog_of_war(stdscr, player_y, player_x):
+def render_fog_of_war(terminal, player_y, player_x):
     # for y in range(3):
     #     for x in range(3):
     #         if 0 <= screen_y + y < level.view_height and 0 <= screen_x + x < level.view_width:
@@ -88,4 +98,5 @@ def render_fog_of_war(stdscr, player_y, player_x):
             map_y = offset_y + y  # Map coordinate for current row (y)
             map_x = offset_x + x  # Map coordinate for current column (x)
             if 0 <= map_y < level.height and 0 <= map_x < level.width:
-                stdscr.addstr(y, x + master_offset, level.memorized[map_y][map_x], curses.color_pair(1))
+                terminal.color(colors.WHITE)
+                terminal.printf(x + master_offset, y, level.memorized[map_y][map_x])

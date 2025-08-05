@@ -1,4 +1,5 @@
 from Enemies import enemyController
+from Resources import colors
 
 enemies_list = []
 
@@ -8,7 +9,7 @@ class Skeleton(enemyController.EnemyController):
         super().__init__()  # Properly initialize the parent class
         self.name = "Skeleton"
         self.enemy_symbol = 'S'
-        self.color = 1
+        self.color = colors.WHITE
         self.speed = 1
         self.hp = 10
         self.perception = 1

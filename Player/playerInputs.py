@@ -1,37 +1,37 @@
-import curses
+import bearlibterminal as terminal
 from Dungeon import levelGenerator, level
 from Renderers import renderer, menuRenderer
 from Player import playerHp, player, playerActions
 import sys
 
 
-def player_input(stdscr, player_y, player_x):
-    key = stdscr.getch()
+def player_input(terminal, player_y, player_x):
+    key = terminal.read()
 
     if key is not None:
         level.changes = True  # Mark level as changed
-        if key == ord('q'):
+        if key == terminal.TK_Q:
             sys.exit(0)
             # return False # Exit to the main menu, for the future.
 
-        elif key == ord('a') and player.can_move and not player.menu_opened:
+        elif key == terminal.TK_A and player.can_move and not player.menu_opened:
             player.action = True
             player.can_move = False
 
-        elif key == ord('i') and not player.menu_opened:
+        elif key == terminal.TK_I and not player.menu_opened:
             player.inspect = True
             player.can_move = False
 
-        elif key == ord('e'):
+        elif key == terminal.TK_E:
             player.can_move = not player.can_move
             player.menu_opened = not player.menu_opened
         elif key == 27:  # ESC key
             player.action = False  # Disable action mode
             player.inspect = False  # Disable inspect mode
             player.can_move = True  # Allow movement again
-            renderer.renderer(stdscr, player_y, player_x)
+            renderer.renderer(terminal, player_y, player_x)
 
-        dy, dx = directiom_input(stdscr, key)
+        dy, dx = directiom_input(terminal, key)
         new_y = player_y + dy
         new_x = player_x + dx
 
@@ -45,12 +45,12 @@ def player_input(stdscr, player_y, player_x):
                 playerActions.open_door(new_y, new_x)  # Handle door interaction
 
         if player.action or player.inspect:
-            player_action(stdscr, player_y, player_x, dy, dx)
+            player_action(terminal, player_y, player_x, dy, dx)
 
     return player_y, player_x
 
 
-def player_action(stdscr, player_y, player_x, dy, dx):
+def player_action(terminal, player_y, player_x, dy, dx):
     new_y = player_y + dy
     new_x = player_x + dx
 
@@ -69,27 +69,27 @@ def player_action(stdscr, player_y, player_x, dy, dx):
             player.can_move = True
 
 
-def directiom_input(stdscr, key=None):
+def directiom_input(terminal, key=None):
     dy, dx = 0, 0
     # Handle movement keys
-    if key == curses.KEY_UP or key == ord('8'):  # Up arrow or numpad 8
+    if key == terminal.TK_UP or key == ord('8'):  # Up arrow or numpad 8
         dy = -1
-    elif key == curses.KEY_DOWN or key == ord('2'):  # Down arrow or numpad 2
+    elif key == terminal.TK_DOWN or key == ord('2'):  # Down arrow or numpad 2
         dy = 1
-    elif key == curses.KEY_LEFT or key == ord('4'):  # Left arrow or numpad 4
+    elif key == terminal.TK_LEFT or key == ord('4'):  # Left arrow or numpad 4
         dx = -1
-    elif key == curses.KEY_RIGHT or key == ord('6'):  # Right arrow or numpad 6
+    elif key == terminal.TK_RIGHT or key == ord('6'):  # Right arrow or numpad 6
         dx = 1
-    elif key == curses.KEY_HOME or key == ord('7'):  # Home key or numpad 7
+    elif key == terminal.TK_HOME or key == ord('7'):  # Home key or numpad 7
         dy = -1
         dx = -1
-    elif key == curses.KEY_END or key == ord('1'):  # End key or numpad 1
+    elif key == terminal.TK_END or key == ord('1'):  # End key or numpad 1
         dy = 1
         dx = -1
-    elif key == curses.KEY_PPAGE or key == ord('9'):  # Page Up or numpad 9
+    elif key == terminal.TK_PAGEUP or key == ord('9'):  # Page Up or numpad 9
         dy = -1
         dx = 1
-    elif key == curses.KEY_NPAGE or key == ord('3'):  # Page Down or numpad 3
+    elif key == terminal.TK_PAGEDOWN or key == ord('3'):  # Page Down or numpad 3
         dy = 1
         dx = 1
     return dy, dx
