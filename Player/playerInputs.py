@@ -3,54 +3,63 @@ from Dungeon import levelGenerator, level
 from Renderers import renderer, menuRenderer
 from Player import playerHp, player, playerActions
 import sys
+import time
+
+last_move_time = 0
+move_delay = 0.05
 
 
-def player_input(terminal, player_y, player_x):
-    key = terminal.read()
+def player_input(terminal, key, player_y, player_x):
+    global last_move_time, move_delay
+    if key != terminal.TK_CLOSE:
+        current_time = time.time()
+        level.changes = True
 
-    if key is not None:
-        level.changes = True  # Mark level as changed
         if key == terminal.TK_Q:
             sys.exit(0)
-            # return False # Exit to the main menu, for the future.
 
-        elif key == terminal.TK_A and player.can_move and not player.menu_opened:
-            player.action = True
-            player.can_move = False
+        if current_time - last_move_time >= move_delay:
+            last_move_time = current_time
 
-        elif key == terminal.TK_I and not player.menu_opened:
-            player.inspect = True
-            player.can_move = False
+            if key == terminal.TK_A and player.can_move and not player.menu_opened:
+                player.action = True
+                player.can_move = False
 
-        elif key == terminal.TK_E:
-            player.can_move = not player.can_move
-            player.menu_opened = not player.menu_opened
-        elif key == 27:  # ESC key
-            player.action = False  # Disable action mode
-            player.inspect = False  # Disable inspect mode
-            player.can_move = True  # Allow movement again
-            renderer.renderer(terminal, player_y, player_x)
+            elif key == terminal.TK_I and not player.menu_opened:
+                player.inspect = True
+                player.can_move = False
 
-        dy, dx = directiom_input(terminal, key)
-        new_y = player_y + dy
-        new_x = player_x + dx
+            elif key == terminal.TK_E:
+                player.can_move = not player.can_move
+                player.menu_opened = not player.menu_opened
 
-        if 0 <= new_y < level.height and 0 <= new_x < level.width and player.can_move:
-            playerActions.passive_inspect(new_y, new_x)
-            if level.level[new_y][new_x] in level.walkable:  # Check if the tile is walkable
-                player_y, player_x = new_y, new_x  # Update player position
-                if dx != 0 or dy != 0:
-                    level.step_counter += 1  # Increment step counter for movement
-            elif level.level[new_y][new_x] in level.doors:
-                playerActions.open_door(new_y, new_x)  # Handle door interaction
+            elif key == 27 or key == terminal.TK_ESCAPE:
+                player.action = False
+                player.inspect = False
+                player.can_move = True
+                renderer.renderer(terminal, player_y, player_x)
 
-        if player.action or player.inspect:
-            player_action(terminal, player_y, player_x, dy, dx)
+            dy, dx = direction_input(terminal, key)
+            new_y = player_y + dy
+            new_x = player_x + dx
+
+            if 0 <= new_y < level.height and 0 <= new_x < level.width and player.can_move:
+                playerActions.passive_inspect(new_y, new_x)
+                if level.level[new_y][new_x] in level.walkable:
+                    player_y, player_x = new_y, new_x
+                    if dx != 0 or dy != 0:
+                        level.step_counter += 1
+                elif level.level[new_y][new_x] in level.doors:
+                    playerActions.open_door(new_y, new_x)
+
+            if player.action or player.inspect:
+                player_action(player_y, player_x, dy, dx)
 
     return player_y, player_x
 
 
-def player_action(terminal, player_y, player_x, dy, dx):
+def player_action(player_y, player_x, dy, dx):
+    global can_press
     new_y = player_y + dy
     new_x = player_x + dx
 
@@ -69,7 +78,8 @@ def player_action(terminal, player_y, player_x, dy, dx):
             player.can_move = True
 
 
-def directiom_input(terminal, key=None):
+def direction_input(terminal, key=None):
+    global can_press
     dy, dx = 0, 0
     # Handle movement keys
     if key == terminal.TK_UP or key == ord('8'):  # Up arrow or numpad 8

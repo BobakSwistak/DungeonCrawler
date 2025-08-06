@@ -4,15 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="23dfc354-9bb7-4c61-9667-04865449b8c6" name="Changes" comment="experimental | enemy pathfinding">
-      <change afterPath="$PROJECT_DIR$/Resources/sizes.py" afterDir="false" />
+    <list default="true" id="23dfc354-9bb7-4c61-9667-04865449b8c6" name="Changes" comment="new | changed TUI from curses to bearlibterminal.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Enemies/enemies.py" beforeDir="false" afterPath="$PROJECT_DIR$/Enemies/enemies.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Player/playerInputs.py" beforeDir="false" afterPath="$PROJECT_DIR$/Player/playerInputs.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Renderers/logoRenderer.py" beforeDir="false" afterPath="$PROJECT_DIR$/Renderers/logoRenderer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Renderers/menuRenderer.py" beforeDir="false" afterPath="$PROJECT_DIR$/Renderers/menuRenderer.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Renderers/renderer.py" beforeDir="false" afterPath="$PROJECT_DIR$/Renderers/renderer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resources/colors.py" beforeDir="false" afterPath="$PROJECT_DIR$/Resources/colors.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/sizes.py" beforeDir="false" afterPath="$PROJECT_DIR$/Resources/sizes.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -194,7 +190,8 @@
       <workItem from="1754211192447" duration="580000" />
       <workItem from="1754218757469" duration="3242000" />
       <workItem from="1754325337080" duration="2064000" />
-      <workItem from="1754416612145" duration="2605000" />
+      <workItem from="1754416612145" duration="2695000" />
+      <workItem from="1754460762429" duration="2911000" />
     </task>
     <task id="LOCAL-00001" summary="experimental | corridor generation does not work.">
       <option name="closed" value="true" />
@@ -420,7 +417,15 @@
       <option name="project" value="LOCAL" />
       <updated>1754211145121</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="new | changed TUI from curses to bearlibterminal.">
+      <option name="closed" value="true" />
+      <created>1754419317891</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1754419317891</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -453,7 +458,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="experimental | corridor generation partly works with help of copilot." />
     <MESSAGE value="experimental |  pt. 2 corridor generation partly works with help of copilot." />
     <MESSAGE value="experimental | room and corridor generation finally works." />
     <MESSAGE value="new | fixed gitignore" />
@@ -478,19 +482,20 @@
     <MESSAGE value="new | added passive inspect chance." />
     <MESSAGE value="fix | fixed code." />
     <MESSAGE value="experimental | enemy pathfinding" />
-    <option name="LAST_COMMIT_MESSAGE" value="experimental | enemy pathfinding" />
+    <MESSAGE value="new | changed TUI from curses to bearlibterminal." />
+    <option name="LAST_COMMIT_MESSAGE" value="new | changed TUI from curses to bearlibterminal." />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/DungeonCrawler$test.coverage" NAME="test Coverage Results" MODIFIED="1754206534591" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/123" />
     <SUITE FILE_PATH="coverage/DungeonCrawler$renderer.coverage" NAME="renderer Coverage Results" MODIFIED="1754412839359" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Renderers" />
     <SUITE FILE_PATH="coverage/DungeonCrawler$imports.coverage" NAME="imports Coverage Results" MODIFIED="1751187675423" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/DungeonCrawler$main.coverage" NAME="main Coverage Results" MODIFIED="1754419250896" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/DungeonCrawler$main.coverage" NAME="main Coverage Results" MODIFIED="1754464285363" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/DungeonCrawler$levelGenerator.coverage" NAME="levelGenerator Coverage Results" MODIFIED="1752688037666" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Dungeon" />
     <SUITE FILE_PATH="coverage/DungeonCrawler$levelManager.coverage" NAME="levelManager Coverage Results" MODIFIED="1754040512240" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Dungeon" />
     <SUITE FILE_PATH="coverage/DungeonCrawler$level.coverage" NAME="level Coverage Results" MODIFIED="1754210943643" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Dungeon" />
     <SUITE FILE_PATH="coverage/DungeonCrawler$enemyManager.coverage" NAME="enemyManager Coverage Results" MODIFIED="1754220111539" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Enemies" />
     <SUITE FILE_PATH="coverage/DungeonCrawler$menu.coverage" NAME="menu Coverage Results" MODIFIED="1751188592425" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/DungeonCrawler$main__1_.coverage" NAME="main (1) Coverage Results" MODIFIED="1751189775197" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/python_projects/games/snake" />
-    <SUITE FILE_PATH="coverage/DungeonCrawler$123.coverage" NAME="123 Coverage Results" MODIFIED="1754418089168" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/DungeonCrawler$123.coverage" NAME="123 Coverage Results" MODIFIED="1754463425210" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

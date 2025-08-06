@@ -2,8 +2,9 @@ from bearlibterminal import terminal
 from Dungeon import levelGenerator, level
 from Renderers import renderer, menuRenderer, logoRenderer
 from Player import playerInputs, playerHp, player
-from Resources import colors
+from Resources import colors, sizes
 import sys
+import time
 
 
 def main():
@@ -31,31 +32,36 @@ def main_screen(terminal):
 
 
 def game_cycle(terminal):
-    player.player_y, player.player_x = levelGenerator.generate_dungeon()  # Initialize player position (y, x)
+    player.player_y, player.player_x = levelGenerator.generate_dungeon()
 
     while True:
-        terminal.clear()
+        time.sleep(0.005)
         if player.menu_opened is False:
             renderer.renderer(terminal, player.player_y, player.player_x)
         menuRenderer.menus(terminal, player.player_y, player.player_x)
         terminal.refresh()
-        if level.changes:
-            level.changes = False
-            result = playerInputs.player_input(terminal, player.player_y, player.player_x)
+
+        # Handle input every frame (non-blocking)
+        if terminal.has_input():
+            key = terminal.read()
+            sizes.flush_input()
+            result = playerInputs.player_input(terminal, key, player.player_y, player.player_x)
+
             if result is False:
                 main_screen(terminal)
                 return
-
-            player.player_y, player.player_x = result  # Update player position (y, x)
+            player.player_y, player.player_x = result
             playerHp.hp_update()
 
-            # Only clear and refresh the screen when necessary
+        # Only redraw if needed
+        if level.changes:
             terminal.clear()
             renderer.renderer(terminal, player.player_y, player.player_x)
             menuRenderer.menus(terminal, player.player_y, player.player_x)
             terminal.refresh()
+            level.changes = False
 
-        if playerHp.hp <= 0:  # Handle player death
+        if playerHp.hp <= 0:
             death(terminal)
             return
 

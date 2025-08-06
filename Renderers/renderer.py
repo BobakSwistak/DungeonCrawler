@@ -74,7 +74,7 @@ def render_map(terminal, player_y, player_x):
                     elif tile in level.doors:
                         terminal.color(colors.BROWN)
                         terminal.printf(x + master_offset, y, "+")  # Door
-                    elif tile == '`':
+                    elif tile == "`":
                         terminal.color(colors.BROWN)
                         terminal.printf(x + master_offset, y, "`")  # open Door
                     else:
