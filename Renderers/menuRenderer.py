@@ -3,7 +3,7 @@ from Dungeon import level
 from Player import playerHp, player
 from Resources import texts, sizes, colors
 
-menu_offset = renderer.master_offset + level.view_width + 20
+menu_offset = renderer.master_offset + level.view_width + 5
 height_offset = 1
 log_array = []
 height, width = 0, 0
@@ -16,9 +16,6 @@ def menus(terminal, player_y, player_x):
     right_menu(terminal)
     hp_menu(terminal)
     text_help(terminal)
-    if not log_array:
-        debug_log(["Test log entry for right menu", colors.WHITE])
-
 
 def left_menu(terminal, player_y, player_x, height, width):
     # Display player position (y, x)

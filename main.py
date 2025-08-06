@@ -2,7 +2,7 @@ from bearlibterminal import terminal
 from Dungeon import levelGenerator, level
 from Renderers import renderer, menuRenderer, logoRenderer
 from Player import playerInputs, playerHp, player
-from Resources import colors, sizes
+from Resources import sizes
 import sys
 import time
 
@@ -10,7 +10,7 @@ import time
 def main():
     playerHp.hp_init()
     terminal.open()
-    terminal.set("window: size=140x50, cellsize=auto, title='BearLibTerminal Example'; font: default")
+    terminal.set("window: size=160x50, cellsize=auto, title='Dungeon Crawler'; font: default")
 
     terminal.refresh()
 
@@ -35,6 +35,7 @@ def game_cycle(terminal):
     player.player_y, player.player_x = levelGenerator.generate_dungeon()
 
     while True:
+        terminal.clear()
         time.sleep(0.005)
         if player.menu_opened is False:
             renderer.renderer(terminal, player.player_y, player.player_x)

@@ -16,12 +16,16 @@ def player_input(terminal, key, player_y, player_x):
         level.changes = True
 
         if key == terminal.TK_Q:
-            sys.exit(0)
+            sys.exit()
 
         if current_time - last_move_time >= move_delay:
             last_move_time = current_time
 
-            if key == terminal.TK_A and player.can_move and not player.menu_opened:
+            if key == terminal.TK_F1:
+                player.can_move = False
+                player.menu_opened = False
+
+            elif key == terminal.TK_A and player.can_move and not player.menu_opened:
                 player.action = True
                 player.can_move = False
 
@@ -79,27 +83,26 @@ def player_action(player_y, player_x, dy, dx):
 
 
 def direction_input(terminal, key=None):
-    global can_press
     dy, dx = 0, 0
     # Handle movement keys
-    if key == terminal.TK_UP or key == ord('8'):  # Up arrow or numpad 8
+    if key in (terminal.TK_UP, ord('8'), terminal.TK_KP_8):  # Up arrow or numpad 8
         dy = -1
-    elif key == terminal.TK_DOWN or key == ord('2'):  # Down arrow or numpad 2
+    elif key in (terminal.TK_DOWN, ord('2'), terminal.TK_KP_2):  # Down arrow or numpad 2
         dy = 1
-    elif key == terminal.TK_LEFT or key == ord('4'):  # Left arrow or numpad 4
+    elif key in (terminal.TK_LEFT, ord('4'), terminal.TK_KP_4):  # Left arrow or numpad 4
         dx = -1
-    elif key == terminal.TK_RIGHT or key == ord('6'):  # Right arrow or numpad 6
+    elif key in (terminal.TK_RIGHT, ord('6'), terminal.TK_KP_6):  # Right arrow or numpad 6
         dx = 1
-    elif key == terminal.TK_HOME or key == ord('7'):  # Home key or numpad 7
+    elif key in (terminal.TK_HOME, ord('7'), terminal.TK_KP_7):  # Home key or numpad 7
         dy = -1
         dx = -1
-    elif key == terminal.TK_END or key == ord('1'):  # End key or numpad 1
+    elif key in (terminal.TK_END, ord('1'), terminal.TK_KP_1):  # End key or numpad 1
         dy = 1
         dx = -1
-    elif key == terminal.TK_PAGEUP or key == ord('9'):  # Page Up or numpad 9
+    elif key in (terminal.TK_PAGEUP, ord('9'), terminal.TK_KP_9):  # Page Up or numpad 9
         dy = -1
         dx = 1
-    elif key == terminal.TK_PAGEDOWN or key == ord('3'):  # Page Down or numpad 3
+    elif key in (terminal.TK_PAGEDOWN, ord('3'), terminal.TK_KP_3):  # Page Down or numpad 3
         dy = 1
         dx = 1
     return dy, dx
