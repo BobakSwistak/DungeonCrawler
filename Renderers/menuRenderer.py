@@ -17,11 +17,12 @@ def menus(terminal, player_y, player_x):
     hp_menu(terminal)
     text_help(terminal)
 
+
 def left_menu(terminal, player_y, player_x, height, width):
     # Display player position (y, x)
-    terminal.color(colors.WHITE)
-    terminal.printf(0, 0, f"Player Position: ({player_y}, {player_x})")
-    terminal.printf(0, 1, f"Steps Taken: {level.step_counter}")
+    # terminal.color(colors.WHITE)
+    # terminal.printf(0, 0, f"Player Position: ({player_y}, {player_x})")
+    # terminal.printf(0, 1, f"Steps Taken: {level.step_counter}")
 
     # Draw author text at the bottom right
     terminal.printf(width - 2 - len(texts.Texts.autor_text), height - 1, texts.Texts.autor_text)

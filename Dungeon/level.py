@@ -18,9 +18,9 @@ roomSize = (7, 17)
 roomCount = 300
 
 random_door_chance = 0.3
-open_door_chance = 2
-trapped_door_chance = 0
-hidden_door_chance = 0
+open_door_chance = 0.2
+trapped_door_chance = 0.1
+hidden_door_chance = 0.2
 
 rooms = []  # list of rooms
 level = []  # list of all tiles

@@ -15,14 +15,14 @@ def renderer(terminal, player_y, player_x):
         render_fog_of_war(terminal, player_y, player_x)
 
     # Render enemies
-    for enemy in enemies.enemies_list:
-        if level.visible[enemy.enemy_pos[0]][enemy.enemy_pos[1]]:
-            enemy_y, enemy_x = enemy.enemy_pos
-            if offset_y <= enemy_y < offset_y + level.view_height and offset_x <= enemy_x < offset_x + level.view_width:
-                screen_y = enemy_y - offset_y
-                screen_x = enemy_x - offset_x
-                terminal.printf(screen_x + master_offset, screen_y, enemy.enemy_symbol, enemy.color)
-
+    # for enemy in enemies.enemies_list:
+    #     if level.visible[enemy.enemy_pos[0]][enemy.enemy_pos[1]]:
+    #         enemy_y, enemy_x = enemy.enemy_pos
+    #         if offset_y <= enemy_y < offset_y + level.view_height and offset_x <= enemy_x < offset_x + level.view_width:
+    #             screen_y = enemy_y - offset_y
+    #             screen_x = enemy_x - offset_x
+    #             terminal.printf(screen_x + master_offset, screen_y, enemy.enemy_symbol, enemy.color)
+    #
 
 #     todo enemies are not moving
 

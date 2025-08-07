@@ -16,7 +16,7 @@ def generate_dungeon():
     # Spawn player in the center room
     center_y = level.height // 2 + 3
     center_x = level.width // 2 + 3
-    enemyManager.generate_enemy("Skeleton")
+    #enemyManager.generate_enemy("Skeleton")
     return center_y, center_x  # (y, x)
 
 
