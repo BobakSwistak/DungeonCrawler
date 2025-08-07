@@ -1,4 +1,5 @@
-from Resources import texts, colors, sizes
+from Resources import texts, colors
+import services
 
 logo = [
     "    ___                                        ___                   _",
@@ -19,7 +20,7 @@ death = [
 
 
 def draw_centered_logo(terminal):
-    screen_height, screen_width = sizes.get_screen_size(terminal)
+    screen_height, screen_width = services.get_screen_size(terminal)
     logo_height = len(logo)
     logo_width = max(len(line) for line in logo)
 
@@ -35,7 +36,7 @@ def draw_centered_logo(terminal):
 
 
 def death_screen(terminal):
-    screen_height, screen_width = sizes.get_screen_size(terminal)
+    screen_height, screen_width = services.get_screen_size(terminal)
     death_height = len(death)
     death_width = max(len(line) for line in death)
     # Calculate top-left corner for centering (y, x)
@@ -46,6 +47,6 @@ def death_screen(terminal):
         # Draw each line of the logo at the correct (y, x) position
         terminal.color(colors.WHITE)
         terminal.printf(start_y + i, start_x, line)
-    height, width = sizes.get_screen_size(terminal)
+    height, width = services.get_screen_size(terminal)
     terminal.color(colors.WHITE)
     terminal.printf(height - 3, width // 2 - len(texts.Texts.death_text) // 2, texts.Texts.death_text)

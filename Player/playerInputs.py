@@ -2,6 +2,7 @@ import bearlibterminal as terminal
 from Dungeon import levelGenerator, level
 from Renderers import renderer, menuRenderer
 from Player import playerHp, player, playerActions
+from Resources import font
 import sys
 import time
 
@@ -17,13 +18,21 @@ def player_input(terminal, key, player_y, player_x):
 
         if key == terminal.TK_Q:
             sys.exit()
+        if terminal.state(terminal.TK_CONTROL):
+            if key in (ord('+'), terminal.TK_KP_PLUS):
+                font.font_size += 1
+            elif key in (ord('-'), terminal.TK_KP_MINUS):
+                font.font_size -= 1
+
 
         if current_time - last_move_time >= move_delay:
             last_move_time = current_time
 
             if key == terminal.TK_F1:
-                player.can_move = False
-                player.menu_opened = False
+                player.can_move = not player.can_move
+                player.menu_opened = not player.menu_opened
+                menuRenderer.control_menu_toggle = not menuRenderer.control_menu_toggle
+
 
             elif key == terminal.TK_A and player.can_move and not player.menu_opened:
                 player.action = True
@@ -41,7 +50,10 @@ def player_input(terminal, key, player_y, player_x):
                 player.action = False
                 player.inspect = False
                 player.can_move = True
+                player.menu_opened = False
+                menuRenderer.control_menu_toggle = False
                 renderer.renderer(terminal, player_y, player_x)
+
 
             dy, dx = direction_input(terminal, key)
             new_y = player_y + dy

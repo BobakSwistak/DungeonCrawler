@@ -5,3 +5,14 @@ class Texts:
     inspection_text = "choose a direction which you want to inspect"
     rest_text = "write how much turns you want to rest or write * to rest until full regeneration: "
     autor_text = "by Bobak Świstak"
+    F1_text = "Press F1 for controls info"
+    controls_text = [
+        "Controls:",
+        "Numpad or arrows to move",
+        "home, end, pgup, pgdown to move diagonally",
+        "Esc to close any menu or cancel action",
+        "ctrl+/ctrl- to increase/decrese tile size ",
+        "i to inspect Tile",
+        "a to Interact with Tile",
+        "q to Exit"
+    ]

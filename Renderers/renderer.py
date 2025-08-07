@@ -10,7 +10,8 @@ def renderer(terminal, player_y, player_x):
     global offset_y, offset_x
     offset_y = max(0, min(player_y - level.view_height // 2, level.height - level.view_height))
     offset_x = max(0, min(player_x - level.view_width // 2, level.width - level.view_width))
-    render_map(terminal, player_y, player_x)
+    if not player.menu_opened:
+        render_map(terminal, player_y, player_x)
     if level.fog_of_war:
         render_fog_of_war(terminal, player_y, player_x)
 
@@ -23,6 +24,7 @@ def renderer(terminal, player_y, player_x):
     #             screen_x = enemy_x - offset_x
     #             terminal.printf(screen_x + master_offset, screen_y, enemy.enemy_symbol, enemy.color)
     #
+
 
 #     todo enemies are not moving
 

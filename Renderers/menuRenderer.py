@@ -1,21 +1,25 @@
 import Renderers.renderer as renderer
+import services
 from Dungeon import level
 from Player import playerHp, player
-from Resources import texts, sizes, colors
+from Resources import texts, colors
 
 menu_offset = renderer.master_offset + level.view_width + 5
 height_offset = 1
 log_array = []
 height, width = 0, 0
 
+control_menu_toggle = False
+
 
 def menus(terminal, player_y, player_x):
-    global height, width  # Global variables for terminal size
-    height, width = sizes.get_screen_size(terminal)
+    global height, width, control_menu_toggle  # Global variables for terminal size
+    height, width = services.get_screen_size(terminal)
     left_menu(terminal, player_y, player_x, height, width)
     right_menu(terminal)
     hp_menu(terminal)
     text_help(terminal)
+    if control_menu_toggle: control_menu(terminal)
 
 
 def left_menu(terminal, player_y, player_x, height, width):
@@ -25,7 +29,9 @@ def left_menu(terminal, player_y, player_x, height, width):
     # terminal.printf(0, 1, f"Steps Taken: {level.step_counter}")
 
     # Draw author text at the bottom right
+    height, _ = services.get_screen_size(terminal)
     terminal.printf(width - 2 - len(texts.Texts.autor_text), height - 1, texts.Texts.autor_text)
+    terminal.printf(0, height - 1, texts.Texts.F1_text)
 
 
 def text_help(terminal):
@@ -135,3 +141,11 @@ def right_menu(terminal):
             terminal.printf(menu_offset, i + height_offset, log_array[i][0])
     # Update log_array with the processed lines
     log_array = new_log_array
+
+
+def control_menu(terminal):
+    global height_offset
+    height, width = services.get_screen_size(terminal)
+    terminal.color(colors.WHITE)
+    for i in range(len(texts.Texts.controls_text)):
+        terminal.printf(10, i + height_offset, texts.Texts.controls_text[i])
