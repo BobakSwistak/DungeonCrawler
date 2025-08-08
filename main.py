@@ -56,7 +56,9 @@ def game_cycle(terminal):
         if terminal.has_input():
             key = terminal.read()
             services.flush_input(terminal)
+            level.occupied[player.player_y][player.player_x] = False
             result = playerInputs.player_input(terminal, key, player.player_y, player.player_x)
+            level.occupied[player.player_y][player.player_x] = True
 
             if result is False:
                 main_screen(terminal)

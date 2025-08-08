@@ -2,6 +2,7 @@ import random
 import Dungeon.level as level
 import Enemies.enemyManager as enemyManager
 
+
 def generate_dungeon():
     level.unwalkable.append(level.doors)
     # Initialize level and visible arrays as [y][x]
@@ -109,8 +110,6 @@ def carve_door(y, x):
         level.level[y][x] = '`'
     elif random.random() < level.trapped_door_chance:
         level.level[y][x] = 't+'
-    elif random.random() < level.hidden_door_chance:
-        level.level[y][x] = 'h+'
     else:
         level.level[y][x] = '+'
 
@@ -133,6 +132,10 @@ def generating_doors():
                          level.level[y - 1][x] == '#' and level.level[y + 1][x] == '#')):
                     if random.random() < level.random_door_chance:
                         carve_door(y, x)
+                        if random.random() < level.hidden_door_chance:
+                            level.level[y][x] = 'h+'
+                        else:
+                            level.level[y][x] = '+'
 
 
 def clean_up():

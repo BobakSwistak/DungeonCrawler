@@ -1,8 +1,8 @@
 from Dungeon import level, levelManager
 from Player import player
 from Renderers import menuRenderer
+from Enemies.aStarAlgoritm import AStarAlgorithm
 import random
-import heapq
 
 
 class EnemyController:
@@ -13,6 +13,8 @@ class EnemyController:
         self.speed = 1
         self.hp = 1
         self.perception = 1
+
+        self.astar_algorithm = AStarAlgorithm()
 
         self.enemy_pos = None
         self.target_pos = None
@@ -37,24 +39,20 @@ class EnemyController:
         if [player.player_y, player.player_x] in self.field_of_view:
             self.agro = True
             self.target_pos = [player.player_y, player.player_x]
+            self.create_path()
         else:
             self.agro = False
         self.move()
 
     def move(self):
-        # Try to create a path if needed
-        attempts = 0
-        while (not self.path or self.enemy_pos == self.target_pos) and attempts < 10:
-            self.create_path()
-            if not self.path or self.enemy_pos == self.target_pos:
-                self.find_target_pos()
-            attempts += 1
-        # Move if possible
         if self.path and self.enemy_pos != self.target_pos:
             level.occupied[self.enemy_pos[0]][self.enemy_pos[1]] = False
             self.enemy_pos = self.path.pop(0)
             menuRenderer.debug_log(f"Enemy moved to position: {self.enemy_pos}")
             level.occupied[self.enemy_pos[0]][self.enemy_pos[1]] = True
+        else:
+            self.target_pos = [player.player_y, player.player_x]
+            self.create_path()
 
     def open_door(self, door_pos):
         door = level.level[door_pos[0]][door_pos[1]]
@@ -75,83 +73,17 @@ class EnemyController:
                 break
 
     def find_target_pos(self):
-        # Avoid picking the current position or an occupied/unreachable tile
-        attempts = 0
-        while attempts < 1000:
-            target_pos = [random.randint(1, level.height - 2), random.randint(1, level.width - 2)]
-            if (
-                    level.level[target_pos[0]][target_pos[1]] in level.walkable and
-                    not level.occupied[target_pos[0]][target_pos[1]] and
-                    target_pos != self.enemy_pos
-            ):
-                self.target_pos = target_pos
-                return
-            attempts += 1
-        # Fallback: stay in place if no valid target found
-        self.target_pos = self.enemy_pos
+        self.room = random.choice(level.rooms)
+        self.y = random.randint(self.room[0] + 2, self.room[2] - 2)
+        self.x = random.randint(self.room[1] + 2, self.room[3] - 2)
+        self.target_pos = [self.y, self.x]
+        self.create_path()
+        print(self.enemy_pos)
 
     def create_path(self):
         start = tuple(self.enemy_pos)
         goal = tuple(self.target_pos)
-        self.path = self.astar(start, goal)
-
-    def heuristic(self, a, b):
-        # Manhattan distance
-        return abs(a[0] - b[0]) + abs(a[1] - b[1])
-
-    def reconstruct_path(self, came_from, current):
-        path = [current]
-        while current in came_from:
-            current = came_from[current]
-            path.append(current)
-        path.reverse()
-        return path
-
-    def get_neighbors(self, pos):
-        y, x = pos
-        neighbors = []
-
-        # Include diagonal movements
-        directions = [
-            (-1, 0), (1, 0), (0, -1), (0, 1),  # Cardinal directions
-            (-1, -1), (-1, 1), (1, -1), (1, 1)  # Diagonal directions
-        ]
-
-        for dy, dx in directions:
-            ny, nx = y + dy, x + dx
-            if 0 <= ny < level.height and 0 <= nx < level.width:
-                if level.level[ny][nx] not in level.unwalkable not in level.doors:
-                    neighbors.append((ny, nx))
-        return neighbors
-
-    def astar(self, start, goal):
-        open_set = []
-        heapq.heappush(open_set, (0, start))
-        came_from = {}
-        g_score = {start: 0}
-        f_score = {start: self.heuristic(start, goal)}
-
-        visited = set()
-
-        while open_set:
-            _, current = heapq.heappop(open_set)
-
-            if current == goal:
-                return self.reconstruct_path(came_from, current)
-
-            if current in visited:
-                continue
-            visited.add(current)
-
-            for neighbor in self.get_neighbors(current):
-                tentative_g = g_score[current] + 1
-                if tentative_g < g_score.get(neighbor, float('inf')):
-                    came_from[neighbor] = current
-                    g_score[neighbor] = tentative_g
-                    f_score[neighbor] = tentative_g + self.heuristic(neighbor, goal)
-                    heapq.heappush(open_set, (f_score[neighbor], neighbor))
-        return []
-
+        self.path = self.astar_algorithm.astar(start, goal)
 #
 # # levelGenerator.generate_dungeon()
 #
@@ -160,4 +92,4 @@ class EnemyController:
 #
 # for i in enemy_manager.path:
 #     level.level[i[0]][i[1]] = 'E'  # Mark path with 'E'
-# print("\n".join("".join(str(j) for j in i) for i in level.level))
+

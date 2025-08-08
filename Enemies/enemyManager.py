@@ -7,4 +7,4 @@ def generate_enemy(enemy_name):
     center_x = level.width // 2 + 1
     skeleton_instance = enemies.Skeleton()  # Create an instance of Skeleton
     enemies.enemies_list.append(skeleton_instance)  # Add the instance to the list
-    skeleton_instance.controller()  # Call the controller method on the instance
+    enemies.enemies_list[0].controller()  # Call the controller method on the instance

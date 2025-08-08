@@ -62,11 +62,10 @@ def player_input(terminal, key, player_y, player_x):
 
                 if level.level[new_y][new_x] in level.walkable and not level.occupied[new_y][new_x]:
                     # Mark old position as unoccupied
-                    level.occupied[player_y][player_x] = False
                     # Move player
                     player_y, player_x = new_y, new_x
                     # Mark new position as occupied
-                    level.occupied[player_y][player_x] = True
+
                     if dx != 0 or dy != 0:
                         level.step_counter += 1
                         playerActions.passive_inspect(new_y, new_x)
