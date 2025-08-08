@@ -1,8 +1,8 @@
-import bearlibterminal as terminal
 from Dungeon import levelGenerator, level
 from Renderers import renderer, menuRenderer
 from Player import playerHp, player, playerActions
 from Resources import font
+from Enemies import enemies
 import sys
 import time
 
@@ -15,7 +15,8 @@ def player_input(terminal, key, player_y, player_x):
     if key != terminal.TK_CLOSE:
         current_time = time.time()
         level.changes = True
-
+        enemy = enemies.enemies_list[0]
+        enemy.controller()
         if key == terminal.TK_Q:
             sys.exit()
         if terminal.state(terminal.TK_CONTROL):
@@ -23,7 +24,6 @@ def player_input(terminal, key, player_y, player_x):
                 font.font_size += 1
             elif key in (ord('-'), terminal.TK_KP_MINUS):
                 font.font_size -= 1
-
 
         if current_time - last_move_time >= move_delay:
             last_move_time = current_time
@@ -54,19 +54,28 @@ def player_input(terminal, key, player_y, player_x):
                 menuRenderer.control_menu_toggle = False
                 renderer.renderer(terminal, player_y, player_x)
 
-
             dy, dx = direction_input(terminal, key)
             new_y = player_y + dy
             new_x = player_x + dx
 
             if 0 <= new_y < level.height and 0 <= new_x < level.width and player.can_move:
-                playerActions.passive_inspect(new_y, new_x)
-                if level.level[new_y][new_x] in level.walkable:
+
+                if level.level[new_y][new_x] in level.walkable and not level.occupied[new_y][new_x]:
+                    # Mark old position as unoccupied
+                    level.occupied[player_y][player_x] = False
+                    # Move player
                     player_y, player_x = new_y, new_x
+                    # Mark new position as occupied
+                    level.occupied[player_y][player_x] = True
                     if dx != 0 or dy != 0:
                         level.step_counter += 1
+                        playerActions.passive_inspect(new_y, new_x)
                 elif level.level[new_y][new_x] in level.doors:
                     playerActions.open_door(new_y, new_x)
+                    playerActions.passive_inspect(new_y, new_x)
+                else:
+                    playerActions.passive_inspect(player_x, player_y)
+                    level.occupied[player_y][player_x] = True
 
             if player.action or player.inspect:
                 player_action(player_y, player_x, dy, dx)

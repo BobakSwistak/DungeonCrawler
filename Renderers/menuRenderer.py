@@ -25,7 +25,7 @@ def menus(terminal, player_y, player_x):
 def left_menu(terminal, player_y, player_x, height, width):
     # Display player position (y, x)
     # terminal.color(colors.WHITE)
-    # terminal.printf(0, 0, f"Player Position: ({player_y}, {player_x})")
+    terminal.printf(0, 2, f"Player Position: ({player_y}, {player_x})")
     # terminal.printf(0, 1, f"Steps Taken: {level.step_counter}")
 
     # Draw author text at the bottom right
@@ -88,6 +88,7 @@ def hp_menu(terminal):
     terminal.color(hp_color)
     terminal.printf(4, 0, str(playerHp.hp))
     offset = len(str(playerHp.hp))
+    terminal.color(colors.WHITE)  # Reset color to white for max HP
     terminal.printf(offset + 4, 0, f"/{playerHp.max_hp}")  # Display max HP
 
 

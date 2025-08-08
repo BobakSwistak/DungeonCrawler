@@ -27,20 +27,46 @@ class EnemyController:
         if not self.agro:
             self.field_of_view = levelManager.calculate_field_of_view(self.enemy_pos[0], self.enemy_pos[1],
                                                                       10 + self.perception)
+            if self.enemy_pos == self.target_pos:
+                self.find_target_pos()
+                self.create_path()
         else:
             self.target_pos = [player.player_y, player.player_x]
             self.create_path()
 
-        self.move()
-        if [player.player_y, player.player_x] in self.path:
+        if [player.player_y, player.player_x] in self.field_of_view:
             self.agro = True
+            self.target_pos = [player.player_y, player.player_x]
+        else:
+            self.agro = False
+        self.move()
 
     def move(self):
-        if not self.path:
+        # Try to create a path if needed
+        attempts = 0
+        while (not self.path or self.enemy_pos == self.target_pos) and attempts < 10:
             self.create_path()
-            return
-        self.enemy_pos = self.path.pop()
-        menuRenderer.debug_log("Enemy moved to position: {}".format(self.enemy_pos))
+            if not self.path or self.enemy_pos == self.target_pos:
+                self.find_target_pos()
+            attempts += 1
+        # Move if possible
+        if self.path and self.enemy_pos != self.target_pos:
+            level.occupied[self.enemy_pos[0]][self.enemy_pos[1]] = False
+            self.enemy_pos = self.path.pop(0)
+            menuRenderer.debug_log(f"Enemy moved to position: {self.enemy_pos}")
+            level.occupied[self.enemy_pos[0]][self.enemy_pos[1]] = True
+
+    def open_door(self, door_pos):
+        door = level.level[door_pos[0]][door_pos[1]]
+        menuRenderer.debug_log("door")
+        if door == "+":
+            level.level[door_pos[0]][door_pos[1]] = "`"  # Open the door
+            menuRenderer.debug_log("Door opened")
+
+        elif door == "t+":
+            self.hp -= random.randint(2, 5)
+            level.level[door_pos[0]][door_pos[1]] = "`"  # Open the door
+            menuRenderer.debug_log("Door was trapped")
 
     def enemyPosition(self):
         while True:
@@ -49,11 +75,20 @@ class EnemyController:
                 break
 
     def find_target_pos(self):
-        while True:
+        # Avoid picking the current position or an occupied/unreachable tile
+        attempts = 0
+        while attempts < 1000:
             target_pos = [random.randint(1, level.height - 2), random.randint(1, level.width - 2)]
-            if level.level[target_pos[0]][target_pos[1]] in level.walkable:
+            if (
+                    level.level[target_pos[0]][target_pos[1]] in level.walkable and
+                    not level.occupied[target_pos[0]][target_pos[1]] and
+                    target_pos != self.enemy_pos
+            ):
                 self.target_pos = target_pos
-                break
+                return
+            attempts += 1
+        # Fallback: stay in place if no valid target found
+        self.target_pos = self.enemy_pos
 
     def create_path(self):
         start = tuple(self.enemy_pos)
@@ -85,7 +120,7 @@ class EnemyController:
         for dy, dx in directions:
             ny, nx = y + dy, x + dx
             if 0 <= ny < level.height and 0 <= nx < level.width:
-                if level.level[ny][nx] in level.walkable:
+                if level.level[ny][nx] not in level.unwalkable not in level.doors:
                     neighbors.append((ny, nx))
         return neighbors
 

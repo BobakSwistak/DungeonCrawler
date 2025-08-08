@@ -1,4 +1,4 @@
-from Enemies import enemies, enemyController
+from Enemies import enemies
 from Dungeon import level
 
 

@@ -3,6 +3,7 @@ from Dungeon import levelGenerator, level
 from Renderers import renderer, menuRenderer, logoRenderer
 from Player import playerInputs, playerHp, player
 from Resources import font
+from Enemies import enemies
 import sys
 import time
 import services
@@ -54,7 +55,7 @@ def game_cycle(terminal):
         # Handle input every frame (non-blocking)
         if terminal.has_input():
             key = terminal.read()
-            services.flush_input()
+            services.flush_input(terminal)
             result = playerInputs.player_input(terminal, key, player.player_y, player.player_x)
 
             if result is False:
