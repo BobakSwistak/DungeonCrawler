@@ -27,7 +27,7 @@ def main_screen(terminal):
 
     while True:
         key = terminal.read()
-        if key == ord('q'):
+        if key == terminal.TK_CLOSE or key == terminal.TK_Q:
             sys.exit()
         elif key != -1:  # Wait for any key press
             game_cycle(terminal)
@@ -60,23 +60,23 @@ def game_cycle(terminal):
             services.flush_input(terminal)
 
             result = playerInputs.player_input(terminal, key, player.player_y, player.player_x)
+            if level.changes == True:
+                if result is False:
+                    main_screen(terminal)
+                    return
+                player.player_y, player.player_x = result
+                playerHp.hp_update()
+                level.occupied[player.player_y][player.player_x] = True
+                # Move enemies every player turn
+                for enemy in enemies.enemies_list:
+                    enemy.controller()
 
-            if result is False:
-                main_screen(terminal)
-                return
-            player.player_y, player.player_x = result
-            playerHp.hp_update()
-            level.occupied[player.player_y][player.player_x] = True
-            # Move enemies every player turn
-            for enemy in enemies.enemies_list:
-                enemy.controller()
-
-            terminal.clear()
-            renderer.renderer(terminal, player.player_y, player.player_x)
-            menuRenderer.menus(terminal, player.player_y, player.player_x)
-            terminal.refresh()
-            level.changes = False
-        player.can_input = True
+                terminal.clear()
+                renderer.renderer(terminal, player.player_y, player.player_x)
+                menuRenderer.menus(terminal, player.player_y, player.player_x)
+                terminal.refresh()
+                level.changes = False
+            player.can_input = True
         if playerHp.hp <= 0:
             death(terminal)
             return
@@ -87,7 +87,7 @@ def death(terminal):
     logoRenderer.death_screen(terminal)
     while True:
         key = terminal.read()
-        if key == ord('q'):
+        if key == terminal.TK_Q:
             sys.exit()
         elif key != -1:  # Wait for any key press
             playerHp.hp_init()

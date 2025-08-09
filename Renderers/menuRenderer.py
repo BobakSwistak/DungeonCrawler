@@ -2,6 +2,7 @@ import Renderers.renderer as renderer
 import services
 from Dungeon import level
 from Player import playerHp, player
+from Renderers.renderer import master_offset
 from Resources import texts, colors
 
 menu_offset = renderer.master_offset + level.view_width + 5
@@ -125,10 +126,7 @@ def right_menu(terminal):
 
     # Display the log entries on the screen
     for i in range(len(log_array)):
-        if terminal.color(log_array[i][1]):
-            terminal.printf(menu_offset, i + height_offset, log_array[i][0])
-        else:
-            terminal.color(colors.WHITE)
+            terminal.color(log_array[i][1])
             terminal.printf(menu_offset, i + height_offset, log_array[i][0])
     # Update log_array with the processed lines
     log_array = new_log_array
@@ -139,4 +137,4 @@ def control_menu(terminal):
     height, width = services.get_screen_size(terminal)
     terminal.color(colors.WHITE)
     for i in range(len(texts.Texts.controls_text)):
-        terminal.printf(10, i + height_offset, texts.Texts.controls_text[i])
+        terminal.printf(master_offset, i + height_offset, texts.Texts.controls_text[i])

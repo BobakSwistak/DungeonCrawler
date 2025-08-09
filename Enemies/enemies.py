@@ -15,6 +15,6 @@ class Skeleton(enemyController.EnemyController):
         self.perception = 1
         self.enemy_pos = [0, 0]
 
-        self.enemyPosition()
+        self.enemy_position()
         self.find_target_pos()
         self.create_path()

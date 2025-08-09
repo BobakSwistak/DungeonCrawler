@@ -11,33 +11,22 @@ move_delay = 0.05
 
 
 def player_input(terminal, key, player_y, player_x):
-
     global last_move_time, move_delay
     if key != terminal.TK_CLOSE:
+
         current_time = time.time()
-        level.changes = True
-        if key == terminal.TK_Q:
-            sys.exit()
-        if terminal.state(terminal.TK_CONTROL):
-            if key in (ord('+'), terminal.TK_KP_PLUS):
-                font.font_size += 1
-            elif key in (ord('-'), terminal.TK_KP_MINUS):
-                font.font_size -= 1
+        tech_input(terminal, key)
 
         if current_time - last_move_time >= move_delay:
             last_move_time = current_time
 
-            if key == terminal.TK_F1:
-                player.can_move = not player.can_move
-                player.menu_opened = not player.menu_opened
-                menuRenderer.control_menu_toggle = not menuRenderer.control_menu_toggle
-
-
-            elif key == terminal.TK_A and player.can_move and not player.menu_opened:
+            if key == terminal.TK_A and player.can_move and not player.menu_opened:
+                level.changes = True
                 player.action = True
                 player.can_move = False
 
             elif key == terminal.TK_I and not player.menu_opened:
+                level.changes = True
                 player.inspect = True
                 player.can_move = False
 
@@ -53,36 +42,33 @@ def player_input(terminal, key, player_y, player_x):
                 menuRenderer.control_menu_toggle = False
                 renderer.renderer(terminal, player_y, player_x)
 
-            dy, dx = direction_input(terminal, key)
-            new_y = player_y + dy
-            new_x = player_x + dx
+        dy, dx = direction_input(terminal, key)
+        new_y = player_y + dy
+        new_x = player_x + dx
 
-            if 0 <= new_y < level.height and 0 <= new_x < level.width and player.can_move:
+        if 0 <= new_y < level.height and 0 <= new_x < level.width and player.can_move:
 
-                if level.level[new_y][new_x] in level.walkable and not level.occupied[new_y][new_x]:
-                    # Mark old position as unoccupied
-                    # Move player
-                    player_y, player_x = new_y, new_x
-                    # Mark new position as occupied
+            if level.level[new_y][new_x] in level.walkable and not level.occupied[new_y][new_x]:
+                player_y, player_x = new_y, new_x
+                # Mark new position as occupied
 
-                    if dx != 0 or dy != 0:
-                        level.step_counter += 1
-                        playerActions.passive_inspect(new_y, new_x)
-                elif level.level[new_y][new_x] in level.doors:
-                    playerActions.open_door(new_y, new_x)
+                if dx != 0 or dy != 0:
+                    level.step_counter += 1
                     playerActions.passive_inspect(new_y, new_x)
-                else:
-                    playerActions.passive_inspect(player_x, player_y)
-                    level.occupied[player_y][player_x] = True
+            elif level.level[new_y][new_x] in level.doors:
+                playerActions.open_door(new_y, new_x)
+                playerActions.passive_inspect(new_y, new_x)
+            else:
+                playerActions.passive_inspect(player_x, player_y)
+                level.occupied[player_y][player_x] = True
 
-            if player.action or player.inspect:
-                player_action(player_y, player_x, dy, dx)
-    menuRenderer.debug_log("moved", colors.RED)
+        if player.action or player.inspect:
+            player_action(player_y, player_x, dy, dx)
+
     return player_y, player_x
 
 
 def player_action(player_y, player_x, dy, dx):
-    global can_press
     new_y = player_y + dy
     new_x = player_x + dx
 
@@ -124,4 +110,22 @@ def direction_input(terminal, key=None):
     elif key in (terminal.TK_PAGEDOWN, ord('3'), terminal.TK_KP_3):  # Page Down or numpad 3
         dy = 1
         dx = 1
+    if (dx != 0 or dy != 0) and player.can_move:
+        level.changes = True
     return dy, dx
+
+
+def tech_input(terminal, key):
+    if key == terminal.TK_Q:
+        sys.exit()
+
+    elif terminal.state(terminal.TK_CONTROL):
+        if key in (ord('+'), terminal.TK_KP_PLUS):
+            font.font_size += 1
+        elif key in (ord('-'), terminal.TK_KP_MINUS):
+            font.font_size -= 1
+
+    elif key == terminal.TK_F1:
+        player.can_move = not player.can_move
+        player.menu_opened = not player.menu_opened
+        menuRenderer.control_menu_toggle = not menuRenderer.control_menu_toggle
