@@ -1,5 +1,5 @@
 from Dungeon import level, levelManager
-from Player import player
+from Player import player, playerHp
 from Renderers import menuRenderer
 from Enemies.aStarAlgoritm import AStarAlgorithm
 import random
@@ -19,7 +19,7 @@ class EnemyController:
         self.move_counter = 0
 
         self.enemy_pos = None
-        self.target_pos = None
+        self.target_pos = [53, 103]
         self.field_of_view = None
 
         self.path = []
@@ -27,7 +27,7 @@ class EnemyController:
         self.agro = False
 
         self.enemy_position()
-        self.find_target_pos()
+        # self.find_target_pos()
         self.create_path()
 
     def controller(self):
@@ -37,17 +37,18 @@ class EnemyController:
             self.target_pos = [player.player_y, player.player_x]
             self.path = levelManager.bresenham_line(self.enemy_pos[0], self.enemy_pos[1], player.player_y,
                                                     player.player_x)
+            if len(self.path) <= 2:
+                self.attack()
+
         if self.enemy_pos == self.target_pos:
             self.find_target_pos()
             self.create_path()
-
+        self.agro = False
         if self.field_of_view[player.player_y][player.player_x]:
             self.agro = True
             self.path = levelManager.bresenham_line(self.enemy_pos[0], self.enemy_pos[1], player.player_y,
                                                     player.player_x)
             self.path.pop(0)
-        else:
-            self.agro = False
         self.move_counter += self.speed
         while self.move_counter >= 1:
             self.move()
@@ -76,6 +77,9 @@ class EnemyController:
         elif door == "t+":
             self.hp -= random.randint(2, 5)
             level.level[door_pos[0]][door_pos[1]] = "`"  # Open the door
+
+    def attack(self):
+        playerHp.hp -= random.randint(1, 4)  # Deal damage to the player
 
     def enemy_position(self):
         while True:

@@ -41,12 +41,10 @@ def death_screen(terminal):
     death_width = max(len(line) for line in death)
     # Calculate top-left corner for centering (y, x)
     start_y = (screen_height - death_height) // 2  # y is row
-    start_x = (screen_width - death_width) // 2  # x is column
+    start_x = (screen_width - death_width) // 2    # x is column
 
     for i, line in enumerate(death):
-        # Draw each line of the logo at the correct (y, x) position
         terminal.color(colors.WHITE)
-        terminal.printf(start_y + i, start_x, line)
-    height, width = services.get_screen_size(terminal)
+        terminal.printf(start_x, start_y + i, line)  # Correct order: (x, y)
     terminal.color(colors.WHITE)
-    terminal.printf(height - 3, width // 2 - len(texts.Texts.death_text) // 2, texts.Texts.death_text)
+    terminal.printf(screen_width // 2 - len(texts.Texts.death_text) // 2, screen_height - 3, texts.Texts.death_text)

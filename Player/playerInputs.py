@@ -58,6 +58,12 @@ def player_input(terminal, key, player_y, player_x):
             elif level.level[new_y][new_x] in level.doors:
                 playerActions.open_door(new_y, new_x)
                 playerActions.passive_inspect(new_y, new_x)
+            elif level.occupied[new_y][new_x]:
+                for enemy in enemies.enemies_list:
+                    print("try to hit")
+                    if enemy.enemy_pos == [new_y, new_x] or enemy.enemy_pos == (new_y, new_x):
+
+                        playerActions.attack(enemy)
             else:
                 playerActions.passive_inspect(player_x, player_y)
                 level.occupied[player_y][player_x] = True

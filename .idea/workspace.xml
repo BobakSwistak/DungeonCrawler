@@ -4,13 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="23dfc354-9bb7-4c61-9667-04865449b8c6" name="Changes" comment="fix | now enemies walk correctly once per turn, enemies can't step on a player, like it all should be.">
+    <list default="true" id="23dfc354-9bb7-4c61-9667-04865449b8c6" name="Changes" comment="new fix | enemies can move with other speeds than 1, code fixes.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dungeon/level.py" beforeDir="false" afterPath="$PROJECT_DIR$/Dungeon/level.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Enemies/enemies.py" beforeDir="false" afterPath="$PROJECT_DIR$/Enemies/enemies.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Enemies/enemyController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Enemies/enemyController.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Player/playerActions.py" beforeDir="false" afterPath="$PROJECT_DIR$/Player/playerActions.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Player/playerInputs.py" beforeDir="false" afterPath="$PROJECT_DIR$/Player/playerInputs.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Renderers/menuRenderer.py" beforeDir="false" afterPath="$PROJECT_DIR$/Renderers/menuRenderer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Renderers/logoRenderer.py" beforeDir="false" afterPath="$PROJECT_DIR$/Renderers/logoRenderer.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -201,7 +200,7 @@
       <workItem from="1754662759284" duration="4963000" />
       <workItem from="1754728767377" duration="44000" />
       <workItem from="1754735180100" duration="4225000" />
-      <workItem from="1754744491543" duration="4231000" />
+      <workItem from="1754744491543" duration="5983000" />
     </task>
     <task id="LOCAL-00001" summary="experimental | corridor generation does not work.">
       <option name="closed" value="true" />
@@ -491,7 +490,15 @@
       <option name="project" value="LOCAL" />
       <updated>1754739368046</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="new fix | enemies can move with other speeds than 1, code fixes.">
+      <option name="closed" value="true" />
+      <created>1754748895452</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1754748895452</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -524,7 +531,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="new | all scripts are in [x][y] array style" />
     <MESSAGE value="fix | all scripts are in [y][x] array style" />
     <MESSAGE value="new | tiles which player sees are now Bright and the tiles that the player remembers are darker color." />
     <MESSAGE value="new | player can close/open doors." />
@@ -549,13 +555,14 @@
     <MESSAGE value="new | added abillity to change text size and F1/controls menu." />
     <MESSAGE value="fix | enemies can open doors and move but after some time they stop this is a bug but it can be a feature so the enemies can go to sleep." />
     <MESSAGE value="fix | now enemies walk correctly once per turn, enemies can't step on a player, like it all should be." />
-    <option name="LAST_COMMIT_MESSAGE" value="fix | now enemies walk correctly once per turn, enemies can't step on a player, like it all should be." />
+    <MESSAGE value="new fix | enemies can move with other speeds than 1, code fixes." />
+    <option name="LAST_COMMIT_MESSAGE" value="new fix | enemies can move with other speeds than 1, code fixes." />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/DungeonCrawler$test.coverage" NAME="test Coverage Results" MODIFIED="1754206534591" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/123" />
     <SUITE FILE_PATH="coverage/DungeonCrawler$renderer.coverage" NAME="renderer Coverage Results" MODIFIED="1754412839359" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Renderers" />
     <SUITE FILE_PATH="coverage/DungeonCrawler$imports.coverage" NAME="imports Coverage Results" MODIFIED="1751187675423" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/DungeonCrawler$main.coverage" NAME="main Coverage Results" MODIFIED="1754748722970" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/DungeonCrawler$main.coverage" NAME="main Coverage Results" MODIFIED="1754750475771" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/DungeonCrawler$levelGenerator.coverage" NAME="levelGenerator Coverage Results" MODIFIED="1752688037666" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Dungeon" />
     <SUITE FILE_PATH="coverage/DungeonCrawler$levelManager.coverage" NAME="levelManager Coverage Results" MODIFIED="1754040512240" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Dungeon" />
     <SUITE FILE_PATH="coverage/DungeonCrawler$level.coverage" NAME="level Coverage Results" MODIFIED="1754210943643" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Dungeon" />

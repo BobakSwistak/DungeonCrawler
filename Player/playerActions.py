@@ -33,6 +33,10 @@ def inspect_tile(new_y, new_x):
         menuRenderer.debug_log("there is nothing unusual to see here")
 
 
+def attack(enemy):
+    enemy.hp -= random.randint(2, 5)  # Deal damage to the enemy
+    print("hit")
+
 def passive_inspect(new_y, new_x):
     for i in range(new_y - 1, new_y + 1):
         for j in range(new_x - 1, new_x + 1):

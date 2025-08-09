@@ -2,7 +2,7 @@ from bearlibterminal import terminal
 from Dungeon import levelGenerator, level
 from Renderers import renderer, menuRenderer, logoRenderer
 from Player import playerInputs, playerHp, player
-from Resources import font
+from Resources import font, colors
 from Enemies import enemies
 import sys
 import time
@@ -68,8 +68,13 @@ def game_cycle(terminal):
                 playerHp.hp_update()
                 level.occupied[player.player_y][player.player_x] = True
                 # Move enemies every player turn
-                for enemy in enemies.enemies_list:
-                    enemy.controller()
+                if enemies.enemies_list:
+                    for i in range(len(enemies.enemies_list)):
+                        if enemies.enemies_list[i].hp < 0:
+                            enemies.enemies_list.pop(i)
+                            menuRenderer.debug_log("enemy dead", color=colors.ORANGE)
+                            continue
+                        enemies.enemies_list[i].controller()
 
                 terminal.clear()
                 renderer.renderer(terminal, player.player_y, player.player_x)
@@ -78,6 +83,8 @@ def game_cycle(terminal):
                 level.changes = False
             player.can_input = True
         if playerHp.hp <= 0:
+            level.changes = True
+
             death(terminal)
             return
 
@@ -85,10 +92,13 @@ def game_cycle(terminal):
 def death(terminal):
     terminal.clear()
     logoRenderer.death_screen(terminal)
+    terminal.refresh()
     while True:
+
         key = terminal.read()
         if key == terminal.TK_Q:
             sys.exit()
+
         elif key != -1:  # Wait for any key press
             playerHp.hp_init()
             menuRenderer.clear_log()
