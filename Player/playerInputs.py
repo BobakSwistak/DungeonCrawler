@@ -1,7 +1,7 @@
 from Dungeon import levelGenerator, level
 from Renderers import renderer, menuRenderer
 from Player import playerHp, player, playerActions
-from Resources import font
+from Resources import font, colors
 from Enemies import enemies
 import sys
 import time
@@ -11,12 +11,11 @@ move_delay = 0.05
 
 
 def player_input(terminal, key, player_y, player_x):
+
     global last_move_time, move_delay
     if key != terminal.TK_CLOSE:
         current_time = time.time()
         level.changes = True
-        enemy = enemies.enemies_list[0]
-        enemy.controller()
         if key == terminal.TK_Q:
             sys.exit()
         if terminal.state(terminal.TK_CONTROL):
@@ -78,7 +77,7 @@ def player_input(terminal, key, player_y, player_x):
 
             if player.action or player.inspect:
                 player_action(player_y, player_x, dy, dx)
-
+    menuRenderer.debug_log("moved", colors.RED)
     return player_y, player_x
 
 

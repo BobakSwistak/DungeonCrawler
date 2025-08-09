@@ -47,33 +47,36 @@ def game_cycle(terminal):
 
         terminal.clear()
         time.sleep(0.005)
-        if player.menu_opened is False:
+        if not player.menu_opened:
             renderer.renderer(terminal, player.player_y, player.player_x)
         menuRenderer.menus(terminal, player.player_y, player.player_x)
         terminal.refresh()
+        level.occupied[player.player_y][player.player_x] = False
 
         # Handle input every frame (non-blocking)
-        if terminal.has_input():
+        if terminal.has_input() and player.can_input:
+            player.can_input = False
             key = terminal.read()
             services.flush_input(terminal)
-            level.occupied[player.player_y][player.player_x] = False
+
             result = playerInputs.player_input(terminal, key, player.player_y, player.player_x)
-            level.occupied[player.player_y][player.player_x] = True
 
             if result is False:
                 main_screen(terminal)
                 return
             player.player_y, player.player_x = result
             playerHp.hp_update()
+            level.occupied[player.player_y][player.player_x] = True
+            # Move enemies every player turn
+            for enemy in enemies.enemies_list:
+                enemy.controller()
 
-        # Only redraw if needed
-        if level.changes:
             terminal.clear()
             renderer.renderer(terminal, player.player_y, player.player_x)
             menuRenderer.menus(terminal, player.player_y, player.player_x)
             terminal.refresh()
             level.changes = False
-
+        player.can_input = True
         if playerHp.hp <= 0:
             death(terminal)
             return

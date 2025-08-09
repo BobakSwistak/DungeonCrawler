@@ -42,10 +42,5 @@ def player_fov(player_y, player_x, local_visible):
     for y in range(level.height):
         for x in range(level.width):
             if local_visible[y][x]:
-                level.memorized[y][x] = ''
-    for y in range(level.height):
-        for x in range(level.width):
-            if local_visible[y][x]:
-                level.visible[y][x] = True
-            else:
-                level.visible[y][x] = False
+                level.memorized[y][x] = level.level[y][x]
+    level.visible = local_visible

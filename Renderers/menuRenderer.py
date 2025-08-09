@@ -24,7 +24,7 @@ def menus(terminal, player_y, player_x):
 
 def left_menu(terminal, player_y, player_x, height, width):
     # Display player position (y, x)
-    # terminal.color(colors.WHITE)
+    terminal.color(colors.WHITE)
     terminal.printf(0, 2, f"Player Position: ({player_y}, {player_x})")
     # terminal.printf(0, 1, f"Steps Taken: {level.step_counter}")
 
@@ -61,8 +61,8 @@ def text_help(terminal):
     #     return user_input
 
 
-def debug_log(text):
-    log_array.append(text)
+def debug_log(text, color=colors.WHITE):
+    log_array.append((text, color))  # Append the text and color pair to the log array
 
 
 def clear_log():
@@ -104,16 +104,6 @@ def right_menu(terminal):
     lines = 0  # Counter for lines in the menu
     new_log_array = []  # Temporary list to store processed log entries
 
-    # Validate and format each log entry
-    for i in range(len(log_array)):
-        # Ensure each log entry is a list or tuple with at least two elements
-        if not isinstance(log_array[i], (list, tuple)) or len(log_array[i]) < 2:
-            log_array[i] = [log_array[i], 1]  # Default to color pair 1 if invalid
-
-        # Ensure the second element (color pair) is an integer
-        if not isinstance(log_array[i][1], int):
-            log_array[i][1] = 1  # Default to color pair 1
-
     # Process log entries to fit within the screen width
     for i in range(len(log_array)):
         if len(log_array[i][0]) > width - menu_offset:  # Check if the log entry exceeds the width
@@ -126,7 +116,7 @@ def right_menu(terminal):
                     text = part + " "  # Start a new line
                 else:
                     text += part + " "  # Add the word to the current line
-            new_log_array.append([text.strip(), log_array[i][1]])  # Add the last line
+            new_log_array.append((text.strip(), log_array[i][1]))  # Add the last line
         else:
             new_log_array.append(log_array[i])  # Add short entries as-is
 
