@@ -1,12 +1,12 @@
 import heapq
 from Dungeon import level
 
+
 class AStarAlgorithm:
 
     def heuristic(self, a, b):
         # Manhattan distance
         return abs(a[0] - b[0]) + abs(a[1] - b[1])
-
 
     def reconstruct_path(self, came_from, current):
         path = [current]
@@ -15,7 +15,6 @@ class AStarAlgorithm:
             path.append(current)
         path.reverse()
         return path
-
 
     def get_neighbors(self, pos):
         y, x = pos
@@ -33,7 +32,6 @@ class AStarAlgorithm:
                 if level.level[ny][nx] not in level.unwalkable:
                     neighbors.append((ny, nx))
         return neighbors
-
 
     def astar(self, start, goal):
         open_set = []

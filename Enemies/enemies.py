@@ -13,7 +13,12 @@ class Skeleton(enemyController.EnemyController):
         self.speed = 1
         self.hp = 10
         self.perception = 1
-        self.enemy_pos = [0, 0]
+        self.morale = 1000  # Morale of the enemy
+        self.max_morale = 1000  # Maximum morale of the enemy
+        self.enemy_pos = None  # Initialize enemy position
+
+
+
 
         self.enemy_position()
         self.find_target_pos()

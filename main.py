@@ -69,12 +69,13 @@ def game_cycle(terminal):
                 level.occupied[player.player_y][player.player_x] = True
                 # Move enemies every player turn
                 if enemies.enemies_list:
-                    for i in range(len(enemies.enemies_list)):
-                        if enemies.enemies_list[i].hp < 0:
-                            enemies.enemies_list.pop(i)
+                    for enemy in enemies.enemies_list:
+                        if enemy.hp < 0:
+                            level.occupied[enemy.enemy_pos[0]][enemy.enemy_pos[1]] = False
+                            enemies.enemies_list.remove(enemy)
                             menuRenderer.debug_log("enemy dead", color=colors.ORANGE)
                             continue
-                        enemies.enemies_list[i].controller()
+                        enemy.controller()
 
                 terminal.clear()
                 renderer.renderer(terminal, player.player_y, player.player_x)
