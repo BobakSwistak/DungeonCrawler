@@ -29,7 +29,8 @@ class AStarAlgorithm:
         for dy, dx in directions:
             ny, nx = y + dy, x + dx
             if 0 <= ny < level.height and 0 <= nx < level.width:
-                if level.level[ny][nx] not in level.unwalkable:
+                if level.level[ny][nx] in level.walkable or level.level[ny][nx] in level.doors and not \
+                level.occupied[ny][nx]:
                     neighbors.append((ny, nx))
         return neighbors
 
@@ -59,4 +60,5 @@ class AStarAlgorithm:
                     g_score[neighbor] = tentative_g
                     f_score[neighbor] = tentative_g + self.heuristic(neighbor, goal)
                     heapq.heappush(open_set, (f_score[neighbor], neighbor))
-        return []
+        # Return an empty path if no valid path is found
+        return [(start[0], start[1])]  # Stay in place if no path is found

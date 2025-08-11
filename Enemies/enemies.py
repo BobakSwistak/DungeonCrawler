@@ -12,9 +12,9 @@ class Skeleton(enemyController.EnemyController):
         self.color = colors.WHITE
         self.speed = 1
         self.hp = 10
-        self.perception = 1
-        self.morale = 1000  # Morale of the enemy
-        self.max_morale = 1000  # Maximum morale of the enemy
+        self.perception = 0
+        self.morale = 2  # Morale of the enemy
+        self.max_morale = 2  # Maximum morale of the enemy
         self.enemy_pos = None  # Initialize enemy position
 
 

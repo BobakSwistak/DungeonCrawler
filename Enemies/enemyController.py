@@ -46,9 +46,7 @@ class EnemyController:
         self.field_of_view = levelManager.calculate_field_of_view(self.enemy_pos[0], self.enemy_pos[1],
                                                                   10 + self.perception)
         self.heal()
-        self.field_of_view = levelManager.calculate_field_of_view(self.enemy_pos[0], self.enemy_pos[1],
-                                                                  10 + self.perception)
-        self.heal()
+
         if self.morale > 0:
             self.escaping = False  # Reset escaping if morale is restored
 
@@ -83,6 +81,7 @@ class EnemyController:
             self.move_counter -= 1
 
     def move(self):
+        level.occupied[self.enemy_pos[0]][self.enemy_pos[1]] = False
         if not self.escaping:
             if self.path and self.enemy_pos != self.target_pos:
                 next_y, next_x = self.path[0]
@@ -97,42 +96,48 @@ class EnemyController:
                     level.occupied[self.enemy_pos[0]][self.enemy_pos[1]] = True
                 else:
                     # Recalculate path if blocked or not walkable
+                    self.move_to_the_furthest_tile()
                     self.find_target_pos()
                     self.create_path()
-                    # todo the enemy isn't able to find a new way/path, but it was working!
             else:
+                # If the enemy is not moving towards the target, find a new target position
                 self.target_pos = [player.player_y, player.player_x]
                 self.create_path()
-                self.move()
+                level.occupied[self.enemy_pos[0]][self.enemy_pos[1]] = True
         else:
+            # If the enemy is escaping, find the furthest tile from the player
             level.occupied[self.enemy_pos[0]][self.enemy_pos[1]] = False
-            max_tiles = 3
-            for i in range(3):
-                escape_roots = self.furthest_tiles(self.enemy_pos, [player.player_y, player.player_x], max_tiles)
-                max_tiles += 2
-                valid_tiles = [pos for pos in escape_roots
-                               if pos != tuple(self.enemy_pos)
-                               and not level.occupied[pos[0]][pos[1]]
-                               and (level.level[pos[0]][pos[1]] in level.walkable or level.level[pos[0]][
-                        pos[1]] in level.doors)]
-                if valid_tiles:
+            self.move_to_the_furthest_tile()
 
-                    pos = random.choice(valid_tiles)
-                    if level.level[pos[0]][pos[1]] in level.doors:
-                        self.open_door(pos)
-                    else:
-                        self.enemy_pos = list(pos)
-                    break
-                else:
-                    if i == 2:
-                        # If no valid escape tile found after 3 attempts, stay in place
-                        if len(levelManager.bresenham_line(self.enemy_pos[0], self.enemy_pos[1], player.player_y,
-                                                           player.player_x)) <= 2:
-                            # The enemy is close to the player, so it will not escape
-                            self.attack()
-                # If no valid escape tile, stay in place
+            # If no valid escape tile, stay in place
         level.occupied[self.enemy_pos[0]][self.enemy_pos[1]] = True
-        menuRenderer.debug_log(f"{self.enemy_pos}")
+        menuRenderer.debug_log(str(self.enemy_pos))
+
+    def move_to_the_furthest_tile(self):
+        max_tiles = 3
+        for i in range(3):
+            escape_roots = self.furthest_tiles(self.enemy_pos, [player.player_y, player.player_x], max_tiles)
+            max_tiles += 2
+            valid_tiles = [pos for pos in escape_roots
+                           if pos != tuple(self.enemy_pos)
+                           and not level.occupied[pos[0]][pos[1]]
+                           and (level.level[pos[0]][pos[1]] in level.walkable or level.level[pos[0]][
+                    pos[1]] in level.doors)]
+            if valid_tiles:
+
+                pos = random.choice(valid_tiles)
+                if level.level[pos[0]][pos[1]] in level.doors:
+                    self.open_door(pos)
+                else:
+                    self.enemy_pos = list(pos)
+                break
+            else:
+                if i == 2:
+                    # If no valid escape tile found after 3 attempts, stay in place
+                    if len(levelManager.bresenham_line(self.enemy_pos[0], self.enemy_pos[1], player.player_y,
+                                                       player.player_x)) <= 2:
+                        # The enemy is close to the player, so it will not escape
+                        self.attack()
 
     def open_door(self, door_pos):
         door = level.level[door_pos[0]][door_pos[1]]
@@ -166,8 +171,8 @@ class EnemyController:
 
     def find_target_pos(self):
         room = random.choice(level.rooms)
-        y = random.randint(room[0] + 2, room[2] - 2)
-        x = random.randint(room[1] + 2, room[3] - 2)
+        y = random.randint(room[0] + 1, room[2] - 1)
+        x = random.randint(room[1] + 1, room[3] - 1)
         self.target_pos = [y, x]
         self.create_path()
 
