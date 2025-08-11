@@ -25,6 +25,8 @@ class EnemyController:
         self.heavy = False
         self.ranged = False
 
+        self.is_visible = False
+
         self.astar_algorithm = AStarAlgorithm()
 
         self.move_counter = 0
@@ -36,35 +38,35 @@ class EnemyController:
         self.path = []
 
         self.agro = False
-        self.escaping = False
+
+        self.escaping_counter = 0
 
         self.enemy_position()
-        self.find_target_pos()
+        # self.find_target_pos()
         self.create_path()
 
     def controller(self):
         self.field_of_view = levelManager.calculate_field_of_view(self.enemy_pos[0], self.enemy_pos[1],
                                                                   10 + self.perception)
         self.heal()
-
-        if self.morale > 0:
-            self.escaping = False  # Reset escaping if morale is restored
+        if self.escaping_counter > 0:
+            self.escaping_counter -= 1  #
 
         if self.morale <= 0:
             if not self.field_of_view[player.player_y][player.player_x]:
-                self.escaping = False
                 self.agro = False
             else:
-                self.escaping = True
+                self.escaping_counter = 20
                 self.agro = False
                 self.path.clear()
-        if not self.escaping:
+        if self.escaping_counter <= 0:
             if self.agro:
                 self.target_pos = [player.player_y, player.player_x]
                 self.path = levelManager.bresenham_line(self.enemy_pos[0], self.enemy_pos[1], player.player_y,
                                                         player.player_x)
                 if len(self.path) <= 2:
                     self.attack()
+                    return
 
             if self.enemy_pos == self.target_pos or not self.path:
                 self.find_target_pos()
@@ -82,7 +84,7 @@ class EnemyController:
 
     def move(self):
         level.occupied[self.enemy_pos[0]][self.enemy_pos[1]] = False
-        if not self.escaping:
+        if self.escaping_counter <= 0:
             if self.path and self.enemy_pos != self.target_pos:
                 next_y, next_x = self.path[0]
                 # Check if the next tile is walkable and not occupied
@@ -104,14 +106,13 @@ class EnemyController:
                 self.target_pos = [player.player_y, player.player_x]
                 self.create_path()
                 level.occupied[self.enemy_pos[0]][self.enemy_pos[1]] = True
-        else:
+        elif self.escaping_counter > 0:
             # If the enemy is escaping, find the furthest tile from the player
             level.occupied[self.enemy_pos[0]][self.enemy_pos[1]] = False
             self.move_to_the_furthest_tile()
 
             # If no valid escape tile, stay in place
         level.occupied[self.enemy_pos[0]][self.enemy_pos[1]] = True
-        menuRenderer.debug_log(str(self.enemy_pos))
 
     def move_to_the_furthest_tile(self):
         max_tiles = 3
@@ -141,7 +142,6 @@ class EnemyController:
 
     def open_door(self, door_pos):
         door = level.level[door_pos[0]][door_pos[1]]
-        menuRenderer.debug_log("door")
         if door == "+":
             level.level[door_pos[0]][door_pos[1]] = "`"  # Open the door
 
@@ -162,6 +162,8 @@ class EnemyController:
             self.morale += 1  # Regenerate morale over time
             if self.hp > self.hp_max:
                 self.hp = self.hp_max
+            if self.morale > self.max_morale:
+                self.morale = self.max_morale
 
     def enemy_position(self):
         while True:

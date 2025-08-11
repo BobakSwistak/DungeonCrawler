@@ -73,7 +73,11 @@ def game_cycle(terminal):
                         if enemy.hp < 0:
                             level.occupied[enemy.enemy_pos[0]][enemy.enemy_pos[1]] = False
                             enemies.enemies_list.remove(enemy)
-                            menuRenderer.debug_log("enemy dead", color=colors.ORANGE)
+                            print("dead")
+                            if enemy.is_visible:
+                                menuRenderer.debug_log(f"You killed {enemy.name}.", color=colors.ORANGE)
+                            else:
+                                menuRenderer.debug_log(f"You hear something dying in the distance.", color=colors.WHITE)
                             continue
                         enemy.controller()
 

@@ -7,4 +7,4 @@ RED = "#FF0000"  # Red
 ORANGE = "#FF7F00"  # Orange
 YELLOW = "#FFFF00"  # Yellow
 GREEN = "#00FF00"  # Green
-CYAN = "#00FF00"
+CYAN = "#00AAAA"  # Cyan

@@ -63,7 +63,7 @@ def text_help(terminal):
 
 
 def debug_log(text, color=colors.WHITE):
-    log_array.append((text, color))  # Append the text and color pair to the log array
+    log_array.append((str(text), color))  # Append the text and color pair to the log array
 
 
 def clear_log():
@@ -75,17 +75,7 @@ def hp_menu(terminal):
     terminal.color(colors.WHITE)
     terminal.printf(0, 0, f"Hp: ")
     hp_percentage = playerHp.hp / playerHp.max_hp  # Calculate the health percentage
-    hp_color = 0  # Default color pair for health
-    if hp_percentage == 1:
-        hp_color = colors.WHITE
-    elif hp_percentage > 0.75:
-        hp_color = colors.GREEN
-    elif hp_percentage > 0.5:
-        hp_color = colors.YELLOW
-    elif hp_percentage > 0.25:
-        hp_color = colors.ORANGE
-    else:
-        hp_color = colors.RED
+    hp_color = services.get_color(playerHp.hp, playerHp.max_hp, colors.WHITE)
     terminal.color(hp_color)
     terminal.printf(4, 0, str(playerHp.hp))
     offset = len(str(playerHp.hp))

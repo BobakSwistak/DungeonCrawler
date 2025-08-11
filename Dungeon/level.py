@@ -2,7 +2,7 @@ width = 200
 height = 100
 
 changes = False  # flag to indicate if the level has changed
-fog_of_war = False
+fog_of_war = True
 
 step_counter = 0  # counter for steps taken by the player
 

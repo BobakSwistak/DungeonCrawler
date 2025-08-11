@@ -11,7 +11,8 @@ class Skeleton(enemyController.EnemyController):
         self.enemy_symbol = 'S'
         self.color = colors.WHITE
         self.speed = 1
-        self.hp = 10
+        self.hp = 20
+        self.hp_max = 20
         self.perception = 0
         self.morale = 2  # Morale of the enemy
         self.max_morale = 2  # Maximum morale of the enemy

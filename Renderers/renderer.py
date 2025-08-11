@@ -1,7 +1,8 @@
 from Dungeon import level, levelManager
 from Enemies import enemies, enemyController, enemyManager
-from Player import player
+from Player import player, playerHp
 from Resources import colors
+import services
 
 master_offset = 30  # Reserve 30 columns on the left for a menu
 
@@ -73,7 +74,7 @@ def render_map(terminal, player_y, player_x):
                         terminal.printf(x + master_offset, y, tile)  # Default
 
     if 0 <= screen_y < level.view_height and 0 <= screen_x < level.view_width:
-        terminal.color(colors.CYAN)
+        terminal.color(services.get_color(playerHp.hp, playerHp.max_hp, colors.CYAN))
         terminal.printf(screen_x + master_offset, screen_y, '@')
 
 
@@ -107,7 +108,7 @@ def render_fog_of_war(terminal, player_y, player_x):
                     terminal.color(colors.DARK_BROWN)
                     terminal.printf(x + master_offset, y, "`")  # Open Door
                 else:
-                    terminal.color(colors.GREY)
+                    terminal.color(colors.RED)
                     terminal.printf(x + master_offset, y, tile)  # Default
 
 
@@ -115,9 +116,12 @@ def render_fog_of_war(terminal, player_y, player_x):
 def render_enemies(terminal):
     for enemy in enemies.enemies_list:
         if level.visible[enemy.enemy_pos[0]][enemy.enemy_pos[1]]:
+            enemy.is_visible = True
             enemy_y, enemy_x = enemy.enemy_pos
             if offset_y <= enemy_y < offset_y + level.view_height and offset_x <= enemy_x < offset_x + level.view_width:
                 screen_y = enemy_y - offset_y
                 screen_x = enemy_x - offset_x
-                terminal.color(enemy.color)
+                terminal.color(services.get_color(enemy.hp, enemy.hp_max, enemy.color))
                 terminal.printf(screen_x + master_offset, screen_y, enemy.enemy_symbol)
+        else:
+            enemy.is_visible = False
