@@ -1,10 +1,11 @@
 from Dungeon import levelGenerator, level
-from Renderers import renderer, menuRenderer
+from Renderers import menuRenderer, renderer
 from Player import playerHp, player, playerActions
 from Resources import font, colors
 from Enemies import enemies
 import sys
 import time
+import services
 
 last_move_time = 0
 move_delay = 0.05
@@ -22,17 +23,49 @@ def player_input(terminal, key, player_y, player_x):
 
             if key == terminal.TK_A and player.can_move and not player.menu_opened:
                 level.changes = True
-                player.action = True
-                player.can_move = False
+
+                renderer.renderer(terminal, False)
+                menuRenderer.interaction_text_render(terminal)
+                terminal.refresh()
+
+                services.wait_for_input(terminal)
+                dy, dx = direction_input(terminal, get_input(terminal))
+                if dy == 0 and dx == 0:
+                    return None
+
+                new_y = player_y + dy
+                new_x = player_x + dx
+
+                playerActions.action(new_y, new_x)
+
 
             elif key == terminal.TK_I and not player.menu_opened:
                 level.changes = True
-                player.inspect = True
-                player.can_move = False
+
+                renderer.renderer(terminal, False)
+                menuRenderer.inspection_text_render(terminal)
+                terminal.refresh()
+
+                services.wait_for_input(terminal)
+                dy, dx = direction_input(terminal, get_input(terminal))
+                new_y = player_y + dy
+                new_x = player_x + dx
+                if new_y == player_y and new_x == player_x:
+                    return None
+
+                playerActions.inspect_tile(new_y, new_x)
 
             elif key == terminal.TK_E:
                 player.can_move = not player.can_move
                 player.menu_opened = not player.menu_opened
+
+            elif key == terminal.TK_R and player.can_move and not player.menu_opened:
+                level.changes = True
+                player.action = False
+                player.can_move = False
+                player.rest = True
+                menuRenderer.control_menu_toggle = False
+
 
             elif key == 27 or key == terminal.TK_ESCAPE:
                 player.action = False
@@ -40,7 +73,9 @@ def player_input(terminal, key, player_y, player_x):
                 player.can_move = True
                 player.menu_opened = False
                 menuRenderer.control_menu_toggle = False
-                renderer.renderer(terminal, player_y, player_x)
+                player.rest = False
+                renderer.renderer(terminal, False)
+                return None
 
         dy, dx = direction_input(terminal, key)
         new_y = player_y + dy
@@ -60,37 +95,13 @@ def player_input(terminal, key, player_y, player_x):
                 playerActions.passive_inspect(new_y, new_x)
             elif level.occupied[new_y][new_x]:
                 for enemy in enemies.enemies_list:
-                    print("try to hit")
                     if enemy.enemy_pos == [new_y, new_x] or enemy.enemy_pos == (new_y, new_x):
-
                         playerActions.attack(enemy)
             else:
                 playerActions.passive_inspect(player_x, player_y)
                 level.occupied[player_y][player_x] = True
 
-        if player.action or player.inspect:
-            player_action(player_y, player_x, dy, dx)
-
     return player_y, player_x
-
-
-def player_action(player_y, player_x, dy, dx):
-    new_y = player_y + dy
-    new_x = player_x + dx
-
-    if player.action:
-        if dx != 0 or dy != 0:
-            if level.level[new_y][new_x] == "`":
-                playerActions.close_door(new_y, new_x)
-            elif level.level[new_y][new_x] in level.doors:
-                playerActions.open_door(new_y, new_x)
-            player.action = False
-            player.can_move = True
-    elif player.inspect:
-        if dx != 0 or dy != 0:
-            playerActions.inspect_tile(new_y, new_x)
-            player.inspect = False
-            player.can_move = True
 
 
 def direction_input(terminal, key=None):
@@ -135,3 +146,9 @@ def tech_input(terminal, key):
         player.can_move = not player.can_move
         player.menu_opened = not player.menu_opened
         menuRenderer.control_menu_toggle = not menuRenderer.control_menu_toggle
+
+
+def get_input(terminal):
+    key = terminal.read()
+    services.flush_input(terminal)
+    return key

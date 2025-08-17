@@ -1,8 +1,7 @@
-import Renderers.renderer as renderer
+import Renderers.levelRenderer as renderer
 import services
 from Dungeon import level
 from Player import playerHp, player
-from Renderers.renderer import master_offset
 from Resources import texts, colors
 
 menu_offset = renderer.master_offset + level.view_width + 5
@@ -19,7 +18,6 @@ def menus(terminal, player_y, player_x):
     left_menu(terminal, player_y, player_x, height, width)
     right_menu(terminal)
     hp_menu(terminal)
-    text_help(terminal)
     if control_menu_toggle: control_menu(terminal)
 
 
@@ -35,31 +33,18 @@ def left_menu(terminal, player_y, player_x, height, width):
     terminal.printf(0, height - 1, texts.Texts.F1_text)
 
 
-def text_help(terminal):
+def interaction_text_render(terminal):
     terminal.color(colors.WHITE)
-    if player.action:
-        terminal.printf(width // 2 - len(texts.Texts.interaction_text) // 2, 1, texts.Texts.interaction_text)
-    if player.inspect:
-        terminal.printf(width // 2 - len(texts.Texts.inspection_text) // 2, 1, texts.Texts.inspection_text)
-    # elif player.rest:
-    #     terminal.printf(1, width // 2 - len(texts.Texts.rest_text) // 2, texts.Texts.rest_text)
-    #     terminal.refresh()  # Refresh the screen to display the prompt
-    #
-    #     input_x = width // 2 - len(Texts.rest_text) // 2 + len(Texts.rest_text)  # Position input after the prompt
-    #     stdscr.refresh()  # Ensure the input prompt is visible
-    #
-    #     user_input = ""
-    #     while True:
-    #         key = stdscr.getch()
-    #         if key == ord('\n'):  # Enter key
-    #             break
-    #         elif key != -1:  # Valid key press
-    #             user_input += chr(key)
-    #             stdscr.refresh()
-    #
-    #     level.rest = False
-    #     level.can_move = True
-    #     return user_input
+    terminal.printf(width // 2 - len(texts.Texts.interaction_text) // 2, 1, texts.Texts.interaction_text)
+
+
+def inspection_text_render(terminal):
+    terminal.color(colors.WHITE)
+    terminal.printf(width // 2 - len(texts.Texts.inspection_text) // 2, 1, texts.Texts.inspection_text)
+
+
+def rest_text_render(terminal):
+    return
 
 
 def debug_log(text, color=colors.WHITE):
@@ -116,8 +101,8 @@ def right_menu(terminal):
 
     # Display the log entries on the screen
     for i in range(len(log_array)):
-            terminal.color(log_array[i][1])
-            terminal.printf(menu_offset, i + height_offset, log_array[i][0])
+        terminal.color(log_array[i][1])
+        terminal.printf(menu_offset, i + height_offset, log_array[i][0])
     # Update log_array with the processed lines
     log_array = new_log_array
 
@@ -127,4 +112,31 @@ def control_menu(terminal):
     height, width = services.get_screen_size(terminal)
     terminal.color(colors.WHITE)
     for i in range(len(texts.Texts.controls_text)):
-        terminal.printf(master_offset, i + height_offset, texts.Texts.controls_text[i])
+        terminal.printf(renderer.master_offset, i + height_offset, texts.Texts.controls_text[i])
+
+
+def rest_input(terminal):
+    user_input = ""
+    terminal.clear()
+    terminal.printf(width // 2 - len(texts.Texts.rest_text) // 2, 1, texts.Texts.rest_text)
+    terminal.refresh()
+
+    while True:
+        key = terminal.read()
+        if key == terminal.TK_RETURN:  # Enter key
+            break
+        elif key == 27 or key == terminal.TK_ESCAPE:  # Escape key
+            return 0
+        elif key == terminal.TK_BACKSPACE and len(user_input) > 0:  # Backspace key
+            user_input = user_input[:-1]
+        elif terminal.state(terminal.TK_CHAR):  # Any printable character
+            user_input += chr(terminal.state(terminal.TK_CHAR))
+
+        # Update the display
+        terminal.clear()
+        terminal.printf(width // 2 - len(texts.Texts.rest_text) // 2, 1, texts.Texts.rest_text + user_input)
+        terminal.refresh()
+    player.action = False
+    player.can_move = True
+    player.rest = False
+    return user_input

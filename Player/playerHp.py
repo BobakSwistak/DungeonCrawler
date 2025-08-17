@@ -28,4 +28,6 @@ def damage_player(dmg_min, dmg_max):  # healing is the same but -dmg
 
 
 def rest(counter):
-    return
+    while counter > 0:
+        counter -= 1
+

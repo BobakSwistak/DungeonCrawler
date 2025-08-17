@@ -1,6 +1,6 @@
 from bearlibterminal import terminal
 from Dungeon import levelGenerator, level
-from Renderers import renderer, menuRenderer, logoRenderer
+from Renderers import logoRenderer, renderer, menuRenderer
 from Player import playerInputs, playerHp, player
 from Resources import font, colors
 from Enemies import enemies
@@ -47,23 +47,24 @@ def game_cycle(terminal):
 
         terminal.clear()
         time.sleep(0.005)
-        if not player.menu_opened:
-            renderer.renderer(terminal, player.player_y, player.player_x)
-        menuRenderer.menus(terminal, player.player_y, player.player_x)
+        renderer.renderer(terminal, player.menu_opened)
         terminal.refresh()
         level.occupied[player.player_y][player.player_x] = False
 
         # Handle input every frame (non-blocking)
         if terminal.has_input() and player.can_input:
-            player.can_input = False
-            key = terminal.read()
-            services.flush_input(terminal)
+            key = playerInputs.get_input(terminal)
 
             result = playerInputs.player_input(terminal, key, player.player_y, player.player_x)
-            if level.changes == True:
+            if not result:
+                print("skip")
+                continue
+            elif level.changes:
                 if result is False:
                     main_screen(terminal)
                     return
+                elif result is None:
+                    continue
                 player.player_y, player.player_x = result
                 playerHp.hp_update()
                 level.occupied[player.player_y][player.player_x] = True
@@ -82,7 +83,7 @@ def game_cycle(terminal):
                         enemy.controller()
 
                 terminal.clear()
-                renderer.renderer(terminal, player.player_y, player.player_x)
+                renderer.renderer(terminal, player.menu_opened)
                 menuRenderer.menus(terminal, player.player_y, player.player_x)
                 terminal.refresh()
                 level.changes = False
@@ -111,5 +112,8 @@ def death(terminal):
             game_cycle(terminal)
             return
 
+
+def rest_update(terminal):
+    return 
 
 main()
