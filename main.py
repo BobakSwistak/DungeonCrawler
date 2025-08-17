@@ -7,6 +7,7 @@ from Enemies import enemies
 import sys
 import time
 import services
+import deathScreen
 
 
 def main():
@@ -77,43 +78,21 @@ def game_cycle(terminal):
                             print("dead")
                             if enemy.is_visible:
                                 menuRenderer.debug_log(f"You killed {enemy.name}.", color=colors.ORANGE)
-                            else:
+                            elif abs(player.player_y - enemy.enemy_pos[0]) + abs(player.player_x - enemy.enemy_pos[1]) >= 10:
                                 menuRenderer.debug_log(f"You hear something dying in the distance.", color=colors.WHITE)
                             continue
                         enemy.controller()
 
                 terminal.clear()
                 renderer.renderer(terminal, player.menu_opened)
-                menuRenderer.menus(terminal, player.player_y, player.player_x)
                 terminal.refresh()
                 level.changes = False
             player.can_input = True
         if playerHp.hp <= 0:
             level.changes = True
 
-            death(terminal)
+            deathScreen.death(terminal)
             return
 
-
-def death(terminal):
-    terminal.clear()
-    logoRenderer.death_screen(terminal)
-    terminal.refresh()
-    while True:
-
-        key = terminal.read()
-        if key == terminal.TK_Q:
-            sys.exit()
-
-        elif key != -1:  # Wait for any key press
-            playerHp.hp_init()
-            menuRenderer.clear_log()
-
-            game_cycle(terminal)
-            return
-
-
-def rest_update(terminal):
-    return 
 
 main()

@@ -6,6 +6,7 @@ from Enemies import enemies
 import sys
 import time
 import services
+import fast_update
 
 last_move_time = 0
 move_delay = 0.05
@@ -61,12 +62,32 @@ def player_input(terminal, key, player_y, player_x):
 
             elif key == terminal.TK_R and player.can_move and not player.menu_opened:
                 level.changes = True
-                player.action = False
-                player.can_move = False
-                player.rest = True
-                menuRenderer.control_menu_toggle = False
 
+                renderer.renderer(terminal, False)
+                input_text = menuRenderer.rest_text_controller(terminal)
+                if input_text is None:
+                    return None
 
+                elif services.is_int(input_text):
+                    input_text = int(input_text)
+
+                    for i in range(input_text):
+                        if any(enemy.is_visible for enemy in enemies.enemies_list):
+                            break
+                        if terminal.has_input():
+                            break
+                        fast_update.fast_update(terminal)
+
+                elif input_text == "*":
+
+                    while not playerHp.hp == playerHp.max_hp:
+                        if any(enemy.is_visible for enemy in enemies.enemies_list):
+                            break
+                        if terminal.has_input():
+                            break
+
+                        fast_update.fast_update(terminal)
+                return None
             elif key == 27 or key == terminal.TK_ESCAPE:
                 player.action = False
                 player.inspect = False

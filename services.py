@@ -14,6 +14,13 @@ def wait_for_input(terminal):
     while not terminal.has_input():
         break
 
+def is_int(value):
+    try:
+        int(value)
+        return True
+    except ValueError:
+        return False
+
 def get_color(hp, max_hp, max_color):
     hp_percentage = hp / max_hp  # Calculate the health percentage
     hp_color = 0  # Default color pair for health
