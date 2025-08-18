@@ -2,6 +2,7 @@ import Renderers.levelRenderer as renderer
 import services
 from Dungeon import level
 from Player import playerHp, player
+from Player.playerInputs import player_input
 from Resources import texts, colors
 
 menu_offset = renderer.master_offset + level.view_width + 5
@@ -49,6 +50,7 @@ def rest_text_controller(terminal):
     text_pos = width // 2 - len(text) // 2
     input_pos = text_pos + len(text)
 
+    terminal.clear_area(menu_offset, 1, width, 2)
     terminal.printf(text_pos, 1, text)
     terminal.refresh()
 
@@ -64,7 +66,8 @@ def rest_text_controller(terminal):
             user_input += chr(terminal.state(terminal.TK_CHAR))
 
         # Update only the input area
-        terminal.clear_area(input_pos, 1, len(user_input) + 1, 1)
+        terminal.clear_area(menu_offset, 1, width, 2)
+        terminal.printf(text_pos, 1, text)
         terminal.printf(input_pos, 1, user_input)
         terminal.refresh()
 
@@ -137,30 +140,3 @@ def control_menu(terminal):
     terminal.color(colors.WHITE)
     for i in range(len(texts.Texts.controls_text)):
         terminal.printf(renderer.master_offset, i + height_offset, texts.Texts.controls_text[i])
-
-
-def rest_input(terminal):
-    user_input = ""
-    terminal.clear()
-    terminal.printf(width // 2 - len(texts.Texts.rest_text) // 2, 1, texts.Texts.rest_text)
-    terminal.refresh()
-
-    while True:
-        key = terminal.read()
-        if key == terminal.TK_RETURN:  # Enter key
-            break
-        elif key == 27 or key == terminal.TK_ESCAPE:  # Escape key
-            return 0
-        elif key == terminal.TK_BACKSPACE and len(user_input) > 0:  # Backspace key
-            user_input = user_input[:-1]
-        elif terminal.state(terminal.TK_CHAR):  # Any printable character
-            user_input += chr(terminal.state(terminal.TK_CHAR))
-
-        # Update the display
-        terminal.clear()
-        terminal.printf(width // 2 - len(texts.Texts.rest_text) // 2, 1, texts.Texts.rest_text + user_input)
-        terminal.refresh()
-    player.action = False
-    player.can_move = True
-    player.rest = False
-    return user_input
