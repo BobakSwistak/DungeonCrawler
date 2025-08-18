@@ -58,7 +58,6 @@ def game_cycle(terminal):
 
             result = playerInputs.player_input(terminal, key, player.player_y, player.player_x)
             if not result:
-                print("skip")
                 continue
             elif level.changes:
                 if result is False:
@@ -75,7 +74,6 @@ def game_cycle(terminal):
                         if enemy.hp < 0:
                             level.occupied[enemy.enemy_pos[0]][enemy.enemy_pos[1]] = False
                             enemies.enemies_list.remove(enemy)
-                            print("dead")
                             if enemy.is_visible:
                                 menuRenderer.debug_log(f"You killed {enemy.name}.", color=colors.ORANGE)
                             elif abs(player.player_y - enemy.enemy_pos[0]) + abs(player.player_x - enemy.enemy_pos[1]) >= 10:

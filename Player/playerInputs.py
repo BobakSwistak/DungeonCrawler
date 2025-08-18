@@ -1,7 +1,7 @@
-from Dungeon import levelGenerator, level
+from Dungeon import level
 from Renderers import menuRenderer, renderer
 from Player import playerHp, player, playerActions
-from Resources import font, colors
+from Resources import font
 from Enemies import enemies
 import sys
 import time
@@ -69,6 +69,7 @@ def player_input(terminal, key, player_y, player_x):
                     return None
 
                 elif services.is_int(input_text):
+                    playerHp.resting = True
                     input_text = int(input_text)
 
                     for i in range(input_text):
@@ -79,7 +80,7 @@ def player_input(terminal, key, player_y, player_x):
                         fast_update.fast_update(terminal)
 
                 elif input_text == "*":
-
+                    playerHp.resting = True
                     while not playerHp.hp == playerHp.max_hp:
                         if any(enemy.is_visible for enemy in enemies.enemies_list):
                             break
@@ -87,6 +88,7 @@ def player_input(terminal, key, player_y, player_x):
                             break
 
                         fast_update.fast_update(terminal)
+                playerHp.resting = False
                 return None
             elif key == 27 or key == terminal.TK_ESCAPE:
                 player.action = False

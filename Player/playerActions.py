@@ -46,7 +46,6 @@ def attack(enemy):
     enemy.hp -= random.randint(2, 5)  # Deal damage to the enemy
     enemy.morale -= random.randint(1, 2)  # Reduce enemy morale
     enemy.last_damage_time = random.randint(10, 30)  # Deal damage to the enemy
-    print("hit")
 
 
 def passive_inspect(new_y, new_x):

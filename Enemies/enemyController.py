@@ -50,7 +50,7 @@ class EnemyController:
                                                                   10 + self.perception)
         self.heal()
         if self.escaping_counter > 0:
-            self.escaping_counter -= 1  #
+            self.escaping_counter -= 1
 
         if self.morale <= 0:
             if not self.field_of_view[player.player_y][player.player_x]:
@@ -74,8 +74,8 @@ class EnemyController:
             self.agro = False
             if self.field_of_view[player.player_y][player.player_x]:
                 self.agro = True
-                self.path = levelManager.bresenham_line(self.enemy_pos[0], self.enemy_pos[1], player.player_y,
-                                                        player.player_x)
+                self.target_pos = [player.player_y, player.player_x]
+                self.create_path()
                 self.path.pop(0)
         self.move_counter += self.speed
         while self.move_counter >= 1:

@@ -39,7 +39,6 @@ def generate_rooms():
                     if distance < minDistance:
                         minDistance = distance
                         nearestPlace = (y, x)
-        # print(nearestPlace, minDistance)
         startPos = (room[0] + room[2]) // 2, (room[1] + room[3]) // 2  # (y, x)
         endPos = nearestPlace
         carve_tunnel(startPos, endPos)
@@ -73,10 +72,8 @@ def carve_room(roomH=None, roomW=None, y=None, x=None):
             check_y = y + j
             check_x = x + i
             if check_y >= level.height or check_x >= level.width:
-                # print('room check out of bounds')
                 return None
             if level.level[check_y][check_x] != '#':
-                # print('room already exists')
                 return None
     for j in range(roomH):
         for i in range(roomW):
