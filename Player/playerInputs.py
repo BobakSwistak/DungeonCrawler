@@ -77,7 +77,7 @@ def player_input(terminal, key, player_y, player_x):
                             break
                         if terminal.has_input():
                             break
-                        fast_update.fast_update(terminal)
+                        fast_update.fast_update(terminal, "Resting...")
 
                 elif input_text == "*":
                     playerHp.resting = True
@@ -87,7 +87,7 @@ def player_input(terminal, key, player_y, player_x):
                         if terminal.has_input():
                             break
 
-                        fast_update.fast_update(terminal)
+                        fast_update.fast_update(terminal, "Resting...")
                 playerHp.resting = False
                 return None
             elif key == 27 or key == terminal.TK_ESCAPE:

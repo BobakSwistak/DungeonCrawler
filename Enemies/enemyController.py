@@ -2,14 +2,16 @@ from Dungeon import level, levelManager
 from Player import player, playerHp
 from Renderers import menuRenderer
 from Enemies.aStarAlgoritm import AStarAlgorithm
+from Resources import colors
 import random
 
+# todo add ability to sleep.
 
 class EnemyController:
     def __init__(self):
         self.name = "Enemy"
         self.enemy_symbol = 'M'  # Symbol for the enemy
-        self.color = 1  # Color code for rendering
+        self.color = colors.ORANGE  # Color code for rendering
         self.speed = 1
         self.hp = 10
         self.hp_max = 10

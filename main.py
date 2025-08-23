@@ -3,7 +3,7 @@ from Dungeon import levelGenerator, level
 from Renderers import logoRenderer, renderer, menuRenderer
 from Player import playerInputs, playerHp, player
 from Resources import font, colors
-from Enemies import enemies
+from Enemies import enemyManager
 import sys
 import os
 import time
@@ -71,22 +71,12 @@ def game_cycle(terminal):
                     return
                 elif result is None:
                     continue
+                level.occupied[result[0]][result[1]] = True
+                # Move enemies every player turn
+                enemyManager.enemy_update()
                 player.player_y, player.player_x = result
                 playerHp.hp_update()
                 level.occupied[player.player_y][player.player_x] = True
-                # Move enemies every player turn
-                if enemies.enemies_list:
-                    for enemy in enemies.enemies_list:
-                        if enemy.hp < 0:
-                            level.occupied[enemy.enemy_pos[0]][enemy.enemy_pos[1]] = False
-                            enemies.enemies_list.remove(enemy)
-                            if enemy.is_visible:
-                                menuRenderer.debug_log(f"{enemy.name} died.", color=colors.ORANGE)
-                            elif abs(player.player_y - enemy.enemy_pos[0]) + abs(
-                                    player.player_x - enemy.enemy_pos[1]) >= 10:
-                                menuRenderer.debug_log(f"You hear something dying in the distance.", color=colors.WHITE)
-                            continue
-                        enemy.controller()
 
                 terminal.clear()
                 renderer.renderer(terminal, player.menu_opened)

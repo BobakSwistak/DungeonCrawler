@@ -73,6 +73,9 @@ def rest_text_controller(terminal):
 
     return user_input
 
+def text_renderer(terminal, text):
+    terminal.color(colors.WHITE)
+    terminal.printf(width // 2 - len(text) // 2, 1, text)
 
 def debug_log(text, color=colors.WHITE):
     log_array.append((str(text), color))  # Append the text and color pair to the log array
