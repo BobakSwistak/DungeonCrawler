@@ -1,6 +1,8 @@
+import sys
+
 from Renderers import logoRenderer, menuRenderer
 from Player import playerHp
-import sys
+
 
 def death(terminal):
     terminal.clear()
@@ -15,4 +17,3 @@ def death(terminal):
         elif key != -1:  # Wait for any key press
             playerHp.hp_init()
             menuRenderer.clear_log()
-

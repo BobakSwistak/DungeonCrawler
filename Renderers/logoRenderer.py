@@ -1,5 +1,6 @@
-from Resources import texts, colors
 import services
+
+from Resources import texts, colors
 
 logo = [
     "    ___                                        ___                   _",
@@ -41,7 +42,7 @@ def death_screen(terminal):
     death_width = max(len(line) for line in death)
     # Calculate top-left corner for centering (y, x)
     start_y = (screen_height - death_height) // 2  # y is row
-    start_x = (screen_width - death_width) // 2    # x is column
+    start_x = (screen_width - death_width) // 2  # x is column
 
     for i, line in enumerate(death):
         terminal.color(colors.WHITE)

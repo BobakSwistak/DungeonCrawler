@@ -1,9 +1,12 @@
-from Dungeon import level, levelManager
+import random
+
+from Dungeon import level, levelManager, level_init
 from Player import player, playerHp
 from Renderers import menuRenderer
 from Enemies.aStarAlgoritm import AStarAlgorithm
 from Resources import colors
-import random
+from doorController import DoorController
+
 
 # todo add ability to sleep.
 
@@ -85,19 +88,21 @@ class EnemyController:
             self.move_counter -= 1
 
     def move(self):
-        level.occupied[self.enemy_pos[0]][self.enemy_pos[1]] = False
+        level.current_level.occupied[self.enemy_pos[0]][self.enemy_pos[1]] = False
         if self.escaping_counter <= 0:
             if self.path and self.enemy_pos != self.target_pos:
                 next_y, next_x = self.path[0]
                 # Check if the next tile is walkable and not occupied
-                if (level.level[next_y][next_x] in level.walkable or level.level[next_y][next_x] in level.doors) and not \
-                        level.occupied[next_y][next_x]:
-                    level.occupied[self.enemy_pos[0]][self.enemy_pos[1]] = False
-                    if level.level[next_y][next_x] in level.doors:
-                        self.open_door((next_y, next_x))
+                if (level.current_level.level[next_y][next_x] in level_init.walkable or
+                    level.current_level.level[next_y][next_x] in level_init.doors) and not \
+                        level.current_level.occupied[next_y][next_x]:
+                    level.current_level.occupied[self.enemy_pos[0]][self.enemy_pos[1]] = False
+                    if level.current_level.level[next_y][next_x] in level_init.doors:
+                        door = DoorController.open_door((next_y, next_x))
+                        if isinstance(door, tuple): self.hp -= random.randint(door[0], door[1])
                     else:
                         self.enemy_pos = self.path.pop(0)
-                    level.occupied[self.enemy_pos[0]][self.enemy_pos[1]] = True
+                    level.current_level.occupied[self.enemy_pos[0]][self.enemy_pos[1]] = True
                 else:
                     # Recalculate path if blocked or not walkable
                     self.move_to_the_furthest_tile()
@@ -107,14 +112,14 @@ class EnemyController:
                 # If the enemy is not moving towards the target, find a new target position
                 self.target_pos = [player.player_y, player.player_x]
                 self.create_path()
-                level.occupied[self.enemy_pos[0]][self.enemy_pos[1]] = True
+                level.current_level.occupied[self.enemy_pos[0]][self.enemy_pos[1]] = True
         elif self.escaping_counter > 0:
             # If the enemy is escaping, find the furthest tile from the player
-            level.occupied[self.enemy_pos[0]][self.enemy_pos[1]] = False
+            level.current_level.occupied[self.enemy_pos[0]][self.enemy_pos[1]] = False
             self.move_to_the_furthest_tile()
 
             # If no valid escape tile, stay in place
-        level.occupied[self.enemy_pos[0]][self.enemy_pos[1]] = True
+        level.current_level.occupied[self.enemy_pos[0]][self.enemy_pos[1]] = True
 
     def move_to_the_furthest_tile(self):
         max_tiles = 3
@@ -123,14 +128,15 @@ class EnemyController:
             max_tiles += 2
             valid_tiles = [pos for pos in escape_roots
                            if pos != tuple(self.enemy_pos)
-                           and not level.occupied[pos[0]][pos[1]]
-                           and (level.level[pos[0]][pos[1]] in level.walkable or level.level[pos[0]][
-                    pos[1]] in level.doors)]
+                           and not level.current_level.occupied[pos[0]][pos[1]]
+                           and (level.current_level.level[pos[0]][pos[1]] in level_init.walkable or
+                                level.current_level.level[pos[0]][
+                                    pos[1]] in level_init.doors)]
             if valid_tiles:
 
                 pos = random.choice(valid_tiles)
-                if level.level[pos[0]][pos[1]] in level.doors:
-                    self.open_door(pos)
+                if level.current_level.level[pos[0]][pos[1]] in level_init.doors:
+                    DoorController.open_door(pos)
                 else:
                     self.enemy_pos = list(pos)
                 break
@@ -141,15 +147,6 @@ class EnemyController:
                                                        player.player_x)) <= 2:
                         # The enemy is close to the player, so it will not escape
                         self.attack()
-
-    def open_door(self, door_pos):
-        door = level.level[door_pos[0]][door_pos[1]]
-        if door == "+":
-            level.level[door_pos[0]][door_pos[1]] = "`"  # Open the door
-
-        elif door == "t+":
-            self.hp -= random.randint(2, 5)
-            level.level[door_pos[0]][door_pos[1]] = "`"  # Open the door
 
     def attack(self):
         if len(levelManager.bresenham_line(self.enemy_pos[0], self.enemy_pos[1], player.player_y,
@@ -169,12 +166,12 @@ class EnemyController:
 
     def enemy_position(self):
         while True:
-            self.enemy_pos = [random.randint(0, level.height - 1), random.randint(0, level.width - 1)]
-            if level.level[self.enemy_pos[0]][self.enemy_pos[1]] in level.walkable:
+            self.enemy_pos = [random.randint(0, level_init.height - 1), random.randint(0, level_init.width - 1)]
+            if level.current_level.level[self.enemy_pos[0]][self.enemy_pos[1]] in level_init.walkable:
                 break
 
     def find_target_pos(self):
-        room = random.choice(level.rooms)
+        room = random.choice(level.current_level.rooms)
         y = random.randint(room[0] + 1, room[2] - 1)
         x = random.randint(room[1] + 1, room[3] - 1)
         self.target_pos = [y, x]

@@ -1,31 +1,16 @@
-width = 200
-height = 100
+class Level:
+    def __init__(self):
+        self.changes = False
 
-changes = False  # flag to indicate if the level has changed
-fog_of_war = True
+        self.step_counter = 0  # counter for steps taken by the player
 
-step_counter = 0  # counter for steps taken by the player
+        self.rooms = []  # list of rooms
+        self.level = []  # list of all tiles
 
-view_width = 80
-view_height = 40
+        self.occupied = []  # list of occupied tiles
 
-walkable = ['.', '`']  # walkable tiles
-unwalkable = ['#', ' ', 'h+']  # unwalkable tiles
+        self.memorized = []  # list of memorized tiles
+        self.visible = []  # list of visible tiles
 
-doors = ['+', 't+']
-
-roomSize = (7, 17)
-roomCount = 300
-
-random_door_chance = 0.3
-open_door_chance = 0.2
-trapped_door_chance = 0.1
-hidden_door_chance = 0.2
-
-rooms = []  # list of rooms
-level = []  # list of all tiles
-
-occupied = [] # list of occupied tiles
-
-memorized = []  # list of memorized tiles
-visible = []  # list of visible tiles
+levels = []
+current_level = Level()

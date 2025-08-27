@@ -1,14 +1,15 @@
+import sys
+import os
+import time
+import services
+import deathScreen
+
 from bearlibterminal import terminal
 from Dungeon import levelGenerator, level
 from Renderers import logoRenderer, renderer, menuRenderer
 from Player import playerInputs, playerHp, player
 from Resources import font, colors
 from Enemies import enemyManager
-import sys
-import os
-import time
-import services
-import deathScreen
 
 font_path = 'Resources/FSEX300.ttf'
 
@@ -40,9 +41,11 @@ def main_screen(terminal):
 
 
 def game_cycle(terminal):
+    level.current_level = level.Level()
+    level.levels.append(level.current_level)
     player.player_y, player.player_x = levelGenerator.generate_dungeon()
-    for i in range(10):
-        menuRenderer.debug_log(f"You hear something dying in the distance.", color=colors.WHITE)
+    # for i in range(10):
+    #     menuRenderer.debug_log(f"You hear something dying in the distance.", color=colors.WHITE)
 
     while True:
         if font.font_size < 8:
@@ -56,7 +59,7 @@ def game_cycle(terminal):
         time.sleep(0.005)
         renderer.renderer(terminal, player.menu_opened)
         terminal.refresh()
-        level.occupied[player.player_y][player.player_x] = False
+        level.current_level.occupied[player.player_y][player.player_x] = False
 
         # Handle input every frame (non-blocking)
         if terminal.has_input() and player.can_input:
@@ -65,26 +68,26 @@ def game_cycle(terminal):
             result = playerInputs.player_input(terminal, key, player.player_y, player.player_x)
             if not result:
                 continue
-            elif level.changes:
+            elif level.current_level.changes:
                 if result is False:
                     main_screen(terminal)
                     return
                 elif result is None:
                     continue
-                level.occupied[result[0]][result[1]] = True
+                level.current_level.occupied[result[0]][result[1]] = True
                 # Move enemies every player turn
                 enemyManager.enemy_update()
                 player.player_y, player.player_x = result
                 playerHp.hp_update()
-                level.occupied[player.player_y][player.player_x] = True
+                level.current_level.occupied[player.player_y][player.player_x] = True
 
                 terminal.clear()
                 renderer.renderer(terminal, player.menu_opened)
                 terminal.refresh()
-                level.changes = False
+                level.current_level.changes = False
             player.can_input = True
         if playerHp.hp <= 0:
-            level.changes = True
+            level.current_level.changes = True
 
             deathScreen.death(terminal)
             return

@@ -1,9 +1,10 @@
+import deathScreen
+
 from Player import player, playerInputs, playerHp
 from Resources import font, colors
 from Renderers import renderer, menuRenderer
 from Dungeon import level
 from Enemies import enemyManager
-import deathScreen
 
 
 def fast_update(terminal, text=None):

@@ -1,12 +1,14 @@
-from Dungeon import level
-from Renderers import menuRenderer, renderer
-from Player import playerHp, player, playerActions
-from Resources import font
-from Enemies import enemies
 import sys
 import time
 import services
 import fast_update
+
+from Dungeon import level, level_init
+from Renderers import menuRenderer, renderer
+from Player import playerHp, player, playerActions
+from Resources import font, colors
+from Enemies import enemies
+from doorController import DoorController
 
 last_move_time = 0
 move_delay = 0.05
@@ -23,7 +25,7 @@ def player_input(terminal, key, player_y, player_x):
             last_move_time = current_time
 
             if key == terminal.TK_A and player.can_move and not player.menu_opened:
-                level.changes = True
+                level.current_level.changes = True
 
                 renderer.renderer(terminal, False)
                 menuRenderer.interaction_text_render(terminal)
@@ -41,7 +43,7 @@ def player_input(terminal, key, player_y, player_x):
 
 
             elif key == terminal.TK_I and not player.menu_opened:
-                level.changes = True
+                level.current_level.changes = True
 
                 renderer.renderer(terminal, False)
                 menuRenderer.inspection_text_render(terminal)
@@ -61,7 +63,7 @@ def player_input(terminal, key, player_y, player_x):
                 player.menu_opened = not player.menu_opened
 
             elif key == terminal.TK_R and player.can_move and not player.menu_opened:
-                level.changes = True
+                level.current_level.changes = True
 
                 renderer.renderer(terminal, False)
                 input_text = menuRenderer.rest_text_controller(terminal)
@@ -104,25 +106,28 @@ def player_input(terminal, key, player_y, player_x):
         new_y = player_y + dy
         new_x = player_x + dx
 
-        if 0 <= new_y < level.height and 0 <= new_x < level.width and player.can_move:
+        if 0 <= new_y < level_init.height and 0 <= new_x < level_init.width and player.can_move:
 
-            if level.level[new_y][new_x] in level.walkable and not level.occupied[new_y][new_x]:
+            if level.current_level.level[new_y][new_x] in level_init.walkable and not level.current_level.occupied[new_y][new_x]:
                 player_y, player_x = new_y, new_x
                 # Mark new position as occupied
 
                 if dx != 0 or dy != 0:
-                    level.step_counter += 1
+                    level.current_level.step_counter += 1
                     playerActions.passive_inspect(new_y, new_x)
-            elif level.level[new_y][new_x] in level.doors:
-                playerActions.open_door(new_y, new_x)
+            elif level.current_level.level[new_y][new_x] in level_init.doors:
+                door = DoorController.open_door((new_y, new_x))
+                if isinstance(door, tuple):
+                    playerHp.damage_player(door[0], door[1])
+                    menuRenderer.debug_log("The door was trapped!", color=colors.ORANGE)
                 playerActions.passive_inspect(new_y, new_x)
-            elif level.occupied[new_y][new_x]:
+            elif level.current_level.occupied[new_y][new_x]:
                 for enemy in enemies.enemies_list:
                     if enemy.enemy_pos == [new_y, new_x] or enemy.enemy_pos == (new_y, new_x):
                         playerActions.attack(enemy)
             else:
                 playerActions.passive_inspect(player_x, player_y)
-                level.occupied[player_y][player_x] = True
+                level.current_level.occupied[player_y][player_x] = True
 
     return player_y, player_x
 
@@ -151,7 +156,7 @@ def direction_input(terminal, key=None):
         dy = 1
         dx = 1
     if (dx != 0 or dy != 0) and player.can_move:
-        level.changes = True
+        level.current_level.changes = True
     return dy, dx
 
 
