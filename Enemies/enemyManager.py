@@ -1,5 +1,6 @@
 from Enemies import enemies
-from Dungeon import level, level_init
+from Dungeon import level, levelInit
+from Dungeon.tiles import Tiles
 from Renderers import menuRenderer
 from Player import player
 from Resources import colors
@@ -8,9 +9,9 @@ import random
 
 def generate_enemy(enemy_name):
     while True:
-        random_y = random.randint(0, level_init.height - 1)
-        random_x = random.randint(0, level_init.width - 1)
-        if level.current_level.level[random_y][random_x] in level_init.walkable and not level.current_level.occupied[random_y][random_x]:
+        random_y = random.randint(0, levelInit.height - 1)
+        random_x = random.randint(0, levelInit.width - 1)
+        if Tiles.is_walkable(level.current_level.level[random_y][random_x]) and not level.current_level.occupied[random_y][random_x]:
             enemy_class = getattr(enemies, enemy_name)  # Retrieve the class dynamically
             enemy_instance = enemy_class()  # Instantiate the enemy
             enemy_instance.enemy_pos = [random_y, random_x]

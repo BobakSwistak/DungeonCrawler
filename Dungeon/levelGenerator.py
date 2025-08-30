@@ -1,7 +1,8 @@
 import random
 import Enemies.enemyManager as enemyManager
 
-from Dungeon import level, level_init
+from Dungeon import level, levelInit
+from Dungeon.tiles import Tiles
 
 local_level = []
 local_occupied = []
@@ -12,35 +13,34 @@ local_rooms = []
 
 def generate_dungeon():
     global local_level, local_occupied, local_visible, local_memorized, local_rooms
-    level_init.unwalkable.append(level_init.doors)
     # Initialize level and visible arrays as [y][x]
-    local_level = [["#" for _ in range(level_init.width)] for _ in range(level_init.height)]
-    local_occupied = [[False for _ in range(level_init.width)] for _ in range(level_init.height)]
-    local_visible = [[" " for _ in range(level_init.width)] for _ in range(level_init.height)]
-    local_memorized = [[" " for _ in range(level_init.width)] for _ in range(level_init.height)]
-    carve_room(10, 8, level_init.height // 2, level_init.width // 2)
+    local_level = [[Tiles.wall for _ in range(levelInit.width)] for _ in range(levelInit.height)]
+    local_occupied = [[False for _ in range(levelInit.width)] for _ in range(levelInit.height)]
+    local_visible = [[Tiles.void for _ in range(levelInit.width)] for _ in range(levelInit.height)]
+    local_memorized = [[Tiles.void for _ in range(levelInit.width)] for _ in range(levelInit.height)]
+    carve_room(10, 8, levelInit.height // 2, levelInit.width // 2)
     generate_rooms()
     generate_tunnels()
     generating_doors()
     clean_up()
     # Spawn player in the center room
-    center_y = level_init.height // 2 + 3
-    center_x = level_init.width // 2 + 3
+    center_y = levelInit.height // 2 + 3
+    center_x = levelInit.width // 2 + 3
     set_level()
     generate_enemies()
     return center_y, center_x  # (y, x)
 
 
 def generate_rooms():
-    for _ in range(level_init.roomCount):
+    for _ in range(levelInit.roomCount):
         minDistance = 9999
         nearestPlace = None
         room = carve_room()
         if room is None:
             continue
-        for y in range(level_init.height):
-            for x in range(level_init.width):
-                if local_level[y][x] == ".":
+        for y in range(levelInit.height):
+            for x in range(levelInit.width):
+                if local_level[y][x] == Tiles.floor:
                     if y > room[0] and y < room[2] and x > room[1] and x < room[3]:
                         continue
                     distance = ((y - room[0] + 3) ** 2 + (x - room[1] + 3) ** 2) ** 0.5
@@ -70,26 +70,26 @@ def generate_tunnels():
 
 def carve_room(roomH=None, roomW=None, y=None, x=None):
     if roomH is None:
-        roomH = random.randint(level_init.roomSize[0], level_init.roomSize[1])
-        roomW = random.randint(level_init.roomSize[0], level_init.roomSize[1])
-        y = random.randint(1, level_init.height - roomH - 2)
-        x = random.randint(1, level_init.width - roomW - 2)
+        roomH = random.randint(levelInit.roomSize[0], levelInit.roomSize[1])
+        roomW = random.randint(levelInit.roomSize[0], levelInit.roomSize[1])
+        y = random.randint(1, levelInit.height - roomH - 2)
+        x = random.randint(1, levelInit.width - roomW - 2)
 
     for j in range(roomH):
         for i in range(roomW):
             check_y = y + j
             check_x = x + i
-            if check_y >= level_init.height or check_x >= level_init.width:
+            if check_y >= levelInit.height or check_x >= levelInit.width:
                 return None
-            if local_level[check_y][check_x] != '#':
+            if local_level[check_y][check_x] != Tiles.wall:
                 return None
     for j in range(roomH):
         for i in range(roomW):
-            local_level[y + j][x + i] = '#'
+            local_level[y + j][x + i] = Tiles.wall
 
     for j in range(roomH - 2):
         for i in range(roomW - 2):
-            local_level[y + j + 1][x + i + 1] = '.'
+            local_level[y + j + 1][x + i + 1] = Tiles.floor
     room = [y, x, roomH + y, roomW + x]  # [y1, x1, y2, x2]
     local_rooms.append(room)
     return room
@@ -99,71 +99,71 @@ def carve_tunnel(startPos, endPos):
     # startPos and endPos are (y, x)
     if startPos[0] < endPos[0]:
         for y in range(startPos[0], endPos[0] + 1):
-            local_level[y][startPos[1]] = '.'
+            local_level[y][startPos[1]] = Tiles.floor
     else:
         for y in range(endPos[0], startPos[0] + 1):
-            local_level[y][startPos[1]] = '.'
+            local_level[y][startPos[1]] = Tiles.floor
     if startPos[1] < endPos[1]:
         for x in range(startPos[1], endPos[1] + 1):
-            local_level[endPos[0]][x] = '.'
+            local_level[endPos[0]][x] = Tiles.floor
     else:
         for x in range(endPos[1], startPos[1] + 1):
-            local_level[endPos[0]][x] = '.'
+            local_level[endPos[0]][x] = Tiles.floor
 
 
 def carve_door(y, x):
-    if random.random() < level_init.open_door_chance:
-        local_level[y][x] = '`'
-    elif random.random() < level_init.trapped_door_chance:
-        local_level[y][x] = 't+'
+    if random.random() < levelInit.open_door_chance:
+        local_level[y][x] = Tiles.open_door
+    elif random.random() < levelInit.trapped_door_chance:
+        local_level[y][x] = Tiles.trapped_door
     else:
-        local_level[y][x] = '+'
+        local_level[y][x] = Tiles.closed_door
 
 
 def generating_doors():
-    for y in range(1, level_init.height - 1):
-        for x in range(1, level_init.width - 1):
-            if local_level[y][x] == '.':
-                if ((local_level[y - 1][x] == '#' and local_level[y + 1][x] == '#' and
-                     local_level[y][x - 1] == '.' and local_level[y][x + 1] == '.') or
-                        (local_level[y][x - 1] == '#' and local_level[y][x + 1] == '#' and
-                         local_level[y - 1][x] == '.' and local_level[y + 1][x] == '.')):
-                    if (local_level[y + 1][x + 1] == '.' or local_level[y + 1][x - 1] == '.' or
-                            local_level[y - 1][x + 1] == '.' or local_level[y - 1][x - 1] == '.'):
+    for y in range(1, levelInit.height - 1):
+        for x in range(1, levelInit.width - 1):
+            if local_level[y][x] == Tiles.floor:
+                if ((local_level[y - 1][x] == Tiles.wall and local_level[y + 1][x] == Tiles.wall and
+                     local_level[y][x - 1] == Tiles.floor and local_level[y][x + 1] == Tiles.floor) or
+                        (local_level[y][x - 1] == Tiles.wall and local_level[y][x + 1] == Tiles.wall and
+                         local_level[y - 1][x] == Tiles.floor and local_level[y + 1][x] == Tiles.floor)):
+                    if (local_level[y + 1][x + 1] == Tiles.floor or local_level[y + 1][x - 1] == Tiles.floor or
+                            local_level[y - 1][x + 1] == Tiles.floor or local_level[y - 1][x - 1] == Tiles.floor):
                         carve_door(y, x)
-            if local_level[y][x] == '#':
-                if ((local_level[y - 1][x] == '.' and local_level[y + 1][x] == '.' and
-                     local_level[y][x - 1] == '#' and local_level[y][x + 1] == '#') or
-                        (local_level[y][x - 1] == '.' and local_level[y][x + 1] == '.' and
-                         local_level[y - 1][x] == '#' and local_level[y + 1][x] == '#')):
-                    if random.random() < level_init.random_door_chance:
+            if local_level[y][x] == Tiles.wall:
+                if ((local_level[y - 1][x] == Tiles.floor and local_level[y + 1][x] == Tiles.floor and
+                     local_level[y][x - 1] == Tiles.wall and local_level[y][x + 1] == Tiles.wall) or
+                        (local_level[y][x - 1] == Tiles.floor and local_level[y][x + 1] == Tiles.floor and
+                         local_level[y - 1][x] == Tiles.wall and local_level[y + 1][x] == Tiles.wall)):
+                    if random.random() < levelInit.random_door_chance:
                         carve_door(y, x)
-                        if random.random() < level_init.hidden_door_chance:
-                            local_level[y][x] = 'h+'
+                        if random.random() < levelInit.hidden_door_chance:
+                            local_level[y][x] = Tiles.hidden_door
                         else:
-                            local_level[y][x] = '+'
+                            local_level[y][x] = Tiles.closed_door
 
 
 def clean_up():
-    for y in range(1, level_init.height - 1):
-        for x in range(1, level_init.width - 1):
-            if local_level[y][x] == '#':
-                if ((local_level[y - 1][x] == '#' or local_level[y - 1][x] == ' ') and
-                        (local_level[y + 1][x] == '#' or local_level[y + 1][x] == ' ') and
-                        (local_level[y][x - 1] == '#' or local_level[y][x - 1] == ' ') and
-                        (local_level[y][x + 1] == '#' or local_level[y][x + 1] == ' ') and
-                        (local_level[y + 1][x + 1] == '#' or local_level[y + 1][x + 1] == ' ') and
-                        (local_level[y + 1][x - 1] == '#' or local_level[y + 1][x - 1] == ' ') and
-                        (local_level[y - 1][x + 1] == '#' or local_level[y - 1][x + 1] == ' ') and
-                        (local_level[y - 1][x - 1] == '#' or local_level[y - 1][x - 1] == ' ')):
-                    local_level[y][x] = ' '
+    for y in range(1, levelInit.height - 1):
+        for x in range(1, levelInit.width - 1):
+            if local_level[y][x] == Tiles.wall:
+                if ((local_level[y - 1][x] == Tiles.wall or local_level[y - 1][x] == Tiles.void) and
+                        (local_level[y + 1][x] == Tiles.wall or local_level[y + 1][x] == Tiles.void) and
+                        (local_level[y][x - 1] == Tiles.wall or local_level[y][x - 1] == Tiles.void) and
+                        (local_level[y][x + 1] == Tiles.wall or local_level[y][x + 1] == Tiles.void) and
+                        (local_level[y + 1][x + 1] == Tiles.wall or local_level[y + 1][x + 1] == Tiles.void) and
+                        (local_level[y + 1][x - 1] == Tiles.wall or local_level[y + 1][x - 1] == Tiles.void) and
+                        (local_level[y - 1][x + 1] == Tiles.wall or local_level[y - 1][x + 1] == Tiles.void) and
+                        (local_level[y - 1][x - 1] == Tiles.wall or local_level[y - 1][x - 1] == Tiles.void)):
+                    local_level[y][x] = Tiles.void
 
-    for y in range(level_init.height):
-        local_level[y][0] = ' '
-        local_level[y][level_init.width - 1] = ' '
-    for x in range(level_init.width):
-        local_level[0][x] = ' '
-        local_level[level_init.height - 1][x] = ' '
+    for y in range(levelInit.height):
+        local_level[y][0] = Tiles.void
+        local_level[y][levelInit.width - 1] = Tiles.void
+    for x in range(levelInit.width):
+        local_level[0][x] = Tiles.void
+        local_level[levelInit.height - 1][x] = Tiles.void
 
 
 def generate_enemies():

@@ -1,5 +1,6 @@
 import heapq
-from Dungeon import level, level_init
+from Dungeon import level, levelInit
+from Dungeon.tiles import Tiles
 
 
 class AStarAlgorithm:
@@ -28,8 +29,8 @@ class AStarAlgorithm:
 
         for dy, dx in directions:
             ny, nx = y + dy, x + dx
-            if 0 <= ny < level_init.height and 0 <= nx < level_init.width:
-                if level.current_level.level[ny][nx] in level_init.walkable or level.current_level.level[ny][nx] in level_init.doors and not \
+            if 0 <= ny < levelInit.height and 0 <= nx < levelInit.width:
+                if Tiles.is_walkable(level.current_level.level[ny][nx]) or Tiles.is_door(level.current_level.level[ny][nx]) and not \
                         level.current_level.occupied[ny][nx]:
                     neighbors.append((ny, nx))
         return neighbors

@@ -1,11 +1,12 @@
 import random
 
-from Dungeon import level, levelManager, level_init
+from Dungeon import level, levelManager, levelInit
 from Player import player, playerHp
 from Renderers import menuRenderer
 from Enemies.aStarAlgoritm import AStarAlgorithm
 from Resources import colors
 from doorController import DoorController
+from Dungeon.tiles import Tiles
 
 
 # todo add ability to sleep.
@@ -93,11 +94,11 @@ class EnemyController:
             if self.path and self.enemy_pos != self.target_pos:
                 next_y, next_x = self.path[0]
                 # Check if the next tile is walkable and not occupied
-                if (level.current_level.level[next_y][next_x] in level_init.walkable or
-                    level.current_level.level[next_y][next_x] in level_init.doors) and not \
+                if (Tiles.is_walkable(level.current_level.level[next_y][next_x]) or
+                    Tiles.is_door(level.current_level.level[next_y][next_x])) and not \
                         level.current_level.occupied[next_y][next_x]:
                     level.current_level.occupied[self.enemy_pos[0]][self.enemy_pos[1]] = False
-                    if level.current_level.level[next_y][next_x] in level_init.doors:
+                    if Tiles.is_door(level.current_level.level[next_y][next_x]):
                         door = DoorController.open_door((next_y, next_x))
                         if isinstance(door, tuple): self.hp -= random.randint(door[0], door[1])
                     else:
@@ -129,14 +130,16 @@ class EnemyController:
             valid_tiles = [pos for pos in escape_roots
                            if pos != tuple(self.enemy_pos)
                            and not level.current_level.occupied[pos[0]][pos[1]]
-                           and (level.current_level.level[pos[0]][pos[1]] in level_init.walkable or
-                                level.current_level.level[pos[0]][
-                                    pos[1]] in level_init.doors)]
+                           and (Tiles.is_walkable(level.current_level.level[pos[0]][pos[1]]) or
+                                Tiles.is_door(level.current_level.level[pos[0]][
+                                    pos[1]]))]
             if valid_tiles:
 
                 pos = random.choice(valid_tiles)
-                if level.current_level.level[pos[0]][pos[1]] in level_init.doors:
-                    DoorController.open_door(pos)
+                if Tiles.is_door(level.current_level.level[pos[0]][pos[1]]):
+                    door = DoorController.open_door(pos)
+                    if isinstance(door, tuple):
+                        self.hp -= random.randint(door[0], door[1])
                 else:
                     self.enemy_pos = list(pos)
                 break
@@ -166,8 +169,8 @@ class EnemyController:
 
     def enemy_position(self):
         while True:
-            self.enemy_pos = [random.randint(0, level_init.height - 1), random.randint(0, level_init.width - 1)]
-            if level.current_level.level[self.enemy_pos[0]][self.enemy_pos[1]] in level_init.walkable:
+            self.enemy_pos = [random.randint(0, levelInit.height - 1), random.randint(0, levelInit.width - 1)]
+            if Tiles.is_walkable(level.current_level.level[self.enemy_pos[0]][self.enemy_pos[1]]):
                 break
 
     def find_target_pos(self):

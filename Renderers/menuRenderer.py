@@ -1,12 +1,12 @@
 import Renderers.levelRenderer as renderer
 import services
 
-from Dungeon import level_init
+from Dungeon import levelInit
 from Player import playerHp, player
 from Player.playerInputs import player_input
 from Resources import texts, colors
 
-menu_offset = renderer.master_offset + level_init.view_width + 5
+menu_offset = renderer.master_offset + levelInit.view_width + 5
 height_offset = 1
 log_array = []
 height, width = 0, 0

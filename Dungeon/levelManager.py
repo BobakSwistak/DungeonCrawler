@@ -1,4 +1,5 @@
-from Dungeon import level, level_init
+from Dungeon import level, levelInit
+from Dungeon.tiles import Tiles
 
 
 def bresenham_line(y0, x0, y1, x1):
@@ -25,22 +26,22 @@ def bresenham_line(y0, x0, y1, x1):
 
 def calculate_field_of_view(player_y, player_x, radius):
     # local_visible[y][x]
-    local_visible = [[False for _ in range(level_init.width)] for _ in range(level_init.height)]
+    local_visible = [[False for _ in range(levelInit.width)] for _ in range(levelInit.height)]
     for y in range(player_y - radius, player_y + radius + 1):
         for x in range(player_x - radius, player_x + radius + 1):
-            if 0 <= y < level_init.height and 0 <= x < level_init.width:
+            if 0 <= y < levelInit.height and 0 <= x < levelInit.width:
                 line = bresenham_line(player_y, player_x, y, x)
                 for (ly, lx) in line:
-                    if 0 <= ly < level_init.height and 0 <= lx < level_init.width:
+                    if 0 <= ly < levelInit.height and 0 <= lx < levelInit.width:
                         local_visible[ly][lx] = True
-                        if level.current_level.level[ly][lx] in level_init.unwalkable or level.current_level.level[ly][lx] in level_init.doors:
+                        if Tiles.is_unwalkable(level.current_level.level[ly][lx]):
                             break
     return local_visible
 
 
 def player_fov(player_y, player_x, local_visible):
-    for y in range(level_init.height):
-        for x in range(level_init.width):
+    for y in range(levelInit.height):
+        for x in range(levelInit.width):
             if local_visible[y][x]:
                 level.current_level.memorized[y][x] = level.current_level.level[y][x]
     level.current_level.visible = local_visible

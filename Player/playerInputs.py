@@ -3,7 +3,8 @@ import time
 import services
 import fast_update
 
-from Dungeon import level, level_init
+from Dungeon import level, levelInit
+from Dungeon.tiles import Tiles
 from Renderers import menuRenderer, renderer
 from Player import playerHp, player, playerActions
 from Resources import font, colors
@@ -106,16 +107,17 @@ def player_input(terminal, key, player_y, player_x):
         new_y = player_y + dy
         new_x = player_x + dx
 
-        if 0 <= new_y < level_init.height and 0 <= new_x < level_init.width and player.can_move:
+        if 0 <= new_y < levelInit.height and 0 <= new_x < levelInit.width and player.can_move:
 
-            if level.current_level.level[new_y][new_x] in level_init.walkable and not level.current_level.occupied[new_y][new_x]:
+            if Tiles.is_walkable(level.current_level.level[new_y][new_x]) and not level.current_level.occupied[new_y][
+                new_x]:
                 player_y, player_x = new_y, new_x
                 # Mark new position as occupied
 
                 if dx != 0 or dy != 0:
                     level.current_level.step_counter += 1
                     playerActions.passive_inspect(new_y, new_x)
-            elif level.current_level.level[new_y][new_x] in level_init.doors:
+            elif Tiles.is_door(level.current_level.level[new_y][new_x]):
                 door = DoorController.open_door((new_y, new_x))
                 if isinstance(door, tuple):
                     playerHp.damage_player(door[0], door[1])
