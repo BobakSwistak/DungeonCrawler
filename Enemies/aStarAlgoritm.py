@@ -1,6 +1,6 @@
 import heapq
 from Dungeon import level, levelInit
-from Dungeon.tiles import Tiles
+from Resources.tiles import Tiles
 
 
 class AStarAlgorithm:

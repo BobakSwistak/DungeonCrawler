@@ -1,6 +1,6 @@
 from Enemies import enemies
 from Dungeon import level, levelInit
-from Dungeon.tiles import Tiles
+from Resources.tiles import Tiles
 from Renderers import menuRenderer
 from Player import player
 from Resources import colors

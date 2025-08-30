@@ -1,7 +1,5 @@
-import random
-
-from Dungeon import level, levelInit
-from Dungeon.tiles import Tiles
+from Dungeon import level
+from Resources.tiles import Tiles
 
 
 class DoorController:

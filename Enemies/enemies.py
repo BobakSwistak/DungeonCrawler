@@ -14,8 +14,8 @@ class Skeleton(enemyController.EnemyController):
         self.hp = 20
         self.hp_max = 20
         self.perception = 0
-        self.morale = 2  # Morale of the enemy
-        self.max_morale = 2  # Maximum morale of the enemy
+        self.morale = 10  # Morale of the enemy
+        self.max_morale = 10  # Maximum morale of the enemy
         self.enemy_pos = None  # Initialize enemy position
 
 

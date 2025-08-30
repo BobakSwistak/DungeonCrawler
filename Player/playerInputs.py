@@ -1,10 +1,10 @@
 import sys
 import time
 import services
-import fast_update
+import updates
 
 from Dungeon import level, levelInit
-from Dungeon.tiles import Tiles
+from Resources.tiles import Tiles
 from Renderers import menuRenderer, renderer
 from Player import playerHp, player, playerActions
 from Resources import font, colors
@@ -28,7 +28,7 @@ def player_input(terminal, key, player_y, player_x):
             if key == terminal.TK_A and player.can_move and not player.menu_opened:
                 level.current_level.changes = True
 
-                renderer.renderer(terminal, False)
+                renderer.renderer(terminal)
                 menuRenderer.interaction_text_render(terminal)
                 terminal.refresh()
 
@@ -46,7 +46,7 @@ def player_input(terminal, key, player_y, player_x):
             elif key == terminal.TK_I and not player.menu_opened:
                 level.current_level.changes = True
 
-                renderer.renderer(terminal, False)
+                renderer.renderer(terminal)
                 menuRenderer.inspection_text_render(terminal)
                 terminal.refresh()
 
@@ -66,7 +66,7 @@ def player_input(terminal, key, player_y, player_x):
             elif key == terminal.TK_R and player.can_move and not player.menu_opened:
                 level.current_level.changes = True
 
-                renderer.renderer(terminal, False)
+                renderer.renderer(terminal)
                 input_text = menuRenderer.rest_text_controller(terminal)
                 if input_text is None:
                     return None
@@ -76,21 +76,22 @@ def player_input(terminal, key, player_y, player_x):
                     input_text = int(input_text)
 
                     for i in range(input_text):
-                        if any(enemy.is_visible for enemy in enemies.enemies_list):
+                        if any(enemy.is_visible for enemy in enemies.enemies_list) and levelInit.fog_of_war:
                             break
                         if terminal.has_input():
                             break
-                        fast_update.fast_update(terminal, "Resting...")
+                        terminal.color(colors.WHITE)
+                        updates.fast_update(terminal, "Resting...")
 
                 elif input_text == "*":
                     playerHp.resting = True
                     while not playerHp.hp == playerHp.max_hp:
-                        if any(enemy.is_visible for enemy in enemies.enemies_list):
+                        if any(enemy.is_visible for enemy in enemies.enemies_list) and levelInit.fog_of_war:
                             break
                         if terminal.has_input():
                             break
-
-                        fast_update.fast_update(terminal, "Resting...")
+                        terminal.color(colors.WHITE)
+                        updates.fast_update(terminal, "Resting...")
                 playerHp.resting = False
                 return None
             elif key == 27 or key == terminal.TK_ESCAPE:
@@ -100,7 +101,7 @@ def player_input(terminal, key, player_y, player_x):
                 player.menu_opened = False
                 menuRenderer.control_menu_toggle = False
                 player.rest = False
-                renderer.renderer(terminal, False)
+                renderer.renderer(terminal)
                 return None
 
         dy, dx = direction_input(terminal, key)

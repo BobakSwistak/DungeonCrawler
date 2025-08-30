@@ -2,7 +2,7 @@ import random
 import Enemies.enemyManager as enemyManager
 
 from Dungeon import level, levelInit
-from Dungeon.tiles import Tiles
+from Resources.tiles import Tiles
 
 local_level = []
 local_occupied = []

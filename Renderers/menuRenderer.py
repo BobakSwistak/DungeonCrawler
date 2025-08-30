@@ -4,9 +4,9 @@ import services
 from Dungeon import levelInit
 from Player import playerHp, player
 from Player.playerInputs import player_input
-from Resources import texts, colors
+from Resources import texts, colors, offsets
 
-menu_offset = renderer.master_offset + levelInit.view_width + 5
+menu_offset = offsets.level_offset + levelInit.view_width + 5
 height_offset = 1
 log_array = []
 height, width = 0, 0
@@ -143,4 +143,4 @@ def control_menu(terminal):
     height, width = services.get_screen_size(terminal)
     terminal.color(colors.WHITE)
     for i in range(len(texts.Texts.controls_text)):
-        terminal.printf(renderer.master_offset, i + height_offset, texts.Texts.controls_text[i])
+        terminal.printf(offsets.level_offset, i + height_offset, texts.Texts.controls_text[i])

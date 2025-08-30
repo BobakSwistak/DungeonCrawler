@@ -1,11 +1,11 @@
 import random
 
-from Dungeon.tiles import Tiles
+from Resources.tiles import Tiles
 from doorController import DoorController
 from Dungeon import level, levelInit
 from Player import player, playerHp
 from Renderers import menuRenderer
-from Resources import texts, colors
+from Resources import colors
 from Enemies import enemies
 
 
@@ -31,9 +31,8 @@ def inspect_tile(new_y, new_x):
 
 
 def attack(enemy):
-    enemy.hp -= random.randint(2, 5)  # Deal damage to the enemy
-    enemy.morale -= random.randint(1, 2)  # Reduce enemy morale
-    enemy.last_damage_time = random.randint(10, 30)  # Deal damage to the enemy
+    enemy.damage_enemy(random.randint(2, 5))
+
     if enemy.hp <= 0:
         for i in enemies.enemies_list:
             if i == enemy:

@@ -1,12 +1,12 @@
 import random
 
-from Dungeon import level, levelManager, levelInit
+from Dungeon import level, levelInit
 from Player import player, playerHp
-from Renderers import menuRenderer
 from Enemies.aStarAlgoritm import AStarAlgorithm
 from Resources import colors
 from doorController import DoorController
-from Dungeon.tiles import Tiles
+from Resources.tiles import Tiles
+from Renderers import fieldOfView
 
 
 # todo add ability to sleep.
@@ -17,11 +17,15 @@ class EnemyController:
         self.enemy_symbol = 'M'  # Symbol for the enemy
         self.color = colors.ORANGE  # Color code for rendering
         self.speed = 1
-        self.hp = 10
+
         self.hp_max = 10
-        self.perception = -10
-        self.morale = 2  # Morale of the enemy
-        self.max_morale = 2  # Maximum morale of the enemy
+        self.hp = self.hp_max
+
+        self.perception = 0
+
+        self.max_morale = self.hp_max / 2  # Maximum morale of the enemy
+        self.morale = self.max_morale  # Morale of the enemy
+
         self.last_damage_time = 0  # Time when the enemy last took damage
 
         self.attack_dmg = [2, 5]
@@ -48,13 +52,13 @@ class EnemyController:
         self.escaping_counter = 0
 
         self.enemy_position()
-        # self.find_target_pos()
+        self.find_target_pos()
         self.create_path()
 
     def controller(self):
-        self.field_of_view = levelManager.calculate_field_of_view(self.enemy_pos[0], self.enemy_pos[1],
-                                                                  10 + self.perception)
-        self.heal()
+        self.field_of_view = fieldOfView.calculate_field_of_view(self.enemy_pos[0], self.enemy_pos[1],
+                                                                 10 + self.perception)
+        self.hp_update()
         if self.escaping_counter > 0:
             self.escaping_counter -= 1
 
@@ -68,8 +72,8 @@ class EnemyController:
         if self.escaping_counter <= 0:
             if self.agro:
                 self.target_pos = [player.player_y, player.player_x]
-                self.path = levelManager.bresenham_line(self.enemy_pos[0], self.enemy_pos[1], player.player_y,
-                                                        player.player_x)
+                self.path = fieldOfView.bresenham_line(self.enemy_pos[0], self.enemy_pos[1], player.player_y,
+                                                       player.player_x)
                 if len(self.path) <= 2:
                     self.attack()
                     return
@@ -132,7 +136,7 @@ class EnemyController:
                            and not level.current_level.occupied[pos[0]][pos[1]]
                            and (Tiles.is_walkable(level.current_level.level[pos[0]][pos[1]]) or
                                 Tiles.is_door(level.current_level.level[pos[0]][
-                                    pos[1]]))]
+                                                  pos[1]]))]
             if valid_tiles:
 
                 pos = random.choice(valid_tiles)
@@ -146,17 +150,22 @@ class EnemyController:
             else:
                 if i == 2:
                     # If no valid escape tile found after 3 attempts, stay in place
-                    if len(levelManager.bresenham_line(self.enemy_pos[0], self.enemy_pos[1], player.player_y,
-                                                       player.player_x)) <= 2:
+                    if len(fieldOfView.bresenham_line(self.enemy_pos[0], self.enemy_pos[1], player.player_y,
+                                                      player.player_x)) <= 2:
                         # The enemy is close to the player, so it will not escape
                         self.attack()
 
     def attack(self):
-        if len(levelManager.bresenham_line(self.enemy_pos[0], self.enemy_pos[1], player.player_y,
-                                           player.player_x)) <= 2:
+        if len(fieldOfView.bresenham_line(self.enemy_pos[0], self.enemy_pos[1], player.player_y,
+                                          player.player_x)) <= 2:
             playerHp.damage_player(self.attack_dmg[0], self.attack_dmg[1])
 
-    def heal(self):
+    def damage_enemy(self, damage):
+        self.hp -= damage
+        self.morale -= damage
+        self.last_damage_time = random.randint(10, 30)
+
+    def hp_update(self):
         self.last_damage_time -= 1
         if self.last_damage_time <= 0:
             self.last_damage_time = random.randint(10, 30)

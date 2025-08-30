@@ -1,5 +1,5 @@
 from Dungeon import level, levelInit
-from Dungeon.tiles import Tiles
+from Resources.tiles import Tiles
 
 
 def bresenham_line(y0, x0, y1, x1):
