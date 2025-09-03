@@ -7,6 +7,8 @@ from Player import playerHp
 from Resources import colors, offsets
 from Renderers import fieldOfView
 
+offset_y, offset_x = 0, 0
+
 
 def render_level(terminal, player_y, player_x):
     global offset_y, offset_x
@@ -29,7 +31,7 @@ def render_map(terminal, player_y, player_x):
             map_y = offset_y + y
             map_x = offset_x + x
             if 0 <= map_y < levelInit.height and 0 <= map_x < levelInit.width:
-                if level.current_level.visible[map_y][map_x]:
+                if level.current_level.visible[map_y][map_x] or not levelInit.fog_of_war:
                     render_tile(level.current_level.level[map_y][map_x], x, y, terminal, colors.WHITE, colors.BROWN,
                                 colors.GREEN)
 
@@ -77,7 +79,7 @@ def render_tile(tile, x, y, terminal, wall_floor_color, door_color, other_color)
 
 def render_enemies(terminal):
     for enemy in enemies.enemies_list:
-        if level.current_level.visible[enemy.enemy_pos[0]][enemy.enemy_pos[1]]:
+        if level.current_level.visible[enemy.enemy_pos[0]][enemy.enemy_pos[1]] or not levelInit.fog_of_war:
             enemy.is_visible = True
             enemy_y, enemy_x = enemy.enemy_pos
             if offset_y <= enemy_y < offset_y + levelInit.view_height and offset_x <= enemy_x < offset_x + levelInit.view_width:

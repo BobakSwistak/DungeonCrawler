@@ -12,5 +12,6 @@ class Level:
         self.memorized = []  # list of memorized tiles
         self.visible = []  # list of visible tiles
 
+
 levels = []
 current_level = Level()

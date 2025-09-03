@@ -1,6 +1,3 @@
-import sys
-import os
-
 from bearlibterminal import terminal
 from Player import playerHp
 from Resources import font

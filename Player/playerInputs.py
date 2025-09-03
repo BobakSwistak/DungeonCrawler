@@ -167,6 +167,9 @@ def tech_input(terminal, key):
     if key == terminal.TK_Q:
         sys.exit()
 
+    elif key == terminal.TK_F2:
+        levelInit.fog_of_war = not levelInit.fog_of_war
+
     elif terminal.state(terminal.TK_CONTROL):
         if key in (ord('+'), terminal.TK_KP_PLUS):
             font.font_size += 1

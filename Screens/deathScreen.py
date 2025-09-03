@@ -17,3 +17,4 @@ def death(terminal):
         elif key != -1:  # Wait for any key press
             playerHp.hp_init()
             menuRenderer.clear_log()
+            sys.exit()

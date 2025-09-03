@@ -22,6 +22,7 @@ def generate_dungeon():
     generate_rooms()
     generate_tunnels()
     generating_doors()
+    generate_staircases()
     clean_up()
     # Spawn player in the center room
     center_y = levelInit.height // 2 + 3
@@ -169,6 +170,31 @@ def clean_up():
 def generate_enemies():
     for i in range(random.randint(10, 10)):
         enemyManager.generate_enemy("Skeleton")
+
+
+def generate_staircases():
+    for i in range(levelInit.staircase_down_count):
+        generate_down_staircase()
+    for i in range(levelInit.staircase_up_count):
+        generate_up_staircase()
+
+
+def generate_up_staircase():
+    y = random.randint(1, levelInit.height - 1)
+    x = random.randint(1, levelInit.width - 1)
+    if local_level[y][x] == Tiles.floor:
+        local_level[y][x] = Tiles.staircase_up
+    else:
+        generate_up_staircase()
+
+
+def generate_down_staircase():
+    y = random.randint(1, levelInit.height - 1)
+    x = random.randint(1, levelInit.width - 1)
+    if local_level[y][x] == Tiles.floor:
+        local_level[y][x] = Tiles.staircase_down
+    else:
+        generate_down_staircase()
 
 
 def set_level():

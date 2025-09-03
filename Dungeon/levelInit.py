@@ -9,6 +9,9 @@ view_height = 40
 roomSize = (7, 17)
 roomCount = 300
 
+staircase_up_count = 1
+staircase_down_count = 1
+
 random_door_chance = 0.3
 open_door_chance = 0.2
 trapped_door_chance = 0.1

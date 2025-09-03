@@ -7,9 +7,12 @@ class Tiles:
     closed_door = "+"
     trapped_door = "t+"
 
+    staircase_down = ">"
+    staircase_up = "<"
+
     hidden_door = wall
 
-    walkable = [floor, open_door]  # walkable tiles
+    walkable = [floor, open_door, staircase_up, staircase_down]  # walkable tiles
     unwalkable = [wall, void, hidden_door]  # unwalkable tiles
 
     doors = [closed_door, trapped_door]
