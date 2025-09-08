@@ -9,9 +9,10 @@ from Enemies import enemyManager
 
 
 def update(terminal):
-    level.current_level = level.Level()
-    level.levels.append(level.current_level)
-    player.player_y, player.player_x = levelGenerator.generate_dungeon()
+    level.levels = []
+    level.levels.append(level.Level())
+    level.current_level = level.levels[0]
+    level.current_level.player_y, level.current_level.player_x = levelGenerator.generate_dungeon(0)
     # for i in range(10):
     #     menuRenderer.debug_log(f"You hear something dying in the distance.", color=colors.WHITE)
 
@@ -27,13 +28,13 @@ def update(terminal):
         time.sleep(0.005)
         renderer.renderer(terminal)
         terminal.refresh()
-        level.current_level.occupied[player.player_y][player.player_x] = False
+        level.current_level.occupied[level.current_level.player_y][level.current_level.player_x] = False
 
         # Handle input every frame (non-blocking)
         if terminal.has_input() and player.can_input:
             key = playerInputs.get_input(terminal)
 
-            result = playerInputs.player_input(terminal, key, player.player_y, player.player_x)
+            result = playerInputs.player_input(terminal, key)
             if not result:
                 continue
             elif level.current_level.changes:
@@ -45,9 +46,9 @@ def update(terminal):
                 level.current_level.occupied[result[0]][result[1]] = True
                 # Move enemies every player turn
                 enemyManager.enemy_update()
-                player.player_y, player.player_x = result
+                level.current_level.player_y, level.current_level.player_x = result
                 playerHp.hp_update()
-                level.current_level.occupied[player.player_y][player.player_x] = True
+                level.current_level.occupied[level.current_level.player_y][level.current_level.player_x] = True
 
                 terminal.clear()
                 renderer.renderer(terminal)

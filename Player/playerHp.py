@@ -1,8 +1,8 @@
-import curses
 import random
 
-resting = False
+from Dungeon import levelInit
 
+resting = False
 hp = 0
 max_hp = 30
 heal_counter = 0  # Track recent damage for healing purposes
@@ -28,6 +28,8 @@ def hp_update():
 
 def damage_player(dmg_min, dmg_max):  # healing is the same but -dmg
     global hp
+    if not levelInit.fog_of_war:
+        return
     dmg = random.randint(dmg_min, dmg_max)
     hp -= dmg
 

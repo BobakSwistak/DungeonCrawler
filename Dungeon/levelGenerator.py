@@ -11,7 +11,7 @@ local_memorized = []
 local_rooms = []
 
 
-def generate_dungeon():
+def generate_dungeon(depth):
     global local_level, local_occupied, local_visible, local_memorized, local_rooms
     # Initialize level and visible arrays as [y][x]
     local_level = [[Tiles.wall for _ in range(levelInit.width)] for _ in range(levelInit.height)]
@@ -22,7 +22,7 @@ def generate_dungeon():
     generate_rooms()
     generate_tunnels()
     generating_doors()
-    generate_staircases()
+    generate_staircases(depth)
     clean_up()
     # Spawn player in the center room
     center_y = levelInit.height // 2 + 3
@@ -172,11 +172,12 @@ def generate_enemies():
         enemyManager.generate_enemy("Skeleton")
 
 
-def generate_staircases():
+def generate_staircases(depth):
     for i in range(levelInit.staircase_down_count):
         generate_down_staircase()
-    for i in range(levelInit.staircase_up_count):
-        generate_up_staircase()
+    if depth is not 1:
+        for i in range(levelInit.staircase_up_count):
+            generate_up_staircase()
 
 
 def generate_up_staircase():

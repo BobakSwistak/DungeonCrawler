@@ -3,7 +3,7 @@ import time
 import services
 import updates
 
-from Dungeon import level, levelInit
+from Dungeon import level, levelInit, levelManager
 from Resources.tiles import Tiles
 from Renderers import menuRenderer, renderer
 from Player import playerHp, player, playerActions
@@ -15,7 +15,7 @@ last_move_time = 0
 move_delay = 0.05
 
 
-def player_input(terminal, key, player_y, player_x):
+def player_input(terminal, key):
     global last_move_time, move_delay
     if key != terminal.TK_CLOSE:
 
@@ -37,8 +37,8 @@ def player_input(terminal, key, player_y, player_x):
                 if dy == 0 and dx == 0:
                     return None
 
-                new_y = player_y + dy
-                new_x = player_x + dx
+                new_y = level.current_level.player_y + dy
+                new_x = level.current_level.player_x + dx
 
                 playerActions.action(new_y, new_x)
 
@@ -52,9 +52,9 @@ def player_input(terminal, key, player_y, player_x):
 
                 services.wait_for_input(terminal)
                 dy, dx = direction_input(terminal, get_input(terminal))
-                new_y = player_y + dy
-                new_x = player_x + dx
-                if new_y == player_y and new_x == player_x:
+                new_y = level.current_level.player_y + dy
+                new_x = level.current_level.player_x + dx
+                if new_y == level.current_level.player_y and new_x == level.current_level.player_x:
                     return None
 
                 playerActions.inspect_tile(new_y, new_x)
@@ -76,7 +76,7 @@ def player_input(terminal, key, player_y, player_x):
                     input_text = int(input_text)
 
                     for i in range(input_text):
-                        if any(enemy.is_visible for enemy in enemies.enemies_list) and levelInit.fog_of_war:
+                        if any(enemy.is_visible for enemy in level.current_level.enemies_list) and levelInit.fog_of_war:
                             break
                         if terminal.has_input():
                             break
@@ -86,7 +86,7 @@ def player_input(terminal, key, player_y, player_x):
                 elif input_text == "*":
                     playerHp.resting = True
                     while not playerHp.hp == playerHp.max_hp:
-                        if any(enemy.is_visible for enemy in enemies.enemies_list) and levelInit.fog_of_war:
+                        if any(enemy.is_visible for enemy in level.current_level.enemies_list) and levelInit.fog_of_war:
                             break
                         if terminal.has_input():
                             break
@@ -94,6 +94,11 @@ def player_input(terminal, key, player_y, player_x):
                         updates.fast_update(terminal, "Resting...")
                 playerHp.resting = False
                 return None
+
+            elif key == terminal.TK_D:
+                level.current_level.changes = True
+                levelManager.levelManager.go_level_downwards(
+                    (level.current_level.player_y, level.current_level.player_x))
             elif key == 27 or key == terminal.TK_ESCAPE:
                 player.action = False
                 player.inspect = False
@@ -105,8 +110,10 @@ def player_input(terminal, key, player_y, player_x):
                 return None
 
         dy, dx = direction_input(terminal, key)
-        new_y = player_y + dy
-        new_x = player_x + dx
+        new_y = level.current_level.player_y + dy
+        new_x = level.current_level.player_x + dx
+        player_y = level.current_level.player_y
+        player_x = level.current_level.player_x
 
         if 0 <= new_y < levelInit.height and 0 <= new_x < levelInit.width and player.can_move:
 
@@ -125,7 +132,7 @@ def player_input(terminal, key, player_y, player_x):
                     menuRenderer.debug_log("The door was trapped!", color=colors.ORANGE)
                 playerActions.passive_inspect(new_y, new_x)
             elif level.current_level.occupied[new_y][new_x]:
-                for enemy in enemies.enemies_list:
+                for enemy in level.current_level.enemies_list:
                     if enemy.enemy_pos == [new_y, new_x] or enemy.enemy_pos == (new_y, new_x):
                         playerActions.attack(enemy)
             else:

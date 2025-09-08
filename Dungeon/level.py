@@ -1,6 +1,13 @@
+from Dungeon import levelGenerator
+
+
 class Level:
     def __init__(self):
         self.changes = False
+
+        self.player_y, self.player_x = 0, 0
+
+        self.enemies_list = []
 
         self.step_counter = 0  # counter for steps taken by the player
 
@@ -14,4 +21,6 @@ class Level:
 
 
 levels = []
-current_level = Level()
+levels.append(Level())
+current_level = levels[0]
+current_level.player_y, current_level.player_x = levelGenerator.generate_dungeon(0)

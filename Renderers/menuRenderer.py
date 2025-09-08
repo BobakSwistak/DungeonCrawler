@@ -1,4 +1,3 @@
-import Renderers.levelRenderer as renderer
 import services
 
 from Dungeon import levelInit

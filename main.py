@@ -13,4 +13,6 @@ def main():
 
     terminal.refresh()
     mainScreen.main_screen(terminal)
+
+
 main()

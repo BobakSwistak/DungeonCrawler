@@ -2,7 +2,6 @@ import services
 
 from Dungeon import level, levelInit
 from Resources.tiles import Tiles
-from Enemies import enemies
 from Player import playerHp
 from Resources import colors, offsets
 from Renderers import fieldOfView
@@ -78,7 +77,7 @@ def render_tile(tile, x, y, terminal, wall_floor_color, door_color, other_color)
 
 
 def render_enemies(terminal):
-    for enemy in enemies.enemies_list:
+    for enemy in level.current_level.enemies_list:
         if level.current_level.visible[enemy.enemy_pos[0]][enemy.enemy_pos[1]] or not levelInit.fog_of_war:
             enemy.is_visible = True
             enemy_y, enemy_x = enemy.enemy_pos

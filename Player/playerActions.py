@@ -34,9 +34,9 @@ def attack(enemy):
     enemy.damage_enemy(random.randint(2, 5))
 
     if enemy.hp <= 0:
-        for i in enemies.enemies_list:
+        for i in level.current_level.enemies_list:
             if i == enemy:
-                enemies.enemies_list.remove(i)
+                level.current_level.enemies_list.remove(i)
                 level.current_level.occupied[enemy.enemy_pos[0]][enemy.enemy_pos[1]] = False
                 menuRenderer.debug_log(f"You killed {enemy.name}.", color=colors.ORANGE)
                 break

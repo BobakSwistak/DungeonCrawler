@@ -1,1 +1,4 @@
 pyinstaller --onefile --add-binary "lib/libBearLibTerminal.so:." --add-data "Resources/FSEX300.ttf:Resources" main.py
+
+pyinstaller --onefile -w --add-binary "lib/BearLibTerminalx32.dll:." --add-data "Resources/FSEX300.ttf:Resources" main.py
+pyinstaller --onefile -w --add-binary "lib/BearLibTerminalx64.dll:." --add-data "Resources/FSEX300.ttf:Resources" main.py

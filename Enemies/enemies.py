@@ -1,26 +1,18 @@
 from Enemies import enemyController
 from Resources import colors
 
-enemies_list = []
-
 
 class Skeleton(enemyController.EnemyController):
     def __init__(self):
-        super().__init__()  # Properly initialize the parent class
-        self.name = "Skeleton"
-        self.enemy_symbol = 'S'
-        self.color = colors.WHITE
-        self.speed = 1
-        self.hp = 20
-        self.hp_max = 20
-        self.perception = 0
-        self.morale = 10  # Morale of the enemy
-        self.max_morale = 10  # Maximum morale of the enemy
-        self.enemy_pos = None  # Initialize enemy position
+        name = "Skeleton"
+        enemy_symbol = 'S'
+        color = colors.WHITE
+        speed = 1
+        hp_max = 20
+        morale_max = hp_max // 2
+        perception = 0
 
+        attack_dmg = [2, 5]
+        heavy_dmg = [5, 10]
 
-
-
-        self.enemy_position()
-        self.find_target_pos()
-        self.create_path()
+        super().__init__(name, enemy_symbol, color, speed, hp_max, morale_max, perception, attack_dmg, False)

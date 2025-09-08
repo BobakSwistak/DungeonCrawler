@@ -1,8 +1,10 @@
 class Texts:
     intro_text = "Press any button to begin"
-    death_text = "Press any button to exit" #"Press any button to restart"
+    death_text = "Press any button to exit"
     interaction_text = "choose a direction in which you want to interact"
     inspection_text = "choose a direction which you want to inspect"
+    staircase_up_text = "press Space to go upstairs"
+    staircase_down_text = "press Space to go downstairs"
     rest_text = "write how much turns you want to rest or write * to rest until full regeneration: "
     autor_text = "by Lord Bobak"
     F1_text = "Press F1 for controls info"

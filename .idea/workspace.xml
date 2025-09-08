@@ -4,17 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="23dfc354-9bb7-4c61-9667-04865449b8c6" name="Changes" comment="fix | fixes">
+    <list default="true" id="23dfc354-9bb7-4c61-9667-04865449b8c6" name="Changes" comment="build | alfa 0.1">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Dungeon/level.py" beforeDir="false" afterPath="$PROJECT_DIR$/Dungeon/level.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Dungeon/levelGenerator.py" beforeDir="false" afterPath="$PROJECT_DIR$/Dungeon/levelGenerator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dungeon/levelInit.py" beforeDir="false" afterPath="$PROJECT_DIR$/Dungeon/levelInit.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dungeon/levelManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/Dungeon/levelManager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Enemies/enemies.py" beforeDir="false" afterPath="$PROJECT_DIR$/Enemies/enemies.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Enemies/enemyController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Enemies/enemyController.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Enemies/enemyManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/Enemies/enemyManager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Player/playerActions.py" beforeDir="false" afterPath="$PROJECT_DIR$/Player/playerActions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Player/playerHp.py" beforeDir="false" afterPath="$PROJECT_DIR$/Player/playerHp.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Player/playerInputs.py" beforeDir="false" afterPath="$PROJECT_DIR$/Player/playerInputs.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Renderers/levelRenderer.py" beforeDir="false" afterPath="$PROJECT_DIR$/Renderers/levelRenderer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Renderers/menuRenderer.py" beforeDir="false" afterPath="$PROJECT_DIR$/Renderers/menuRenderer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Renderers/renderer.py" beforeDir="false" afterPath="$PROJECT_DIR$/Renderers/renderer.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Resources/texts.py" beforeDir="false" afterPath="$PROJECT_DIR$/Resources/texts.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resources/tiles.py" beforeDir="false" afterPath="$PROJECT_DIR$/Resources/tiles.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/levelManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/Dungeon/levelManager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/libBearLibTerminal.dll" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyinstaller" beforeDir="false" afterPath="$PROJECT_DIR$/pyinstaller" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/updates.py" beforeDir="false" afterPath="$PROJECT_DIR$/updates.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,6 +69,7 @@
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;Python.123.executor&quot;: &quot;Run&quot;,
     &quot;Python.enemyManager.executor&quot;: &quot;Run&quot;,
+    &quot;Python.game.executor&quot;: &quot;Run&quot;,
     &quot;Python.imports.executor&quot;: &quot;Run&quot;,
     &quot;Python.level.executor&quot;: &quot;Run&quot;,
     &quot;Python.levelGenerator.executor&quot;: &quot;Run&quot;,
@@ -68,6 +77,7 @@
     &quot;Python.main (1).executor&quot;: &quot;Run&quot;,
     &quot;Python.main.executor&quot;: &quot;Run&quot;,
     &quot;Python.menu.executor&quot;: &quot;Run&quot;,
+    &quot;Python.terminal.executor&quot;: &quot;Run&quot;,
     &quot;Python.test.executor&quot;: &quot;Run&quot;,
     &quot;Python.tiles.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
@@ -95,30 +105,7 @@
       <recent name="$PROJECT_DIR$/screens" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.main">
-    <configuration name="123" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="DungeonCrawler" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/123/123.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
+  <component name="RunManager">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="DungeonCrawler" />
       <option name="ENV_FILES" value="" />
@@ -142,36 +129,9 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="tiles" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="DungeonCrawler" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Dungeon" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Resources/tiles.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Python.main" />
-        <item itemvalue="Python.tiles" />
-        <item itemvalue="Python.123" />
-        <item itemvalue="Python.main" />
-        <item itemvalue="Python.123" />
       </list>
     </recent_temporary>
   </component>
@@ -268,15 +228,11 @@
       <workItem from="1756636494070" duration="1300000" />
       <workItem from="1756727754020" duration="908000" />
       <workItem from="1756903434097" duration="2799000" />
-      <workItem from="1756913723495" duration="676000" />
-    </task>
-    <task id="LOCAL-00005" summary="experimental | room and corridor generation finally works.">
-      <option name="closed" value="true" />
-      <created>1752691218245</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1752691218245</updated>
+      <workItem from="1756913723495" duration="1028000" />
+      <workItem from="1756915523385" duration="482000" />
+      <workItem from="1756917782930" duration="3422000" />
+      <workItem from="1756989517341" duration="1792000" />
+      <workItem from="1757336005400" duration="1785000" />
     </task>
     <task id="LOCAL-00006" summary="experimental | room and corridor generation finally works.">
       <option name="closed" value="true" />
@@ -662,7 +618,15 @@
       <option name="project" value="LOCAL" />
       <updated>1756908461376</updated>
     </task>
-    <option name="localTasksCounter" value="54" />
+    <task id="LOCAL-00054" summary="build | alfa 0.1">
+      <option name="closed" value="true" />
+      <created>1756914669327</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1756914669327</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -696,7 +660,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="new | added death screen and improved playerInputs." />
     <MESSAGE value="new | added passive inspect chance." />
     <MESSAGE value="fix | fixed code." />
     <MESSAGE value="experimental | enemy pathfinding" />
@@ -721,7 +684,8 @@
     <MESSAGE value="fix new | complete rewriting of a code style." />
     <MESSAGE value="fix | tiles are now in different file than level details." />
     <MESSAGE value="fix | fixes" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix | fixes" />
+    <MESSAGE value="build | alfa 0.1" />
+    <option name="LAST_COMMIT_MESSAGE" value="build | alfa 0.1" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/DungeonCrawler$test.coverage" NAME="test Coverage Results" MODIFIED="1754206534591" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/123" />
@@ -729,8 +693,11 @@
     <SUITE FILE_PATH="coverage/DungeonCrawler$level.coverage" NAME="level Coverage Results" MODIFIED="1754210943643" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Dungeon" />
     <SUITE FILE_PATH="coverage/DungeonCrawler$menu.coverage" NAME="menu Coverage Results" MODIFIED="1751188592425" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/DungeonCrawler$main__1_.coverage" NAME="main (1) Coverage Results" MODIFIED="1751189775197" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/python_projects/games/snake" />
+    <SUITE FILE_PATH="coverage/terminal_py$terminal.coverage" NAME="terminal Coverage Results" MODIFIED="1756915526410" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/lib/BearLibTerminal_0.15.8/Include/Python/bearlibterminal" />
+    <SUITE FILE_PATH="coverage/terminal_py$game.coverage" NAME="game Coverage Results" MODIFIED="1756987260787" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/python_projects/coal_platformer" />
     <SUITE FILE_PATH="coverage/DungeonCrawler$renderer.coverage" NAME="renderer Coverage Results" MODIFIED="1754412839359" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Renderers" />
     <SUITE FILE_PATH="coverage/DungeonCrawler$imports.coverage" NAME="imports Coverage Results" MODIFIED="1751187675423" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/terminal_py$main.coverage" NAME="main Coverage Results" MODIFIED="1757337733901" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/DungeonCrawler$levelGenerator.coverage" NAME="levelGenerator Coverage Results" MODIFIED="1752688037666" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Dungeon" />
     <SUITE FILE_PATH="coverage/DungeonCrawler$levelManager.coverage" NAME="levelManager Coverage Results" MODIFIED="1754040512240" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Dungeon" />
     <SUITE FILE_PATH="coverage/DungeonCrawler$enemyManager.coverage" NAME="enemyManager Coverage Results" MODIFIED="1754220111539" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Enemies" />
