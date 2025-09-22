@@ -24,13 +24,13 @@ def bresenham_line(y0, x0, y1, x1):
     return points
 
 
-def calculate_field_of_view(player_y, player_x, radius):
-    # local_visible[y][x]
+def calculate_field_of_view(player_x, player_y, radius):
+    # local_visible[x][y]
     local_visible = [[False for _ in range(levelInit.width)] for _ in range(levelInit.height)]
-    for y in range(player_y - radius, player_y + radius + 1):
-        for x in range(player_x - radius, player_x + radius + 1):
-            if 0 <= y < levelInit.height and 0 <= x < levelInit.width:
-                line = bresenham_line(player_y, player_x, y, x)
+    for x in range(player_x - radius, player_x + radius + 1):
+        for y in range(player_y - radius, player_y + radius + 1):
+            if 0 <= x < levelInit.height and 0 <= y < levelInit.width:
+                line = bresenham_line(player_x, player_y, x, y)
                 for (ly, lx) in line:
                     if 0 <= ly < levelInit.height and 0 <= lx < levelInit.width:
                         local_visible[ly][lx] = True
@@ -39,9 +39,9 @@ def calculate_field_of_view(player_y, player_x, radius):
     return local_visible
 
 
-def player_fov(player_y, player_x, local_visible):
-    for y in range(levelInit.height):
-        for x in range(levelInit.width):
-            if local_visible[y][x]:
-                level.current_level.memorized[y][x] = level.current_level.level[y][x]
+def player_fov(player_x, player_y, local_visible):
+    for x in range(levelInit.height):
+        for y in range(levelInit.width):
+            if local_visible[x][y]:
+                level.current_level.memorized[x][y] = level.current_level.level[x][y]
     level.current_level.visible = local_visible

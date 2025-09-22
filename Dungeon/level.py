@@ -5,7 +5,7 @@ class Level:
     def __init__(self):
         self.changes = False
 
-        self.player_y, self.player_x = 0, 0
+        self.player_x, self.player_y = 0, 0
 
         self.enemies_list = []
 

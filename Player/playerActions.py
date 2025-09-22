@@ -9,11 +9,11 @@ from Resources import colors
 from Enemies import enemies
 
 
-def action(new_y, new_x):
-    if level.current_level.level[new_y][new_x] == Tiles.open_door:
-        DoorController.close_door((new_y, new_x))
-    elif Tiles.is_door(level.current_level.level[new_y][new_x]):
-        door = DoorController.open_door((new_y, new_x))
+def action(new_x, new_y):
+    if level.current_level.level[new_x][new_y] == Tiles.open_door:
+        DoorController.close_door((new_x, new_y))
+    elif Tiles.is_door(level.current_level.level[new_x][new_y]):
+        door = DoorController.open_door((new_x, new_y))
         if isinstance(door, tuple):
             playerHp.damage_player(door[0], door[1])
             menuRenderer.debug_log("the door was trapped!", color=colors.ORANGE)
@@ -21,10 +21,10 @@ def action(new_y, new_x):
     player.can_move = True
 
 
-def inspect_tile(new_y, new_x):
-    tile = level.current_level.level[new_y][new_x]
+def inspect_tile(new_x, new_y):
+    tile = level.current_level.level[new_x][new_y]
     if tile == Tiles.hidden_door:
-        level.current_level.level[new_y][new_x] = Tiles.closed_door
+        level.current_level.level[new_x][new_y] = Tiles.closed_door
         menuRenderer.debug_log("you found something")
     else:
         menuRenderer.debug_log("there is nothing unusual to see here")
@@ -42,9 +42,9 @@ def attack(enemy):
                 break
 
 
-def passive_inspect(new_y, new_x):
-    for i in range(new_y - 1, new_y + 1):
-        for j in range(new_x - 1, new_x + 1):
+def passive_inspect(new_x, new_y):
+    for i in range(new_x - 1, new_x + 1):
+        for j in range(new_y - 1, new_y + 1):
             if 0 <= i < levelInit.height and 0 <= j < levelInit.width:
                 tile = level.current_level.level[i][j]
                 if tile == "h+" and random.random() < player.passive_inspect_chance:

@@ -65,7 +65,7 @@ class EnemyController:
             self.heavy_counter -= 1
 
         if self.morale <= 0:
-            if not self.field_of_view[level.current_level.player_y][level.current_level.player_x]:
+            if not self.field_of_view[level.current_level.player_x][level.current_level.player_y]:
                 self.agro = False
             else:
                 self.escaping_counter = 20
@@ -73,10 +73,10 @@ class EnemyController:
                 self.path.clear()
         if self.escaping_counter <= 0:
             if self.agro:
-                self.target_pos = [level.current_level.player_y, level.current_level.player_x]
+                self.target_pos = [level.current_level.player_x, level.current_level.player_y]
                 self.path = fieldOfView.bresenham_line(self.enemy_pos[0], self.enemy_pos[1],
-                                                       level.current_level.player_y,
-                                                       level.current_level.player_x)
+                                                       level.current_level.player_x,
+                                                       level.current_level.player_y)
                 if len(self.path) <= 2:
                     self.attack()
                     return
@@ -85,9 +85,9 @@ class EnemyController:
                 self.find_target_pos()
                 self.create_path()
             self.agro = False
-            if self.field_of_view[level.current_level.player_y][level.current_level.player_x]:
+            if self.field_of_view[level.current_level.player_x][level.current_level.player_y]:
                 self.agro = True
-                self.target_pos = [level.current_level.player_y, level.current_level.player_x]
+                self.target_pos = [level.current_level.player_x, level.current_level.player_y]
                 self.create_path()
                 self.path.pop(0)
         self.move_counter += self.speed
@@ -99,14 +99,14 @@ class EnemyController:
         level.current_level.occupied[self.enemy_pos[0]][self.enemy_pos[1]] = False
         if self.escaping_counter <= 0:  # If the enemy is not escaping
             if self.path and self.enemy_pos != self.target_pos:
-                next_y, next_x = self.path[0]
+                next_x, next_y = self.path[0]
                 # Check if the next tile is walkable and not occupied
-                if (Tiles.is_walkable(level.current_level.level[next_y][next_x]) or
-                    Tiles.is_door(level.current_level.level[next_y][next_x])) and not \
-                        level.current_level.occupied[next_y][next_x]:
+                if (Tiles.is_walkable(level.current_level.level[next_x][next_y]) or
+                    Tiles.is_door(level.current_level.level[next_x][next_y])) and not \
+                        level.current_level.occupied[next_x][next_y]:
                     level.current_level.occupied[self.enemy_pos[0]][self.enemy_pos[1]] = False
-                    if Tiles.is_door(level.current_level.level[next_y][next_x]):
-                        door = DoorController.open_door((next_y, next_x))
+                    if Tiles.is_door(level.current_level.level[next_x][next_y]):
+                        door = DoorController.open_door((next_x, next_y))
                         if isinstance(door, tuple): self.hp -= random.randint(door[0], door[1])
                     else:
                         self.enemy_pos = self.path.pop(0)
@@ -118,7 +118,7 @@ class EnemyController:
 
             else:
                 # If the enemy is not moving towards the target, find a new target position
-                self.target_pos = [level.current_level.player_y, level.current_level.player_x]
+                self.target_pos = [level.current_level.player_x, level.current_level.player_y]
                 self.create_path()
                 level.current_level.occupied[self.enemy_pos[0]][self.enemy_pos[1]] = True
         elif self.escaping_counter > 0:
@@ -133,7 +133,7 @@ class EnemyController:
         max_tiles = 3
         for i in range(3):
             escape_roots = self.furthest_tiles(self.enemy_pos,
-                                               [level.current_level.player_y, level.current_level.player_x], max_tiles)
+                                               [level.current_level.player_x, level.current_level.player_y], max_tiles)
             max_tiles += 2
             valid_tiles = [pos for pos in escape_roots
                            if pos != tuple(self.enemy_pos)
@@ -155,13 +155,13 @@ class EnemyController:
                 if i == 2:
                     # If no valid escape tile found after 3 attempts, stay in place
                     if len(fieldOfView.bresenham_line(self.enemy_pos[0], self.enemy_pos[1],
-                                                      level.current_level.player_y, level.current_level.player_x)) <= 2:
+                                                      level.current_level.player_x, level.current_level.player_y)) <= 2:
                         # The enemy is close to the player, so it will not escape
                         self.attack()
 
     def attack(self):
-        if len(fieldOfView.bresenham_line(self.enemy_pos[0], self.enemy_pos[1], level.current_level.player_y,
-                                          level.current_level.player_x)) <= 2:
+        if len(fieldOfView.bresenham_line(self.enemy_pos[0], self.enemy_pos[1], level.current_level.player_x,
+                                          level.current_level.player_y)) <= 2:
             if self.heavy_dmg and self.heavy_counter <= 0 and random.random() > 0.2:
                 playerHp.damage_player(self.heavy_dmg[0], self.heavy_dmg[1])
                 self.heavy_counter = random.randint(10, 30)
@@ -194,9 +194,9 @@ class EnemyController:
 
     def find_target_pos(self):
         room = random.choice(level.current_level.rooms)
-        y = random.randint(room[0] + 1, room[2] - 1)
-        x = random.randint(room[1] + 1, room[3] - 1)
-        self.target_pos = [y, x]
+        x = random.randint(room[0] + 1, room[2] - 1)
+        y = random.randint(room[1] + 1, room[3] - 1)
+        self.target_pos = [x, y]
         self.create_path()
 
     def create_path(self):
@@ -205,7 +205,7 @@ class EnemyController:
         self.path = self.astar_algorithm.astar(start, goal)
 
     def furthest_tiles(self, enemy_pos, player_pos, max_tiles=3):
-        y, x = enemy_pos
-        neighbors = [(y + dy, x + dx) for dy in [-1, 0, 1] for dx in [-1, 0, 1] if not (dy == 0 and dx == 0)]
+        x, y = enemy_pos
+        neighbors = [(x + dy, y + dx) for dy in [-1, 0, 1] for dx in [-1, 0, 1] if not (dy == 0 and dx == 0)]
         neighbors.sort(key=lambda tile: abs(tile[0] - player_pos[0]) + abs(tile[1] - player_pos[1]), reverse=True)
         return neighbors[:max_tiles]

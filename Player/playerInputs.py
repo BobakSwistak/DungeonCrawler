@@ -37,10 +37,10 @@ def player_input(terminal, key):
                 if dy == 0 and dx == 0:
                     return None
 
-                new_y = level.current_level.player_y + dy
-                new_x = level.current_level.player_x + dx
+                new_x = level.current_level.player_x + dy
+                new_y = level.current_level.player_y + dx
 
-                playerActions.action(new_y, new_x)
+                playerActions.action(new_x, new_y)
 
 
             elif key == terminal.TK_I and not player.menu_opened:
@@ -52,12 +52,12 @@ def player_input(terminal, key):
 
                 services.wait_for_input(terminal)
                 dy, dx = direction_input(terminal, get_input(terminal))
-                new_y = level.current_level.player_y + dy
-                new_x = level.current_level.player_x + dx
-                if new_y == level.current_level.player_y and new_x == level.current_level.player_x:
+                new_x = level.current_level.player_x + dy
+                new_y = level.current_level.player_y + dx
+                if new_x == level.current_level.player_x and new_y == level.current_level.player_y:
                     return None
 
-                playerActions.inspect_tile(new_y, new_x)
+                playerActions.inspect_tile(new_x, new_y)
 
             elif key == terminal.TK_E:
                 player.can_move = not player.can_move
@@ -98,7 +98,7 @@ def player_input(terminal, key):
             elif key == terminal.TK_D:
                 level.current_level.changes = True
                 levelManager.levelManager.go_level_downwards(
-                    (level.current_level.player_y, level.current_level.player_x))
+                    (level.current_level.player_x, level.current_level.player_y))
             elif key == 27 or key == terminal.TK_ESCAPE:
                 player.action = False
                 player.inspect = False
@@ -110,36 +110,36 @@ def player_input(terminal, key):
                 return None
 
         dy, dx = direction_input(terminal, key)
-        new_y = level.current_level.player_y + dy
-        new_x = level.current_level.player_x + dx
-        player_y = level.current_level.player_y
+        new_x = level.current_level.player_x + dy
+        new_y = level.current_level.player_y + dx
         player_x = level.current_level.player_x
+        player_y = level.current_level.player_y
 
-        if 0 <= new_y < levelInit.height and 0 <= new_x < levelInit.width and player.can_move:
+        if 0 <= new_x < levelInit.height and 0 <= new_y < levelInit.width and player.can_move:
 
-            if Tiles.is_walkable(level.current_level.level[new_y][new_x]) and not level.current_level.occupied[new_y][
-                new_x]:
-                player_y, player_x = new_y, new_x
+            if Tiles.is_walkable(level.current_level.level[new_x][new_y]) and not level.current_level.occupied[new_x][
+                new_y]:
+                player_x, player_y = new_x, new_y
                 # Mark new position as occupied
 
                 if dx != 0 or dy != 0:
                     level.current_level.step_counter += 1
-                    playerActions.passive_inspect(new_y, new_x)
-            elif Tiles.is_door(level.current_level.level[new_y][new_x]):
-                door = DoorController.open_door((new_y, new_x))
+                    playerActions.passive_inspect(new_x, new_y)
+            elif Tiles.is_door(level.current_level.level[new_x][new_y]):
+                door = DoorController.open_door((new_x, new_y))
                 if isinstance(door, tuple):
                     playerHp.damage_player(door[0], door[1])
                     menuRenderer.debug_log("The door was trapped!", color=colors.ORANGE)
-                playerActions.passive_inspect(new_y, new_x)
-            elif level.current_level.occupied[new_y][new_x]:
+                playerActions.passive_inspect(new_x, new_y)
+            elif level.current_level.occupied[new_x][new_y]:
                 for enemy in level.current_level.enemies_list:
-                    if enemy.enemy_pos == [new_y, new_x] or enemy.enemy_pos == (new_y, new_x):
+                    if enemy.enemy_pos == [new_x, new_y] or enemy.enemy_pos == (new_x, new_y):
                         playerActions.attack(enemy)
             else:
-                playerActions.passive_inspect(player_x, player_y)
-                level.current_level.occupied[player_y][player_x] = True
+                playerActions.passive_inspect(player_y, player_x)
+                level.current_level.occupied[player_x][player_y] = True
 
-    return player_y, player_x
+    return player_x, player_y
 
 
 def direction_input(terminal, key=None):

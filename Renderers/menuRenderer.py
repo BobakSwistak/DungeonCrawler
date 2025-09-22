@@ -13,19 +13,19 @@ height, width = 0, 0
 control_menu_toggle = False
 
 
-def menus(terminal, player_y, player_x):
+def menus(terminal, player_x, player_y):
     global height, width, control_menu_toggle  # Global variables for terminal size
     height, width = services.get_screen_size(terminal)
-    left_menu(terminal, player_y, player_x, height, width)
+    left_menu(terminal, player_x, player_y, height, width)
     right_menu(terminal)
     hp_menu(terminal)
     if control_menu_toggle: control_menu(terminal)
 
 
-def left_menu(terminal, player_y, player_x, height, width):
-    # Display player position (y, x)
+def left_menu(terminal, player_x, player_y, height, width):
+    # Display player position (x, y)
     terminal.color(colors.WHITE)
-    terminal.printf(0, 2, f"Player Position: ({player_y}, {player_x})")
+    terminal.printf(0, 2, f"Player Position: ({player_x}, {player_y})")
     # terminal.printf(0, 1, f"Steps Taken: {level.step_counter}")
 
     # Draw author text at the bottom right

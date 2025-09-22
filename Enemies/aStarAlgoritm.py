@@ -18,7 +18,7 @@ class AStarAlgorithm:
         return path
 
     def get_neighbors(self, pos):
-        y, x = pos
+        x, y = pos
         neighbors = []
 
         # Include diagonal movements
@@ -28,7 +28,7 @@ class AStarAlgorithm:
         ]
 
         for dy, dx in directions:
-            ny, nx = y + dy, x + dx
+            ny, nx = x + dy, y + dx
             if 0 <= ny < levelInit.height and 0 <= nx < levelInit.width:
                 if Tiles.is_walkable(level.current_level.level[ny][nx]) or Tiles.is_door(level.current_level.level[ny][nx]) and not \
                         level.current_level.occupied[ny][nx]:
