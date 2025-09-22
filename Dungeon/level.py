@@ -23,4 +23,3 @@ class Level:
 levels = []
 levels.append(Level())
 current_level = levels[0]
-current_level.player_y, current_level.player_x = levelGenerator.generate_dungeon(0)

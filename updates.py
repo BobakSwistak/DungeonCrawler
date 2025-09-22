@@ -12,7 +12,7 @@ def update(terminal):
     level.levels = []
     level.levels.append(level.Level())
     level.current_level = level.levels[0]
-    level.current_level.player_y, level.current_level.player_x = levelGenerator.generate_dungeon(0)
+    level.current_level.player_y, level.current_level.player_x = levelGenerator.levelGenerator.generate_dungeon()
     # for i in range(10):
     #     menuRenderer.debug_log(f"You hear something dying in the distance.", color=colors.WHITE)
 

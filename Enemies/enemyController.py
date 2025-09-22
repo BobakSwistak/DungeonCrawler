@@ -186,10 +186,11 @@ class EnemyController:
                 self.morale = self.max_morale
 
     def enemy_position(self):
-        while True:
+        self.enemy_pos = [0, 0]
+        while not Tiles.is_walkable(level.current_level.level[self.enemy_pos[0]][self.enemy_pos[1]]) or \
+                level.current_level.occupied[self.enemy_pos[0]][self.enemy_pos[1]]:
             self.enemy_pos = [random.randint(0, levelInit.height - 1), random.randint(0, levelInit.width - 1)]
-            if Tiles.is_walkable(level.current_level.level[self.enemy_pos[0]][self.enemy_pos[1]]):
-                break
+        level.current_level.occupied[self.enemy_pos[0]][self.enemy_pos[1]] = True
 
     def find_target_pos(self):
         room = random.choice(level.current_level.rooms)
