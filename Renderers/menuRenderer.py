@@ -89,7 +89,6 @@ def clear_log():
 def hp_menu(terminal):
     terminal.color(colors.WHITE)
     terminal.printf(0, 0, f"Hp: ")
-    hp_percentage = playerHp.hp / playerHp.max_hp  # Calculate the health percentage
     hp_color = services.get_color(playerHp.hp, playerHp.max_hp, colors.WHITE)
     terminal.color(hp_color)
     terminal.printf(4, 0, str(playerHp.hp))

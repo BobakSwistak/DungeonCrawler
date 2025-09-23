@@ -14,6 +14,21 @@ class LevelGenerator:
         self.local_memorized = []
         self.local_rooms = []
 
+        self.door_placement_hor_conditions = [((-1, 0), Tiles.wall),
+                                              ((1, 0), Tiles.wall),
+                                              ((0, -1), Tiles.floor),
+                                              ((0, 1), Tiles.floor)]
+        # wrong conditions usage.
+        self.door_placement_ver_conditions = [((-1, 0), Tiles.floor),
+                                              ((1, 0), Tiles.floor),
+                                              ((0, -1), Tiles.wall),
+                                              ((0, 1), Tiles.wall)]
+
+        self.door_placement_corner_conditions = [((-1, -1), Tiles.floor),
+                                                 ((-1, 1), Tiles.floor),
+                                                 ((1, -1), Tiles.floor),
+                                                 ((1, 1), Tiles.floor)]
+
     def generate_dungeon(self):
         # Initialize level and visible arrays as [x][y]
         self.local_level = [[Tiles.wall for _ in range(levelInit.width)] for _ in range(levelInit.height)]
@@ -24,7 +39,7 @@ class LevelGenerator:
 
         self.generate_rooms()
         self.generate_tunnels()
-        self.generating_doors()
+        self.generate_doors()
         self.generate_staircases()
         self.clean_up()
         # Spawn player in the center room
@@ -111,38 +126,29 @@ class LevelGenerator:
             for y in range(endPos[1], startPos[1] + 1):
                 self.local_level[endPos[0]][y] = Tiles.floor
 
-    def carve_door(self, x, y):
-        if random.random() < levelInit.open_door_chance:
-            self.local_level[x][y] = Tiles.open_door
-        elif random.random() < levelInit.trapped_door_chance:
-            self.local_level[x][y] = Tiles.trapped_door
-        else:
-            self.local_level[x][y] = Tiles.closed_door
+    def generate_doors(self):
 
-    def generating_doors(self):
+        def carve_door():
+            if random.random() < levelInit.open_door_chance:
+                self.local_level[x][y] = Tiles.open_door
+            elif random.random() < levelInit.trapped_door_chance:
+                self.local_level[x][y] = Tiles.trapped_door
+            elif random.random() < levelInit.hidden_door_chance:
+                self.local_level[x][y] = Tiles.hidden_door
+            else:
+                self.local_level[x][y] = Tiles.closed_door
+
         for x in range(1, levelInit.height - 1):
             for y in range(1, levelInit.width - 1):
-                if self.local_level[x][y] == Tiles.floor:
-                    if ((self.local_level[x - 1][y] == Tiles.wall and self.local_level[x + 1][y] == Tiles.wall and
-                         self.local_level[x][y - 1] == Tiles.floor and self.local_level[x][y + 1] == Tiles.floor) or
-                            (self.local_level[x][y - 1] == Tiles.wall and self.local_level[x][y + 1] == Tiles.wall and
-                             self.local_level[x - 1][y] == Tiles.floor and self.local_level[x + 1][y] == Tiles.floor)):
-                        if (self.local_level[x + 1][y + 1] == Tiles.floor or self.local_level[x + 1][
-                            y - 1] == Tiles.floor or
-                                self.local_level[x - 1][y + 1] == Tiles.floor or self.local_level[x - 1][
-                                    y - 1] == Tiles.floor):
-                            self.carve_door(x, y)
-                if self.local_level[x][y] == Tiles.wall:
-                    if ((self.local_level[x - 1][y] == Tiles.floor and self.local_level[x + 1][y] == Tiles.floor and
-                         self.local_level[x][y - 1] == Tiles.wall and self.local_level[x][y + 1] == Tiles.wall) or
-                            (self.local_level[x][y - 1] == Tiles.floor and self.local_level[x][y + 1] == Tiles.floor and
-                             self.local_level[x - 1][y] == Tiles.wall and self.local_level[x + 1][y] == Tiles.wall)):
-                        if random.random() < levelInit.random_door_chance:
-                            self.carve_door(x, y)
-                            if random.random() < levelInit.hidden_door_chance:
-                                self.local_level[x][y] = Tiles.hidden_door
-                            else:
-                                self.local_level[x][y] = Tiles.closed_door
+                if (self.local_level[x][y] == Tiles.floor or (
+                        self.local_level[x][y] == Tiles.wall and random.random() < levelInit.random_door_chance)) and (
+                        self.is_valid_place(x, y, self.door_placement_ver_conditions) or
+                        self.is_valid_place(x, y, self.door_placement_hor_conditions)):
+
+                    for (dx, dy), tile in self.door_placement_corner_conditions:
+                        if self.local_level[x + dx][y + dy] == tile:
+                            carve_door()
+                            break
 
     def clean_up(self):
         for x in range(1, levelInit.height - 1):
@@ -161,27 +167,31 @@ class LevelGenerator:
         for i in range(random.randint(10, 10)):
             enemyManager.generate_enemy("Skeleton")
 
+    def is_valid_place(self, x, y, conditions):
+        return all(0 <= x + dx < levelInit.height and 0 <= y + dy < levelInit.width and self.local_level[x + dx][
+            y + dy] == tile for (dx, dy), tile in conditions)
+
     def generate_staircases(self):
+        def generate_up_staircase():
+            x = random.randint(1, levelInit.height - 1)
+            y = random.randint(1, levelInit.width - 1)
+            if self.local_level[x][y] == Tiles.floor:
+                self.local_level[x][y] = Tiles.staircase_up
+            else:
+                generate_up_staircase()
+
+        def generate_down_staircase():
+            x = random.randint(1, levelInit.height - 1)
+            y = random.randint(1, levelInit.width - 1)
+            if self.local_level[x][y] == Tiles.floor:
+                self.local_level[x][y] = Tiles.staircase_down
+            else:
+                generate_down_staircase()
+
         for i in range(levelInit.staircase_down_count):
-            self.generate_down_staircase()
+            generate_down_staircase()
         for i in range(levelInit.staircase_up_count):
-            self.generate_up_staircase()
-
-    def generate_up_staircase(self):
-        x = random.randint(1, levelInit.height - 1)
-        y = random.randint(1, levelInit.width - 1)
-        if self.local_level[x][y] == Tiles.floor:
-            self.local_level[x][y] = Tiles.staircase_up
-        else:
-            self.generate_up_staircase()
-
-    def generate_down_staircase(self):
-        x = random.randint(1, levelInit.height - 1)
-        y = random.randint(1, levelInit.width - 1)
-        if self.local_level[x][y] == Tiles.floor:
-            self.local_level[x][y] = Tiles.staircase_down
-        else:
-            self.generate_down_staircase()
+            generate_up_staircase()
 
     def export_level(self):
         level.current_level.level = self.local_level

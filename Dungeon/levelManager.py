@@ -14,5 +14,5 @@ class levelManager:
 
                 level.levels.append(level.Level())
                 level.current_level = level.levels[level.levels.index(level.current_level) + 1]
-                level.current_level.player_x, level.current_level.player_y = levelGenerator.generate_dungeon(
+                level.current_level.player_x, level.current_level.player_y = levelGenerator.levelGenerator.generate_dungeon(
                     level.levels.index(level.current_level) + 1)
