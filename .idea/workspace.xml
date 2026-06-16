@@ -4,16 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="23dfc354-9bb7-4c61-9667-04865449b8c6" name="Changes" comment="fix | ?maybe I changed from [y][x] to [x][y] but I am not sure?">
+    <list default="true" id="23dfc354-9bb7-4c61-9667-04865449b8c6" name="Changes" comment="fix | improved level generation code style.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dungeon/level.py" beforeDir="false" afterPath="$PROJECT_DIR$/Dungeon/level.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Dungeon/levelGenerator.py" beforeDir="false" afterPath="$PROJECT_DIR$/Dungeon/levelGenerator.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Dungeon/levelManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/Dungeon/levelManager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Renderers/menuRenderer.py" beforeDir="false" afterPath="$PROJECT_DIR$/Renderers/menuRenderer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Player/playerInputs.py" beforeDir="false" afterPath="$PROJECT_DIR$/Player/playerInputs.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CopilotPersistence">
+    <persistenceIdMap>
+      <entry key="_/home/bobak/PycharmProjects/DungeonCrawler" value="2zAwWJEFf9FtP4cnrHgNAON8OHv" />
+    </persistenceIdMap>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -31,6 +37,18 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RESET_MODE" value="HARD" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;BobakSwistak&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;git@github.com:BobakSwistak/DungeonCrawler.git&quot;,
+    &quot;accountId&quot;: &quot;85aa00ef-f8f8-477d-9384-47c7a64a185d&quot;
+  }
+}</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Enemies/enemyController.py" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -69,16 +87,19 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;ai.playground.ignore.import.keys.banner.in.settings&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/bobak/PycharmProjects/DungeonCrawler/main.py&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/bobak/Pulpit/catchSun&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;aDefault&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.fonts.default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode.Python&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -105,7 +126,9 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="DEBUG_JUST_MY_CODE" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="RUN_TOOL" value="" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -124,8 +147,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-09060db00ec0-JavaScript-PY-251.26927.90" />
-        <option value="bundled-python-sdk-41e8cd69c857-64d779b69b7a-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-251.26927.90" />
+        <option value="bundled-js-predefined-d6986cc7102b-3bd3a6803838-JavaScript-PY-261.22158.340" />
+        <option value="bundled-python-sdk-b63d5a1f7c97-b61e75351b1f-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-261.22158.340" />
       </set>
     </attachedChunks>
   </component>
@@ -219,15 +242,69 @@
       <workItem from="1756917782930" duration="3422000" />
       <workItem from="1756989517341" duration="1792000" />
       <workItem from="1757336005400" duration="1785000" />
-      <workItem from="1758632106729" duration="4454000" />
-    </task>
-    <task id="LOCAL-00009" summary="experimental | improved tunnel generation feature: more tunnels and wide tunnels(bug but now a feature)">
-      <option name="closed" value="true" />
-      <created>1753088850298</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1753088850298</updated>
+      <workItem from="1758632106729" duration="4799000" />
+      <workItem from="1758724355794" duration="493000" />
+      <workItem from="1758806229387" duration="148000" />
+      <workItem from="1758905045178" duration="119000" />
+      <workItem from="1759335345597" duration="1332000" />
+      <workItem from="1759603097402" duration="380000" />
+      <workItem from="1759603490665" duration="7000" />
+      <workItem from="1759603790600" duration="4000" />
+      <workItem from="1759604451766" duration="27000" />
+      <workItem from="1759604508886" duration="492000" />
+      <workItem from="1759646630306" duration="150000" />
+      <workItem from="1759648226607" duration="75000" />
+      <workItem from="1759838108783" duration="91000" />
+      <workItem from="1759855553219" duration="36000" />
+      <workItem from="1759945325583" duration="523000" />
+      <workItem from="1760031539395" duration="2770000" />
+      <workItem from="1760107072899" duration="1494000" />
+      <workItem from="1760254711086" duration="1110000" />
+      <workItem from="1760467843117" duration="112000" />
+      <workItem from="1760637980832" duration="1872000" />
+      <workItem from="1760707669719" duration="301000" />
+      <workItem from="1760808117229" duration="73000" />
+      <workItem from="1761056259324" duration="22000" />
+      <workItem from="1761153903119" duration="31000" />
+      <workItem from="1761402653337" duration="8000" />
+      <workItem from="1762545707340" duration="2191000" />
+      <workItem from="1762633461680" duration="775000" />
+      <workItem from="1762714319654" duration="291000" />
+      <workItem from="1762714642386" duration="6000" />
+      <workItem from="1762714794297" duration="42000" />
+      <workItem from="1762716030896" duration="685000" />
+      <workItem from="1762757445195" duration="23000" />
+      <workItem from="1762757674621" duration="629000" />
+      <workItem from="1762758778883" duration="9000" />
+      <workItem from="1762763718093" duration="16000" />
+      <workItem from="1762855271571" duration="1515000" />
+      <workItem from="1762887381814" duration="2000" />
+      <workItem from="1764867925092" duration="10778000" />
+      <workItem from="1765124587440" duration="79000" />
+      <workItem from="1765306293500" duration="12000" />
+      <workItem from="1766395586767" duration="628000" />
+      <workItem from="1766423953370" duration="1000" />
+      <workItem from="1767967818158" duration="597000" />
+      <workItem from="1767970266511" duration="2499000" />
+      <workItem from="1769180336556" duration="3059000" />
+      <workItem from="1769185690575" duration="101000" />
+      <workItem from="1769190378820" duration="2249000" />
+      <workItem from="1769249496619" duration="44000" />
+      <workItem from="1769252443499" duration="5216000" />
+      <workItem from="1769344093278" duration="598000" />
+      <workItem from="1769438062826" duration="982000" />
+      <workItem from="1769440670498" duration="3268000" />
+      <workItem from="1769610028732" duration="33000" />
+      <workItem from="1769610729861" duration="21000" />
+      <workItem from="1773420574167" duration="8000" />
+      <workItem from="1779461493023" duration="64000" />
+      <workItem from="1779527072118" duration="4471000" />
+      <workItem from="1779711118620" duration="7023000" />
+      <workItem from="1780729982700" duration="2250000" />
+      <workItem from="1780763750264" duration="80000" />
+      <workItem from="1780763950273" duration="51000" />
+      <workItem from="1781432226727" duration="3000" />
+      <workItem from="1781626882887" duration="2350000" />
     </task>
     <task id="LOCAL-00010" summary="fix | all scripts are in [y][x] array style">
       <option name="closed" value="true" />
@@ -613,7 +690,15 @@
       <option name="project" value="LOCAL" />
       <updated>1758563449281</updated>
     </task>
-    <option name="localTasksCounter" value="58" />
+    <task id="LOCAL-00058" summary="fix | improved level generation code style.">
+      <option name="closed" value="true" />
+      <created>1758636906470</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1758636906470</updated>
+    </task>
+    <option name="localTasksCounter" value="59" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -647,7 +732,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="experimental | enemy pathfinding" />
     <MESSAGE value="new | changed TUI from curses to bearlibterminal." />
     <MESSAGE value="fix | fixed diagonal movement." />
     <MESSAGE value="release | added libraries for first alfa version, currently works only for linux." />
@@ -672,23 +756,33 @@
     <MESSAGE value="build | alfa 0.1" />
     <MESSAGE value="fix | fixed level generation and now player can spawn in a random room." />
     <MESSAGE value="fix | ?maybe I changed from [y][x] to [x][y] but I am not sure?" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix | ?maybe I changed from [y][x] to [x][y] but I am not sure?" />
+    <MESSAGE value="fix | improved level generation code style." />
+    <option name="LAST_COMMIT_MESSAGE" value="fix | improved level generation code style." />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/DungeonCrawler$test.coverage" NAME="test Coverage Results" MODIFIED="1754206534591" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/123" />
-    <SUITE FILE_PATH="coverage/DungeonCrawler$main.coverage" NAME="main Coverage Results" MODIFIED="1756914626275" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/DungeonCrawler$level.coverage" NAME="level Coverage Results" MODIFIED="1754210943643" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Dungeon" />
-    <SUITE FILE_PATH="coverage/DungeonCrawler$menu.coverage" NAME="menu Coverage Results" MODIFIED="1751188592425" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/DungeonCrawler$main__1_.coverage" NAME="main (1) Coverage Results" MODIFIED="1751189775197" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/python_projects/games/snake" />
-    <SUITE FILE_PATH="coverage/terminal_py$terminal.coverage" NAME="terminal Coverage Results" MODIFIED="1756915526410" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/lib/BearLibTerminal_0.15.8/Include/Python/bearlibterminal" />
-    <SUITE FILE_PATH="coverage/terminal_py$game.coverage" NAME="game Coverage Results" MODIFIED="1756987260787" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/python_projects/coal_platformer" />
-    <SUITE FILE_PATH="coverage/DungeonCrawler$renderer.coverage" NAME="renderer Coverage Results" MODIFIED="1754412839359" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Renderers" />
-    <SUITE FILE_PATH="coverage/DungeonCrawler$imports.coverage" NAME="imports Coverage Results" MODIFIED="1751187675423" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/terminal_py$main.coverage" NAME="main Coverage Results" MODIFIED="1758636560921" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/DungeonCrawler$levelGenerator.coverage" NAME="levelGenerator Coverage Results" MODIFIED="1752688037666" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Dungeon" />
-    <SUITE FILE_PATH="coverage/DungeonCrawler$levelManager.coverage" NAME="levelManager Coverage Results" MODIFIED="1754040512240" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Dungeon" />
-    <SUITE FILE_PATH="coverage/DungeonCrawler$enemyManager.coverage" NAME="enemyManager Coverage Results" MODIFIED="1754220111539" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Enemies" />
-    <SUITE FILE_PATH="coverage/DungeonCrawler$123.coverage" NAME="123 Coverage Results" MODIFIED="1754925082978" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/terminal_py$main.coverage" NAME="main Coverage Results" MODIFIED="1762633475574" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/DungeonCrawler$tiles.coverage" NAME="tiles Coverage Results" MODIFIED="1756570299322" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Dungeon" />
+    <SUITE FILE_PATH="coverage/DungeonCrawler$main.coverage" NAME="main Coverage Results" MODIFIED="1781626922805" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/DungeonCrawler$imports.coverage" NAME="imports Coverage Results" MODIFIED="1751187675423" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/DungeonCrawler$menu.coverage" NAME="menu Coverage Results" MODIFIED="1751188592425" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/terminal_py$game.coverage" NAME="game Coverage Results" MODIFIED="1756987260787" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/python_projects/coal_platformer" />
+    <SUITE FILE_PATH="coverage/DungeonCrawler$main__1_.coverage" NAME="main (1) Coverage Results" MODIFIED="1751189775197" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/python_projects/games/snake" />
+    <SUITE FILE_PATH="coverage/DungeonCrawler$level.coverage" NAME="level Coverage Results" MODIFIED="1754210943643" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Dungeon" />
+    <SUITE FILE_PATH="coverage/DungeonCrawler$123.coverage" NAME="123 Coverage Results" MODIFIED="1754925082978" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/DungeonCrawler$enemyManager.coverage" NAME="enemyManager Coverage Results" MODIFIED="1754220111539" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Enemies" />
+    <SUITE FILE_PATH="coverage/DungeonCrawler$renderer.coverage" NAME="renderer Coverage Results" MODIFIED="1754412839359" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Renderers" />
+    <SUITE FILE_PATH="coverage/terminal_py$terminal.coverage" NAME="terminal Coverage Results" MODIFIED="1756915526410" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/lib/BearLibTerminal_0.15.8/Include/Python/bearlibterminal" />
+    <SUITE FILE_PATH="coverage/terminal_py$123.coverage" NAME="123 Coverage Results" MODIFIED="1762634218138" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/123" />
+    <SUITE FILE_PATH="coverage/DungeonCrawler$levelManager.coverage" NAME="levelManager Coverage Results" MODIFIED="1754040512240" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Dungeon" />
+    <SUITE FILE_PATH="coverage/DungeonCrawler$levelGenerator.coverage" NAME="levelGenerator Coverage Results" MODIFIED="1752688037666" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Dungeon" />
+  </component>
+  <component name="github-copilot-workspace">
+    <instructionFileLocations>
+      <option value=".github/instructions" />
+    </instructionFileLocations>
+    <promptFileLocations>
+      <option value=".github/prompts" />
+    </promptFileLocations>
   </component>
 </project>

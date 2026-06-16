@@ -8,7 +8,6 @@ from Resources.tiles import Tiles
 from Renderers import menuRenderer, renderer
 from Player import playerHp, player, playerActions
 from Resources import font, colors
-from Enemies import enemies
 from doorController import DoorController
 
 last_move_time = 0
@@ -17,6 +16,7 @@ move_delay = 0.05
 
 def player_input(terminal, key):
     global last_move_time, move_delay
+    player_x, player_y = player.player_x, player.player_y
     if key != terminal.TK_CLOSE:
 
         current_time = time.time()
@@ -97,7 +97,7 @@ def player_input(terminal, key):
 
             elif key == terminal.TK_D:
                 level.current_level.changes = True
-                levelManager.levelManager.go_level_downwards(
+                levelManager.LevelManager.go_level_downwards(
                     (level.current_level.player_x, level.current_level.player_y))
             elif key == 27 or key == terminal.TK_ESCAPE:
                 player.action = False
@@ -165,6 +165,7 @@ def direction_input(terminal, key=None):
     elif key in (terminal.TK_PAGEDOWN, ord('3'), terminal.TK_KP_3):  # Page Down or numpad 3
         dy = 1
         dx = 1
+
     if (dx != 0 or dy != 0) and player.can_move:
         level.current_level.changes = True
     return dy, dx

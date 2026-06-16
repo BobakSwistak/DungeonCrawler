@@ -1,6 +1,3 @@
-from Dungeon import levelGenerator
-
-
 class Level:
     def __init__(self):
         self.changes = False
@@ -20,6 +17,5 @@ class Level:
         self.visible = []  # list of visible tiles
 
 
-levels = []
-levels.append(Level())
+levels = [Level()]
 current_level = levels[0]

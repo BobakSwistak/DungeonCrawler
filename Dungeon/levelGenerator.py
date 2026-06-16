@@ -42,9 +42,6 @@ class LevelGenerator:
         self.generate_doors()
         self.generate_staircases()
         self.clean_up()
-        # Spawn player in the center room
-        center_x = levelInit.height // 2 + 3
-        center_y = levelInit.width // 2 + 3
         self.export_level()
         self.generate_enemies()
         starter_room = random.choice(self.local_rooms)
